@@ -1,0 +1,26 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Add Contact</ion-title>
+    <ion-button slot="start" size="small" fill="clear" (click)="backButton()">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Add Contact</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list>
+    <ion-item *ngFor="let item of itemList" (click)="contactClick(item)">
+      <ion-avatar class="ion-margin-vertical ion-margin-end">
+        <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada774{{item}}?d=identicon&f=y">
+      </ion-avatar>
+      <ion-label>User {{item}}</ion-label>
+    </ion-item>
+  </ion-list>
+  <br>
+</ion-content>

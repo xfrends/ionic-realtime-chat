@@ -1,0 +1,38 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>User 1</ion-title>
+    <ion-button slot="start" size="small" fill="clear" (click)="backButton()">
+        <ion-icon name="chevron-back-outline"></ion-icon>&nbsp;
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item-sliding *ngFor="let item of itemList">
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada774{{item}}?d=identicon&f=y">
+        </ion-avatar>
+        <span class="ion-margin-vertical">
+          <ion-label>User {{item}}</ion-label>
+          <ion-text style="font-size: 14px; color: var(--ion-color-step-600, #666666);">Notes are text elements generally used as subtitles that provide more information. Notes are styled to appear grey by default. Notes can be used in an item as metadata text.</ion-text>
+        </span>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option (click)="reply(item)">Reply</ion-item-option>
+        <ion-item-option (click)="deleteMessage(item)" color="danger">Delete</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <br>
+</ion-content>
+
+<ion-footer collapse="fade" style="box-shadow: rgb(0 0 0 / 10%) 0px 0px 25px 1px;">
+  <ion-item>
+    <ion-textarea class="ion-align-self-center" style="max-height: 200px!important;" auto-grow="true" (ionFocus)="writing()" (ionBlur)="stopWriting()" (ionChange)="editText()" [(ngModel)]="newMessage" placeholder="Enter message here..."></ion-textarea>
+    <ion-button slot="end" fill="clear" class="ion-align-self-center">
+      <ion-icon name="send"></ion-icon>
+    </ion-button>
+  </ion-item>
+</ion-footer>

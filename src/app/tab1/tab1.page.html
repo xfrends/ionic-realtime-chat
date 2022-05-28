@@ -1,17 +1,52 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      Chats
     </ion-title>
+    <ion-button slot="end" size="small" fill="clear" (click)="createChat()" *ngIf="showButton">
+      <ion-icon name="create-outline"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" [scrollEvents]="true" (ionScroll)="onScroll($event)">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
+      <ion-title size="large">Chats</ion-title>
+      <ion-button slot="end" fill="clear" (click)="createChat()">
+        <ion-icon name="create-outline"></ion-icon>
+      </ion-button>
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <app-explore-container name="Chat Empty" navigate="tabs/chat/add-chat"></app-explore-container>
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let item of itemList">
+      <ion-item (click)="openChat(item)">
+        <ion-avatar class="ion-margin-vertical ion-margin-end">
+          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada774{{item}}?d=identicon&f=y">
+        </ion-avatar>
+        <ion-label>
+          <h3>User {{item}}</h3>
+          <p>Whether auto correction should be enabled when the user is entering/editing the text value.</p>
+        </ion-label>
+        <ion-note slot="end">
+          <ion-text color="success" *ngIf="newMessage; else read">
+            <small>10:45 AM</small>
+          </ion-text>
+          <ng-template #read>
+            <ion-text color="medium">
+              <small>10:45 AM</small>
+            </ion-text>
+          </ng-template>
+        </ion-note>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option (click)="openChat(item)">Open</ion-item-option>
+        <ion-item-option (click)="deleteChat(item)" color="danger">Delete</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <br>
 </ion-content>

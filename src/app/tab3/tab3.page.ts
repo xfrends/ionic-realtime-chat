@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { ContentService } from '../shared/api/content.service';
 
 @Component({
   selector: 'app-tab3',
@@ -6,7 +8,36 @@ import { Component } from '@angular/core';
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page {
+  settingForm = {
+    email: '',
+    name: '',
+    status: true,
+  };
+  constructor(
+    private contentService: ContentService,
+    private router: Router
+  ) {}
 
-  constructor() {}
+  editProfile() {
+    console.log('ganti gambar');
+  }
 
+  statusChange(event) {
+    console.log(this.settingForm.status);
+  }
+
+  saveName(event) {
+    console.log(this.settingForm.name);
+  }
+
+  saveEmail(event) {
+    console.log(this.settingForm.email);
+  }
+
+  logout() {
+    this.contentService.postLogout().subscribe((response: any) => {
+      this.contentService.deleteToken();
+      this.router.navigate(['/']);
+    });
+  }
 }
