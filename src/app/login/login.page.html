@@ -23,11 +23,11 @@
             <form (ngSubmit)="onSubmit()" class="form-horizontal">
               <ion-item>
                 <ion-label position="floating">Email</ion-label>
-                <ion-input mode="ios" inputmode="email" [(ngModel)]="loginForm.email" [ngModelOptions]="{standalone: true}" type="email"></ion-input>
+                <ion-input inputmode="email" [(ngModel)]="loginForm.email" [ngModelOptions]="{standalone: true}" type="email"></ion-input>
               </ion-item>
               <ion-item class="ion-margin-bottom">
                 <ion-label position="floating">Password</ion-label>
-                <ion-input mode="ios" inputmode="text" [(ngModel)]="loginForm.password" [ngModelOptions]="{standalone: true}" required="true" type="password"></ion-input>
+                <ion-input inputmode="text" [(ngModel)]="loginForm.password" [ngModelOptions]="{standalone: true}" required="true" type="password"></ion-input>
               </ion-item>
               <ion-button type="submit" expand="block">Login</ion-button>
             </form>

@@ -22,20 +22,25 @@
   <app-explore-container *ngIf="empty" name="Contact Empty" navigate="tabs/contact/add-contact"></app-explore-container>
 
   <ion-list>
-    <ion-item-sliding *ngFor="let item of itemList">
-      <ion-item (click)="contactClick(item)">
+    <ion-item-sliding *ngFor="let item of contacts">
+      <ion-item (click)="contactClick(item.other_user.email)">
         <ion-avatar class="ion-margin-vertical ion-margin-end">
-          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada774{{item}}?d=identicon&f=y">
+          <img src="{{item.other_user.avatar}}">
         </ion-avatar>
-        <ion-label>User {{item}}</ion-label>
+        <ion-label>{{item.other_user.name}}</ion-label>
         <ion-note slot="end">
           <ion-text color="success" *ngIf="isOnline; else lastOnline">
-            <small>online</small>
+            <small>{{item.other_user.status}}</small>
           </ion-text>
           <ng-template #lastOnline>
-            <ion-text color="medium">
-              <small>10:45 AM</small>
+            <ion-text color="medium" *ngIf="!item.today; else today">
+              <small>{{item.other_user.updated_at | date:"mediumDate"}}</small>
             </ion-text>
+            <ng-template #today>
+              <ion-text color="medium">
+                <small>{{item.other_user.updated_at | date:"shortTime"}}</small>
+              </ion-text>
+            </ng-template>
           </ng-template>
         </ion-note>
       </ion-item>

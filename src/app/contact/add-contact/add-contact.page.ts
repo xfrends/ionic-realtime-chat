@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ContentService } from 'src/app/shared/api/content.service';
 
 @Component({
   selector: 'app-add-contact',
@@ -7,19 +8,58 @@ import { Router } from '@angular/router';
   styleUrls: ['./add-contact.page.scss'],
 })
 export class AddContactPage implements OnInit {
-  itemList = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
-
+  contacts = [];
+  profile = [];
   constructor(
-    private router: Router
-  ) { }
+    private router: Router,
+    private contentService: ContentService
+  ) {
+    this.contentService.getToken().then((token) => {
+      this.contentService.getUsers(token).subscribe(
+        (users) => {
+          this.contacts = users.content;
+          this.contentService.getProfile(token).subscribe(
+            (profile) => {
+              this.contacts.forEach(element => {
+                if (element.email === profile.content.email) {
+                  element.isYou = true;
+                }
+              });
+            }
+          );
+        },
+        (error) => {
+          console.log('error: ', error);
+          if (error.status === 401) {
+            this.contentService.deleteToken();
+            this.router.navigate(['/login']);
+          }
+        }
+        );
+    });
+  }
 
   ngOnInit() {
+
   }
 
   backButton() {
     this.router.navigate(['tabs/contact']);
   }
-  contactClick(item) {
-    console.log('click '+item);
+  contactClick(email) {
+    this.contentService.getToken().then((token) => {
+      this.contentService.postContact(token, email).subscribe(
+        (contact) => {
+          this.router.navigate(['tabs/contact']);
+        },
+        (error) => {
+          console.log('error: ', error);
+          if (error.status === 401) {
+            this.contentService.deleteToken();
+            this.router.navigate(['/login']);
+          }
+        }
+        );
+    });
   }
 }

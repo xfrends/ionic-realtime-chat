@@ -12,12 +12,12 @@ export class ContentService {
 
   httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded',
-      // 'Authorization': 'Bearer ' + this.getToken
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
     })
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, ) { }
 
   setToken(data) {
     return Storage.set({key: 'token', value: data });
@@ -32,13 +32,68 @@ export class ContentService {
     return value;
   }
 
-  postLogin(data) {
-    const url = environment.baseUrl+'/api/login';
-    return this.http.post(url, data);
+  getProfile(token) {
+    const url = environment.baseUrl+'/api/auth/profile';
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer '+token
+      })
+    };
+    return this.http.get<any>(url, this.httpOptions);
   }
 
-  postLogout() {
+  postLogin(data) {
+    const url = environment.baseUrl+'/api/login';
+    return this.http.post(url, data, this.httpOptions);
+  }
+
+  postLogout(token) {
     const url = environment.baseUrl+'/api/auth/logout';
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer '+token
+      })
+    };
     return this.http.post(url, {}, this.httpOptions);
+  }
+
+  getUsers(token) {
+    const url = environment.baseUrl+'/api/users';
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer '+token
+      })
+    };
+    return this.http.get<any>(url, this.httpOptions);
+  }
+
+  postContact(token, email) {
+    const url = environment.baseUrl+'/api/contact';
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer '+token
+      })
+    };
+    return this.http.post<any>(url, {email}, this.httpOptions);
+  }
+
+  getContacts(token) {
+    const url = environment.baseUrl+'/api/contact';
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer '+token
+      })
+    };
+    return this.http.get<any>(url, this.httpOptions);
   }
 }

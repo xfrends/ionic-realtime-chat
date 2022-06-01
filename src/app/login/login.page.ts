@@ -19,7 +19,7 @@ export class LoginPage implements OnInit {
 
   constructor(
     private contentService: ContentService,
-    private router: Router
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -29,7 +29,6 @@ export class LoginPage implements OnInit {
   async onSubmit() {
     this.contentService.postLogin(this.loginForm).subscribe((response: any) => {
       this.contentService.setToken(response.content.access_token);
-
       this.router.navigate(['/']);
     });
   }

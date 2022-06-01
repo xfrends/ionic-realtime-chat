@@ -35,9 +35,18 @@ export class Tab3Page {
   }
 
   logout() {
-    this.contentService.postLogout().subscribe((response: any) => {
-      this.contentService.deleteToken();
-      this.router.navigate(['/']);
+    this.contentService.getToken().then((token) => {
+      this.contentService.postLogout(token).subscribe(
+        (response) => {
+          this.contentService.deleteToken();
+          console.log('Success & delete token');
+        },
+        (error) => {
+          this.contentService.deleteToken();
+          console.log('Unauthorization & delete token');
+        }
+        );
     });
+    this.router.navigate(['/login']);
   }
 }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Platform } from '@ionic/angular';
 import { ContentService } from './shared/api/content.service';
 
 @Component({
@@ -9,15 +10,19 @@ import { ContentService } from './shared/api/content.service';
 })
 export class AppComponent {
   user = {};
-  constructor(private router: Router, private contentService: ContentService) {
+  constructor(
+    private router: Router,
+    private contentService: ContentService,
+    private platform: Platform
+    ) {
     this.contentService.getToken()
     .then((data) => {
       if (data === null) {
-        // this.router.navigate(['/login']);
+        this.router.navigate(['/login']);
       }
     })
     .catch( () => {
-      // this.router.navigate(['/login']);
+      this.router.navigate(['/login']);
     });
   }
 }

@@ -15,12 +15,38 @@
   </ion-header>
 
   <ion-list>
-    <ion-item *ngFor="let item of itemList" (click)="contactClick(item)">
-      <ion-avatar class="ion-margin-vertical ion-margin-end">
-        <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada774{{item}}?d=identicon&f=y">
-      </ion-avatar>
-      <ion-label>User {{item}}</ion-label>
-    </ion-item>
+    <span *ngFor="let item of contacts">
+      <ion-item *ngIf="item.isYou; else other">
+        <ion-avatar class="ion-margin-vertical ion-margin-end">
+          <img src="{{item.avatar}}">
+        </ion-avatar>
+        <ion-label>
+          <h4>{{item.name}}</h4>
+          <p>{{item.email}}</p>
+        </ion-label>
+        <ion-note slot="end">
+          <ion-text>
+            <small>You</small>
+          </ion-text>
+        </ion-note>
+      </ion-item>
+      <ng-template #other>
+        <ion-item (click)="contactClick(item.email)">
+          <ion-avatar class="ion-margin-vertical ion-margin-end">
+            <img src="{{item.avatar}}">
+          </ion-avatar>
+          <ion-label>
+            <h4>{{item.name}}</h4>
+            <p>{{item.email}}</p>
+          </ion-label>
+          <ion-note slot="end">
+            <ion-text color="success">
+              <small>Add</small>
+            </ion-text>
+          </ion-note>
+        </ion-item>
+      </ng-template>
+    </span>
   </ion-list>
   <br>
 </ion-content>
