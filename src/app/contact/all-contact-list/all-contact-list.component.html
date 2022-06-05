@@ -1,0 +1,29 @@
+<ion-list>
+  <ion-item-sliding *ngFor="let item of contacts">
+    <ion-item (click)="contactClick(item.other_user.email)">
+      <ion-avatar class="ion-margin-vertical ion-margin-end">
+        <img src="{{item.other_user.avatar}}">
+      </ion-avatar>
+      <ion-label>{{item.other_user.name}}</ion-label>
+      <ion-note slot="end">
+        <ion-text color="success" *ngIf="isOnline; else lastOnline">
+          <small>{{item.other_user.status}}</small>
+        </ion-text>
+        <ng-template #lastOnline>
+          <ion-text color="medium" *ngIf="!item.today; else today">
+            <small>{{item.other_user.updated_at | date:"mediumDate"}}</small>
+          </ion-text>
+          <ng-template #today>
+            <ion-text color="medium">
+              <small>{{item.other_user.updated_at | date:"shortTime"}}</small>
+            </ion-text>
+          </ng-template>
+        </ng-template>
+      </ion-note>
+    </ion-item>
+    <ion-item-options side="end">
+      <ion-item-option (click)="contactClick(item)">Open</ion-item-option>
+      <ion-item-option (click)="contactArsip(item)" color="danger">Delete</ion-item-option>
+    </ion-item-options>
+  </ion-item-sliding>
+</ion-list>

@@ -20,6 +20,21 @@ export class Tab2Page {
     private platform: Platform,
     private contentService: ContentService
   ) {
+    this.getContact();
+    if (!this.platform.is('ios')) {
+      this.showButton = true;
+    }
+  }
+
+  onScroll(event) {
+    if (event.detail.deltaY > 0) {
+        this.showButton = true;
+    } else if (event.detail.deltaY < 0 && this.platform.is('ios')) {
+        this.showButton = false;
+    }
+  }
+
+  getContact() {
     this.contentService.getToken().then((token) => {
       this.contentService.getContacts(token).subscribe(
         (response) => {
@@ -44,25 +59,16 @@ export class Tab2Page {
         }
         );
     });
-    if (!this.platform.is('ios')) {
-      this.showButton = true;
-    }
   }
 
-  onScroll(event) {
-    if (event.detail.deltaY > 0) {
-        this.showButton = true;
-    } else if (event.detail.deltaY < 0 && this.platform.is('ios')) {
-        this.showButton = false;
-    }
-  }
   addContact() {
     this.router.navigate(['tabs/contact/add-contact']);
   }
-  contactClick(item) {
-    this.router.navigate(['tabs/chat/messages']);
-  }
-  contactArsip(item) {
-    console.log(item);
+
+  doRefresh(event) {
+    this.getContact();
+    setTimeout(() => {
+      event.target.complete();
+    }, 2000);
   }
 }

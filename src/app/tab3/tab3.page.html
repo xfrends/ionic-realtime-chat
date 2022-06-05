@@ -16,7 +16,7 @@
   <ion-grid>
     <ion-row class="ion-justify-content-center ion-margin-vertical">
       <ion-col size="6" (click)="editProfile()">
-        <img class="profile" src="./assets/icon/favicon.png" alt="username"/>
+        <img class="profile" src="{{settingForm.avatar}}" alt="{{settingForm.name}}"/>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -26,7 +26,7 @@
       <ion-col size="12">
         <ion-item>
           <ion-label>Online</ion-label>
-          <ion-toggle slot="end" [(ngModel)]="settingForm.status" [checked]="settingForm.status" (ionChange)="statusChange($event)"></ion-toggle>
+          <ion-toggle slot="end" [(ngModel)]="status" [checked]="status" (ionChange)="statusChange($event)"></ion-toggle>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -62,4 +62,7 @@
     </ion-row>
   </ion-grid>
 
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 </ion-content>

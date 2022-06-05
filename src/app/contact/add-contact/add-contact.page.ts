@@ -7,6 +7,7 @@ import { ContentService } from 'src/app/shared/api/content.service';
   templateUrl: './add-contact.page.html',
   styleUrls: ['./add-contact.page.scss'],
 })
+
 export class AddContactPage implements OnInit {
   contacts = [];
   profile = [];
@@ -14,6 +15,14 @@ export class AddContactPage implements OnInit {
     private router: Router,
     private contentService: ContentService
   ) {
+
+  }
+
+  ngOnInit() {
+    this.getUsers();
+  }
+
+  getUsers() {
     this.contentService.getToken().then((token) => {
       this.contentService.getUsers(token).subscribe(
         (users) => {
@@ -39,27 +48,14 @@ export class AddContactPage implements OnInit {
     });
   }
 
-  ngOnInit() {
-
-  }
-
   backButton() {
     this.router.navigate(['tabs/contact']);
   }
-  contactClick(email) {
-    this.contentService.getToken().then((token) => {
-      this.contentService.postContact(token, email).subscribe(
-        (contact) => {
-          this.router.navigate(['tabs/contact']);
-        },
-        (error) => {
-          console.log('error: ', error);
-          if (error.status === 401) {
-            this.contentService.deleteToken();
-            this.router.navigate(['/login']);
-          }
-        }
-        );
-    });
+
+  doRefresh(event) {
+    this.getUsers();
+    setTimeout(() => {
+      event.target.complete();
+    }, 2000);
   }
 }

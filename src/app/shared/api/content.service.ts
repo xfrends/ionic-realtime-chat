@@ -19,6 +19,7 @@ export class ContentService {
 
   constructor(private http: HttpClient, ) { }
 
+  // Start Token
   setToken(data) {
     return Storage.set({key: 'token', value: data });
   }
@@ -26,12 +27,13 @@ export class ContentService {
   deleteToken() {
     return Storage.remove({ key: 'token' });
   }
-
   async getToken() {
     const { value } = await Storage.get({ key: 'token' });
     return value;
   }
+  // End Token
 
+  // Start Auth
   getProfile(token) {
     const url = environment.baseUrl+'/api/auth/profile';
     this.httpOptions = {
@@ -43,12 +45,10 @@ export class ContentService {
     };
     return this.http.get<any>(url, this.httpOptions);
   }
-
   postLogin(data) {
     const url = environment.baseUrl+'/api/login';
     return this.http.post(url, data, this.httpOptions);
   }
-
   postLogout(token) {
     const url = environment.baseUrl+'/api/auth/logout';
     this.httpOptions = {
@@ -60,9 +60,22 @@ export class ContentService {
     };
     return this.http.post(url, {}, this.httpOptions);
   }
+  putUser(token, id, data) {
+    const url = environment.baseUrl+'/api/user/'+id;
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer '+token
+      })
+    };
+    return this.http.put(url, data, this.httpOptions);
+  }
+  // End Auth
 
+  // Start User Contact
   getUsers(token) {
-    const url = environment.baseUrl+'/api/users';
+    const url = environment.baseUrl+'/api/user';
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -72,7 +85,6 @@ export class ContentService {
     };
     return this.http.get<any>(url, this.httpOptions);
   }
-
   postContact(token, email) {
     const url = environment.baseUrl+'/api/contact';
     this.httpOptions = {
@@ -84,7 +96,6 @@ export class ContentService {
     };
     return this.http.post<any>(url, {email}, this.httpOptions);
   }
-
   getContacts(token) {
     const url = environment.baseUrl+'/api/contact';
     this.httpOptions = {
@@ -96,4 +107,41 @@ export class ContentService {
     };
     return this.http.get<any>(url, this.httpOptions);
   }
+  // End User Contact
+
+  // Start Chat
+  postChat(token, email) {
+    const url = environment.baseUrl+'/api/chat';
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer '+token
+      })
+    };
+    return this.http.post<any>(url, {email}, this.httpOptions);
+  }
+  getChats(token) {
+    const url = environment.baseUrl+'/api/chat';
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer '+token
+      })
+    };
+    return this.http.get<any>(url, this.httpOptions);
+  }
+  getChat(token, $chatId) {
+    const url = environment.baseUrl+'/api/chat/'+$chatId;
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer '+token
+      })
+    };
+    return this.http.get<any>(url, this.httpOptions);
+  }
+  // End Chat
 }

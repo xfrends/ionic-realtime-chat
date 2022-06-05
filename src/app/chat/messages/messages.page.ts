@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ContentService } from 'src/app/shared/api/content.service';
 
 @Component({
   selector: 'app-messages',
@@ -7,18 +8,49 @@ import { Router } from '@angular/router';
   styleUrls: ['./messages.page.scss'],
 })
 export class MessagesPage implements OnInit {
-  itemList = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
+  messages = null;
   newMessage = '';
-
+  to = '';
+  chatId = null;
   constructor(
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
+    private contentService: ContentService
   ) { }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.chatId = params.id;
+      this.getChat(this.chatId);
+    });
   }
 
   backButton() {
     this.router.navigate(['tabs/chat']);
+  }
+
+  getChat(chatId) {
+    this.contentService.getToken().then((token) => {
+      this.contentService.getChat(token, chatId).subscribe(
+        (chat) => {
+          this.messages = chat.content.messages;
+          this.to = chat.content.to;
+        },
+        (error) => {
+          console.log('error: ', error);
+          if (error.status === 401) {
+            this.contentService.deleteToken();
+            this.router.navigate(['/login']);
+          }
+        }
+      );
+    });
+  }
+  send() {
+    this.contentService.getToken().then((token) => {
+      //
+    });
+    console.log(this.chatId, this.newMessage);
   }
   reply(item) {
     console.log(item);
@@ -34,8 +66,15 @@ export class MessagesPage implements OnInit {
   }
   editText() {
     console.log(this.newMessage);
-    while (this.newMessage.includes('\n\n')) {
-      this.newMessage = this.newMessage.replace('\n\n','\n');
-    }
+    // remove double enter
+    // while (this.newMessage.includes('\n\n')) {
+    //   this.newMessage = this.newMessage.replace('\n\n','\n');
+    // }
+  }
+  doRefresh(event) {
+    this.getChat(this.chatId);
+    setTimeout(() => {
+      event.target.complete();
+    }, 2000);
   }
 }

@@ -14,39 +14,11 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-list>
-    <span *ngFor="let item of contacts">
-      <ion-item *ngIf="item.isYou; else other">
-        <ion-avatar class="ion-margin-vertical ion-margin-end">
-          <img src="{{item.avatar}}">
-        </ion-avatar>
-        <ion-label>
-          <h4>{{item.name}}</h4>
-          <p>{{item.email}}</p>
-        </ion-label>
-        <ion-note slot="end">
-          <ion-text>
-            <small>You</small>
-          </ion-text>
-        </ion-note>
-      </ion-item>
-      <ng-template #other>
-        <ion-item (click)="contactClick(item.email)">
-          <ion-avatar class="ion-margin-vertical ion-margin-end">
-            <img src="{{item.avatar}}">
-          </ion-avatar>
-          <ion-label>
-            <h4>{{item.name}}</h4>
-            <p>{{item.email}}</p>
-          </ion-label>
-          <ion-note slot="end">
-            <ion-text color="success">
-              <small>Add</small>
-            </ion-text>
-          </ion-note>
-        </ion-item>
-      </ng-template>
-    </span>
-  </ion-list>
+  <app-all-user-list [contacts]="contacts"></app-all-user-list>
+
   <br>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 </ion-content>
