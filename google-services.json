@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "494878116065",
+    "firebase_url": "https://ionic-realtime-chat-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "ionic-realtime-chat",
+    "storage_bucket": "ionic-realtime-chat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:494878116065:android:b08ec3080a16076d774fa0",
+        "android_client_info": {
+          "package_name": "io.realtime.chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "494878116065-ln7vov8gngcvdsa46he14tj1eopirfc7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDM5ZrSK3Nw6CTSR_ByO4TnACtO8ztjB6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "494878116065-ln7vov8gngcvdsa46he14tj1eopirfc7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

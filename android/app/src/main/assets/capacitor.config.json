@@ -1,5 +1,5 @@
 {
-	"appId": "io.ionic.starter",
+	"appId": "io.realtime.chat",
 	"appName": "ionic-realtime-chat",
 	"webDir": "www",
 	"bundledWebRuntime": false
