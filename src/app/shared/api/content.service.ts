@@ -30,17 +30,6 @@ export class ContentService {
     const { value } = await Storage.get({ key: 'token' });
     return value;
   }
-
-  setFcmToken(token) {
-    return Storage.set({key: 'fcmToken', value: token });
-  }
-  deleteFcmToken() {
-    return Storage.remove({ key: 'fcmToken' });
-  }
-  async getFcmToken() {
-    const { value } = await Storage.get({ key: 'fcmToken' });
-    return value;
-  }
   // End Token
 
   // Start Auth
