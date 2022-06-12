@@ -65,6 +65,7 @@ export class MessagesPage implements OnInit {
     this.contentService.getToken().then((token) => {
       this.contentService.postMessage(token, this.chatId, this.replyMessage, this.newMessage, 'text', 'sending').subscribe(
         () => {
+          this.newMessage = '';
           this.getMessages(this.chatId);
         }
       );
