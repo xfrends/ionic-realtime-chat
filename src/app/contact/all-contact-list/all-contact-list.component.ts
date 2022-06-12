@@ -31,7 +31,12 @@ export class AllContactListComponent implements OnInit {
   }
 
   contactArsip(item) {
-    console.log(item);
+    console.log('arsip: ',item);
+    this.contentService.getToken().then((token) => {
+      this.contentService.deleteContact(token, item.id).subscribe((response: any) => {
+        this.router.navigate(['tabs/contact']);
+      });
+    });
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { ContentService } from '../shared/api/content.service';
@@ -8,7 +8,7 @@ import { ContentService } from '../shared/api/content.service';
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss']
 })
-export class Tab2Page {
+export class Tab2Page implements OnInit {
 
   contacts = [];
   empty = true;
@@ -19,7 +19,9 @@ export class Tab2Page {
     private router: Router,
     private platform: Platform,
     private contentService: ContentService
-  ) {
+  ) { }
+
+  ngOnInit() {
     this.getContact();
     if (!this.platform.is('ios')) {
       this.showButton = true;

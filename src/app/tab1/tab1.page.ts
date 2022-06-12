@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { ContentService } from '../shared/api/content.service';
@@ -8,7 +8,7 @@ import { ContentService } from '../shared/api/content.service';
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
-export class Tab1Page {
+export class Tab1Page implements OnInit {
 
   empty = true;
   showButton = false;
@@ -19,12 +19,15 @@ export class Tab1Page {
     private platform: Platform,
     private router: Router,
     private contentService: ContentService
-  ) {
+  ) { }
+
+  ngOnInit() {
     this.getChats();
     if (!this.platform.is('ios')) {
       this.showButton = true;
     }
   }
+
   getChats() {
     this.contentService.getToken().then((token) => {
       this.contentService.getChats(token).subscribe(
@@ -61,6 +64,22 @@ export class Tab1Page {
   createChat() {
     this.router.navigate(['tabs/contact']);
   }
+  pinChat(chatId) {
+    this.contentService.getToken().then((token) => {
+      this.contentService.pinChat(token, chatId, true).subscribe(
+        (response) => {
+            this.getChats();
+        });
+    });
+  }
+  unPinChat(chatId) {
+    this.contentService.getToken().then((token) => {
+      this.contentService.pinChat(token, chatId, false).subscribe(
+        (response) => {
+            this.getChats();
+        });
+    });
+  }
   openChat(chatId) {
     const navigationExtras: NavigationExtras = {
       queryParams: {
@@ -69,11 +88,16 @@ export class Tab1Page {
     };
     this.router.navigate(['tabs/chat/messages'], navigationExtras);
   }
-  deleteChat(item) {
-    console.log('delete chat');
+  deleteChat(chatId) {
+    this.contentService.getToken().then((token) => {
+      this.contentService.deleteChat(token, chatId).subscribe(
+        (response) => {
+            this.getChats();
+        });
+    });
   }
-  unread(item) {
-    console.log('unread chat');
+  unread(chatId) {
+    console.log('unread chat', chatId);
   }
   doRefresh(event) {
     this.getChats();

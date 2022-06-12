@@ -1,6 +1,986 @@
 "use strict";
 (self["webpackChunkapp"] = self["webpackChunkapp"] || []).push([["vendor"],{
 
+/***/ 5400:
+/*!*******************************************************************************************!*\
+  !*** ./node_modules/@awesome-cordova-plugins/core/__ivy_ngcc__/awesome-cordova-plugin.js ***!
+  \*******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "AwesomeCordovaNativePlugin": () => (/* binding */ AwesomeCordovaNativePlugin)
+/* harmony export */ });
+/* harmony import */ var _decorators_common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./decorators/common */ 2474);
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./util */ 8219);
+
+
+var AwesomeCordovaNativePlugin = /** @class */ (function () {
+    function AwesomeCordovaNativePlugin() {
+    }
+    /**
+     * Returns a boolean that indicates whether the plugin is installed
+     *
+     * @returns {boolean}
+     */
+    AwesomeCordovaNativePlugin.installed = function () {
+        var isAvailable = (0,_decorators_common__WEBPACK_IMPORTED_MODULE_0__.checkAvailability)(this.pluginRef) === true;
+        return isAvailable;
+    };
+    /**
+     * Returns the original plugin object
+     */
+    AwesomeCordovaNativePlugin.getPlugin = function () {
+        if (typeof window !== 'undefined') {
+            return (0,_util__WEBPACK_IMPORTED_MODULE_1__.get)(window, this.pluginRef);
+        }
+        return null;
+    };
+    /**
+     * Returns the plugin's name
+     */
+    AwesomeCordovaNativePlugin.getPluginName = function () {
+        var pluginName = this.pluginName;
+        return pluginName;
+    };
+    /**
+     * Returns the plugin's reference
+     */
+    AwesomeCordovaNativePlugin.getPluginRef = function () {
+        var pluginRef = this.pluginRef;
+        return pluginRef;
+    };
+    /**
+     * Returns the plugin's install name
+     */
+    AwesomeCordovaNativePlugin.getPluginInstallName = function () {
+        var plugin = this.plugin;
+        return plugin;
+    };
+    /**
+     * Returns the plugin's supported platforms
+     */
+    AwesomeCordovaNativePlugin.getSupportedPlatforms = function () {
+        var platform = this.platforms;
+        return platform;
+    };
+    AwesomeCordovaNativePlugin.pluginName = '';
+    AwesomeCordovaNativePlugin.pluginRef = '';
+    AwesomeCordovaNativePlugin.plugin = '';
+    AwesomeCordovaNativePlugin.repo = '';
+    AwesomeCordovaNativePlugin.platforms = [];
+    AwesomeCordovaNativePlugin.install = '';
+    return AwesomeCordovaNativePlugin;
+}());
+
+
+
+/***/ }),
+
+/***/ 3512:
+/*!******************************************************************************!*\
+  !*** ./node_modules/@awesome-cordova-plugins/core/__ivy_ngcc__/bootstrap.js ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "checkReady": () => (/* binding */ checkReady)
+/* harmony export */ });
+/**
+ *
+ */
+function checkReady() {
+    if (typeof process === 'undefined') {
+        var win_1 = typeof window !== 'undefined' ? window : {};
+        var DEVICE_READY_TIMEOUT_1 = 5000;
+        // To help developers using cordova, we listen for the device ready event and
+        // log an error if it didn't fire in a reasonable amount of time. Generally,
+        // when this happens, developers should remove and reinstall plugins, since
+        // an inconsistent plugin is often the culprit.
+        var before_1 = Date.now();
+        var didFireReady_1 = false;
+        win_1.document.addEventListener('deviceready', function () {
+            console.log("Ionic Native: deviceready event fired after " + (Date.now() - before_1) + " ms");
+            didFireReady_1 = true;
+        });
+        setTimeout(function () {
+            if (!didFireReady_1 && win_1.cordova) {
+                console.warn("Ionic Native: deviceready did not fire within " + DEVICE_READY_TIMEOUT_1 + "ms. This can happen when plugins are in an inconsistent state. Try removing plugins from plugins/ and reinstalling them.");
+            }
+        }, DEVICE_READY_TIMEOUT_1);
+    }
+}
+
+
+/***/ }),
+
+/***/ 2474:
+/*!**************************************************************************************!*\
+  !*** ./node_modules/@awesome-cordova-plugins/core/__ivy_ngcc__/decorators/common.js ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ERR_CORDOVA_NOT_AVAILABLE": () => (/* binding */ ERR_CORDOVA_NOT_AVAILABLE),
+/* harmony export */   "ERR_PLUGIN_NOT_INSTALLED": () => (/* binding */ ERR_PLUGIN_NOT_INSTALLED),
+/* harmony export */   "getPromise": () => (/* binding */ getPromise),
+/* harmony export */   "wrapPromise": () => (/* binding */ wrapPromise),
+/* harmony export */   "checkAvailability": () => (/* binding */ checkAvailability),
+/* harmony export */   "instanceAvailability": () => (/* binding */ instanceAvailability),
+/* harmony export */   "setIndex": () => (/* binding */ setIndex),
+/* harmony export */   "callCordovaPlugin": () => (/* binding */ callCordovaPlugin),
+/* harmony export */   "callInstance": () => (/* binding */ callInstance),
+/* harmony export */   "getPlugin": () => (/* binding */ getPlugin),
+/* harmony export */   "get": () => (/* binding */ get),
+/* harmony export */   "pluginWarn": () => (/* binding */ pluginWarn),
+/* harmony export */   "cordovaWarn": () => (/* binding */ cordovaWarn),
+/* harmony export */   "wrap": () => (/* binding */ wrap),
+/* harmony export */   "wrapInstance": () => (/* binding */ wrapInstance)
+/* harmony export */ });
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ 2378);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ 6312);
+
+var ERR_CORDOVA_NOT_AVAILABLE = { error: 'cordova_not_available' };
+var ERR_PLUGIN_NOT_INSTALLED = { error: 'plugin_not_installed' };
+/**
+ * @param callback
+ */
+function getPromise(callback) {
+    var tryNativePromise = function () {
+        if (Promise) {
+            return new Promise(function (resolve, reject) {
+                callback(resolve, reject);
+            });
+        }
+        else {
+            console.error('No Promise support or polyfill found. To enable Ionic Native support, please add the es6-promise polyfill before this script, or run with a library like Angular or on a recent browser.');
+        }
+    };
+    if (typeof window !== 'undefined' && window.angular) {
+        var doc = window.document;
+        var injector = window.angular.element(doc.querySelector('[ng-app]') || doc.body).injector();
+        if (injector) {
+            var $q = injector.get('$q');
+            return $q(function (resolve, reject) {
+                callback(resolve, reject);
+            });
+        }
+        console.warn("Angular 1 was detected but $q couldn't be retrieved. This is usually when the app is not bootstrapped on the html or body tag. Falling back to native promises which won't trigger an automatic digest when promises resolve.");
+    }
+    return tryNativePromise();
+}
+/**
+ * @param pluginObj
+ * @param methodName
+ * @param args
+ * @param opts
+ */
+function wrapPromise(pluginObj, methodName, args, opts) {
+    if (opts === void 0) { opts = {}; }
+    var pluginResult, rej;
+    var p = getPromise(function (resolve, reject) {
+        if (opts.destruct) {
+            pluginResult = callCordovaPlugin(pluginObj, methodName, args, opts, function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i] = arguments[_i];
+                }
+                return resolve(args);
+            }, function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i] = arguments[_i];
+                }
+                return reject(args);
+            });
+        }
+        else {
+            pluginResult = callCordovaPlugin(pluginObj, methodName, args, opts, resolve, reject);
+        }
+        rej = reject;
+    });
+    // Angular throws an error on unhandled rejection, but in this case we have already printed
+    // a warning that Cordova is undefined or the plugin is uninstalled, so there is no reason
+    // to error
+    if (pluginResult && pluginResult.error) {
+        p.catch(function () { });
+        typeof rej === 'function' && rej(pluginResult.error);
+    }
+    return p;
+}
+/**
+ * @param pluginObj
+ * @param methodName
+ * @param args
+ * @param opts
+ */
+function wrapOtherPromise(pluginObj, methodName, args, opts) {
+    if (opts === void 0) { opts = {}; }
+    return getPromise(function (resolve, reject) {
+        var pluginResult = callCordovaPlugin(pluginObj, methodName, args, opts);
+        if (pluginResult) {
+            if (pluginResult.error) {
+                reject(pluginResult.error);
+            }
+            else if (pluginResult.then) {
+                pluginResult.then(resolve).catch(reject);
+            }
+        }
+        else {
+            reject({ error: 'unexpected_error' });
+        }
+    });
+}
+/**
+ * @param pluginObj
+ * @param methodName
+ * @param args
+ * @param opts
+ */
+function wrapObservable(pluginObj, methodName, args, opts) {
+    if (opts === void 0) { opts = {}; }
+    return new rxjs__WEBPACK_IMPORTED_MODULE_0__.Observable(function (observer) {
+        var pluginResult;
+        if (opts.destruct) {
+            pluginResult = callCordovaPlugin(pluginObj, methodName, args, opts, function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i] = arguments[_i];
+                }
+                return observer.next(args);
+            }, function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i] = arguments[_i];
+                }
+                return observer.error(args);
+            });
+        }
+        else {
+            pluginResult = callCordovaPlugin(pluginObj, methodName, args, opts, observer.next.bind(observer), observer.error.bind(observer));
+        }
+        if (pluginResult && pluginResult.error) {
+            observer.error(pluginResult.error);
+            observer.complete();
+        }
+        return function () {
+            try {
+                if (opts.clearFunction) {
+                    if (opts.clearWithArgs) {
+                        return callCordovaPlugin(pluginObj, opts.clearFunction, args, opts, observer.next.bind(observer), observer.error.bind(observer));
+                    }
+                    return callCordovaPlugin(pluginObj, opts.clearFunction, []);
+                }
+            }
+            catch (e) {
+                console.warn('Unable to clear the previous observable watch for', pluginObj.constructor.getPluginName(), methodName);
+                console.warn(e);
+            }
+        };
+    });
+}
+/**
+ * Wrap the event with an observable
+ *
+ * @private
+ * @param event event name
+ * @param element The element to attach the event listener to
+ * @returns {Observable}
+ */
+function wrapEventObservable(event, element) {
+    element =
+        typeof window !== 'undefined' && element
+            ? get(window, element)
+            : element || (typeof window !== 'undefined' ? window : {});
+    return (0,rxjs__WEBPACK_IMPORTED_MODULE_1__.fromEvent)(element, event);
+}
+/**
+ * @param plugin
+ * @param methodName
+ * @param pluginName
+ */
+function checkAvailability(plugin, methodName, pluginName) {
+    var pluginRef, pluginPackage;
+    if (typeof plugin === 'string') {
+        pluginRef = plugin;
+    }
+    else {
+        pluginRef = plugin.constructor.getPluginRef();
+        pluginName = plugin.constructor.getPluginName();
+        pluginPackage = plugin.constructor.getPluginInstallName();
+    }
+    var pluginInstance = getPlugin(pluginRef);
+    if (!pluginInstance || (!!methodName && typeof pluginInstance[methodName] === 'undefined')) {
+        if (typeof window === 'undefined' || !window.cordova) {
+            cordovaWarn(pluginName, methodName);
+            return ERR_CORDOVA_NOT_AVAILABLE;
+        }
+        pluginWarn(pluginName, pluginPackage, methodName);
+        return ERR_PLUGIN_NOT_INSTALLED;
+    }
+    return true;
+}
+/**
+ * Checks if _objectInstance exists and has the method/property
+ *
+ * @param pluginObj
+ * @param methodName
+ * @private
+ */
+function instanceAvailability(pluginObj, methodName) {
+    return pluginObj._objectInstance && (!methodName || typeof pluginObj._objectInstance[methodName] !== 'undefined');
+}
+/**
+ * @param args
+ * @param opts
+ * @param resolve
+ * @param reject
+ */
+function setIndex(args, opts, resolve, reject) {
+    if (opts === void 0) { opts = {}; }
+    // ignore resolve and reject in case sync
+    if (opts.sync) {
+        return args;
+    }
+    // If the plugin method expects myMethod(success, err, options)
+    if (opts.callbackOrder === 'reverse') {
+        // Get those arguments in the order [resolve, reject, ...restOfArgs]
+        args.unshift(reject);
+        args.unshift(resolve);
+    }
+    else if (opts.callbackStyle === 'node') {
+        args.push(function (err, result) {
+            if (err) {
+                reject(err);
+            }
+            else {
+                resolve(result);
+            }
+        });
+    }
+    else if (opts.callbackStyle === 'object' && opts.successName && opts.errorName) {
+        var obj = {};
+        obj[opts.successName] = resolve;
+        obj[opts.errorName] = reject;
+        args.push(obj);
+    }
+    else if (typeof opts.successIndex !== 'undefined' || typeof opts.errorIndex !== 'undefined') {
+        var setSuccessIndex = function () {
+            // If we've specified a success/error index
+            if (opts.successIndex > args.length) {
+                args[opts.successIndex] = resolve;
+            }
+            else {
+                args.splice(opts.successIndex, 0, resolve);
+            }
+        };
+        var setErrorIndex = function () {
+            // We don't want that the reject cb gets spliced into the position of an optional argument that has not been
+            // defined and thus causing non expected behavior.
+            if (opts.errorIndex > args.length) {
+                args[opts.errorIndex] = reject; // insert the reject fn at the correct specific index
+            }
+            else {
+                args.splice(opts.errorIndex, 0, reject); // otherwise just splice it into the array
+            }
+        };
+        if (opts.successIndex > opts.errorIndex) {
+            setErrorIndex();
+            setSuccessIndex();
+        }
+        else {
+            setSuccessIndex();
+            setErrorIndex();
+        }
+    }
+    else {
+        // Otherwise, let's tack them on to the end of the argument list
+        // which is 90% of cases
+        args.push(resolve);
+        args.push(reject);
+    }
+    return args;
+}
+/**
+ * @param pluginObj
+ * @param methodName
+ * @param args
+ * @param opts
+ * @param resolve
+ * @param reject
+ */
+function callCordovaPlugin(pluginObj, methodName, args, opts, resolve, reject) {
+    if (opts === void 0) { opts = {}; }
+    // Try to figure out where the success/error callbacks need to be bound
+    // to our promise resolve/reject handlers.
+    args = setIndex(args, opts, resolve, reject);
+    var availabilityCheck = checkAvailability(pluginObj, methodName);
+    if (availabilityCheck === true) {
+        var pluginInstance = getPlugin(pluginObj.constructor.getPluginRef());
+        // eslint-disable-next-line prefer-spread
+        return pluginInstance[methodName].apply(pluginInstance, args);
+    }
+    else {
+        return availabilityCheck;
+    }
+}
+/**
+ * @param pluginObj
+ * @param methodName
+ * @param args
+ * @param opts
+ * @param resolve
+ * @param reject
+ */
+function callInstance(pluginObj, methodName, args, opts, resolve, reject) {
+    if (opts === void 0) { opts = {}; }
+    args = setIndex(args, opts, resolve, reject);
+    if (instanceAvailability(pluginObj, methodName)) {
+        // eslint-disable-next-line prefer-spread
+        return pluginObj._objectInstance[methodName].apply(pluginObj._objectInstance, args);
+    }
+}
+/**
+ * @param pluginRef
+ */
+function getPlugin(pluginRef) {
+    if (typeof window !== 'undefined') {
+        return get(window, pluginRef);
+    }
+    return null;
+}
+/**
+ * @param element
+ * @param path
+ */
+function get(element, path) {
+    var paths = path.split('.');
+    var obj = element;
+    for (var i = 0; i < paths.length; i++) {
+        if (!obj) {
+            return null;
+        }
+        obj = obj[paths[i]];
+    }
+    return obj;
+}
+/**
+ * @param pluginName
+ * @param plugin
+ * @param method
+ */
+function pluginWarn(pluginName, plugin, method) {
+    if (method) {
+        console.warn('Native: tried calling ' + pluginName + '.' + method + ', but the ' + pluginName + ' plugin is not installed.');
+    }
+    else {
+        console.warn("Native: tried accessing the " + pluginName + " plugin but it's not installed.");
+    }
+    if (plugin) {
+        console.warn("Install the " + pluginName + " plugin: 'ionic cordova plugin add " + plugin + "'");
+    }
+}
+/**
+ * @private
+ * @param pluginName
+ * @param method
+ */
+function cordovaWarn(pluginName, method) {
+    if (typeof process === 'undefined') {
+        if (method) {
+            console.warn('Native: tried calling ' +
+                pluginName +
+                '.' +
+                method +
+                ', but Cordova is not available. Make sure to include cordova.js or run in a device/simulator');
+        }
+        else {
+            console.warn('Native: tried accessing the ' +
+                pluginName +
+                ' plugin but Cordova is not available. Make sure to include cordova.js or run in a device/simulator');
+        }
+    }
+}
+/**
+ * @param pluginObj
+ * @param methodName
+ * @param opts
+ * @private
+ */
+var wrap = function (pluginObj, methodName, opts) {
+    if (opts === void 0) { opts = {}; }
+    return function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        if (opts.sync) {
+            // Sync doesn't wrap the plugin with a promise or observable, it returns the result as-is
+            return callCordovaPlugin(pluginObj, methodName, args, opts);
+        }
+        else if (opts.observable) {
+            return wrapObservable(pluginObj, methodName, args, opts);
+        }
+        else if (opts.eventObservable && opts.event) {
+            return wrapEventObservable(opts.event, opts.element);
+        }
+        else if (opts.otherPromise) {
+            return wrapOtherPromise(pluginObj, methodName, args, opts);
+        }
+        else {
+            return wrapPromise(pluginObj, methodName, args, opts);
+        }
+    };
+};
+/**
+ * @param pluginObj
+ * @param methodName
+ * @param opts
+ * @private
+ */
+function wrapInstance(pluginObj, methodName, opts) {
+    if (opts === void 0) { opts = {}; }
+    return function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        if (opts.sync) {
+            return callInstance(pluginObj, methodName, args, opts);
+        }
+        else if (opts.observable) {
+            return new rxjs__WEBPACK_IMPORTED_MODULE_0__.Observable(function (observer) {
+                var pluginResult;
+                if (opts.destruct) {
+                    pluginResult = callInstance(pluginObj, methodName, args, opts, function () {
+                        var args = [];
+                        for (var _i = 0; _i < arguments.length; _i++) {
+                            args[_i] = arguments[_i];
+                        }
+                        return observer.next(args);
+                    }, function () {
+                        var args = [];
+                        for (var _i = 0; _i < arguments.length; _i++) {
+                            args[_i] = arguments[_i];
+                        }
+                        return observer.error(args);
+                    });
+                }
+                else {
+                    pluginResult = callInstance(pluginObj, methodName, args, opts, observer.next.bind(observer), observer.error.bind(observer));
+                }
+                if (pluginResult && pluginResult.error) {
+                    observer.error(pluginResult.error);
+                }
+                return function () {
+                    try {
+                        if (opts.clearWithArgs) {
+                            return callInstance(pluginObj, opts.clearFunction, args, opts, observer.next.bind(observer), observer.error.bind(observer));
+                        }
+                        return callInstance(pluginObj, opts.clearFunction, []);
+                    }
+                    catch (e) {
+                        console.warn('Unable to clear the previous observable watch for', pluginObj.constructor.getPluginName(), methodName);
+                        console.warn(e);
+                    }
+                };
+            });
+        }
+        else if (opts.otherPromise) {
+            return getPromise(function (resolve, reject) {
+                var result;
+                if (opts.destruct) {
+                    result = callInstance(pluginObj, methodName, args, opts, function () {
+                        var args = [];
+                        for (var _i = 0; _i < arguments.length; _i++) {
+                            args[_i] = arguments[_i];
+                        }
+                        return resolve(args);
+                    }, function () {
+                        var args = [];
+                        for (var _i = 0; _i < arguments.length; _i++) {
+                            args[_i] = arguments[_i];
+                        }
+                        return reject(args);
+                    });
+                }
+                else {
+                    result = callInstance(pluginObj, methodName, args, opts, resolve, reject);
+                }
+                if (result && result.then) {
+                    result.then(resolve, reject);
+                }
+                else {
+                    reject();
+                }
+            });
+        }
+        else {
+            var pluginResult_1, rej_1;
+            var p = getPromise(function (resolve, reject) {
+                if (opts.destruct) {
+                    pluginResult_1 = callInstance(pluginObj, methodName, args, opts, function () {
+                        var args = [];
+                        for (var _i = 0; _i < arguments.length; _i++) {
+                            args[_i] = arguments[_i];
+                        }
+                        return resolve(args);
+                    }, function () {
+                        var args = [];
+                        for (var _i = 0; _i < arguments.length; _i++) {
+                            args[_i] = arguments[_i];
+                        }
+                        return reject(args);
+                    });
+                }
+                else {
+                    pluginResult_1 = callInstance(pluginObj, methodName, args, opts, resolve, reject);
+                }
+                rej_1 = reject;
+            });
+            // Angular throws an error on unhandled rejection, but in this case we have already printed
+            // a warning that Cordova is undefined or the plugin is uninstalled, so there is no reason
+            // to error
+            if (pluginResult_1 && pluginResult_1.error) {
+                p.catch(function () { });
+                typeof rej_1 === 'function' && rej_1(pluginResult_1.error);
+            }
+            return p;
+        }
+    };
+}
+
+
+/***/ }),
+
+/***/ 1485:
+/*!*********************************************************************************************************!*\
+  !*** ./node_modules/@awesome-cordova-plugins/core/__ivy_ngcc__/decorators/cordova-function-override.js ***!
+  \*********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "cordovaFunctionOverride": () => (/* binding */ cordovaFunctionOverride)
+/* harmony export */ });
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ 2378);
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./common */ 2474);
+
+
+/**
+ * @param pluginObj
+ * @param methodName
+ */
+function overrideFunction(pluginObj, methodName) {
+    return new rxjs__WEBPACK_IMPORTED_MODULE_1__.Observable(function (observer) {
+        var availabilityCheck = (0,_common__WEBPACK_IMPORTED_MODULE_0__.checkAvailability)(pluginObj, methodName);
+        if (availabilityCheck === true) {
+            var pluginInstance_1 = (0,_common__WEBPACK_IMPORTED_MODULE_0__.getPlugin)(pluginObj.constructor.getPluginRef());
+            pluginInstance_1[methodName] = observer.next.bind(observer);
+            return function () { return (pluginInstance_1[methodName] = function () { }); };
+        }
+        else {
+            observer.error(availabilityCheck);
+            observer.complete();
+        }
+    });
+}
+/**
+ * @param pluginObj
+ * @param methodName
+ * @param args
+ */
+function cordovaFunctionOverride(pluginObj, methodName, args) {
+    if (args === void 0) { args = []; }
+    return overrideFunction(pluginObj, methodName);
+}
+
+
+/***/ }),
+
+/***/ 5084:
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@awesome-cordova-plugins/core/__ivy_ngcc__/decorators/cordova-instance.js ***!
+  \************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "cordovaInstance": () => (/* binding */ cordovaInstance)
+/* harmony export */ });
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./common */ 2474);
+
+/**
+ * @param pluginObj
+ * @param methodName
+ * @param config
+ * @param args
+ */
+function cordovaInstance(pluginObj, methodName, config, args) {
+    args = Array.from(args);
+    return (0,_common__WEBPACK_IMPORTED_MODULE_0__.wrapInstance)(pluginObj, methodName, config).apply(this, args);
+}
+
+
+/***/ }),
+
+/***/ 1830:
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@awesome-cordova-plugins/core/__ivy_ngcc__/decorators/cordova-property.js ***!
+  \************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "cordovaPropertyGet": () => (/* binding */ cordovaPropertyGet),
+/* harmony export */   "cordovaPropertySet": () => (/* binding */ cordovaPropertySet)
+/* harmony export */ });
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./common */ 2474);
+
+/**
+ * @param pluginObj
+ * @param key
+ */
+function cordovaPropertyGet(pluginObj, key) {
+    if ((0,_common__WEBPACK_IMPORTED_MODULE_0__.checkAvailability)(pluginObj, key) === true) {
+        return (0,_common__WEBPACK_IMPORTED_MODULE_0__.getPlugin)(pluginObj.constructor.getPluginRef())[key];
+    }
+    return null;
+}
+/**
+ * @param pluginObj
+ * @param key
+ * @param value
+ */
+function cordovaPropertySet(pluginObj, key, value) {
+    if ((0,_common__WEBPACK_IMPORTED_MODULE_0__.checkAvailability)(pluginObj, key) === true) {
+        (0,_common__WEBPACK_IMPORTED_MODULE_0__.getPlugin)(pluginObj.constructor.getPluginRef())[key] = value;
+    }
+}
+
+
+/***/ }),
+
+/***/ 4461:
+/*!***************************************************************************************!*\
+  !*** ./node_modules/@awesome-cordova-plugins/core/__ivy_ngcc__/decorators/cordova.js ***!
+  \***************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "cordova": () => (/* binding */ cordova)
+/* harmony export */ });
+/* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./common */ 2474);
+
+/**
+ * @param pluginObj
+ * @param methodName
+ * @param config
+ * @param args
+ */
+function cordova(pluginObj, methodName, config, args) {
+    return (0,_common__WEBPACK_IMPORTED_MODULE_0__.wrap)(pluginObj, methodName, config).apply(this, args);
+}
+
+
+/***/ }),
+
+/***/ 6936:
+/*!*************************************************************************************************!*\
+  !*** ./node_modules/@awesome-cordova-plugins/core/__ivy_ngcc__/decorators/instance-property.js ***!
+  \*************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "instancePropertyGet": () => (/* binding */ instancePropertyGet),
+/* harmony export */   "instancePropertySet": () => (/* binding */ instancePropertySet)
+/* harmony export */ });
+/**
+ * @param pluginObj
+ * @param key
+ */
+function instancePropertyGet(pluginObj, key) {
+    if (pluginObj._objectInstance && pluginObj._objectInstance[key]) {
+        return pluginObj._objectInstance[key];
+    }
+    return null;
+}
+/**
+ * @param pluginObj
+ * @param key
+ * @param value
+ */
+function instancePropertySet(pluginObj, key, value) {
+    if (pluginObj._objectInstance) {
+        pluginObj._objectInstance[key] = value;
+    }
+}
+
+
+/***/ }),
+
+/***/ 3142:
+/*!******************************************************************************************!*\
+  !*** ./node_modules/@awesome-cordova-plugins/core/__ivy_ngcc__/decorators/interfaces.js ***!
+  \******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+
+
+
+/***/ }),
+
+/***/ 4624:
+/*!**************************************************************************!*\
+  !*** ./node_modules/@awesome-cordova-plugins/core/__ivy_ngcc__/index.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "AwesomeCordovaNativePlugin": () => (/* reexport safe */ _awesome_cordova_plugin__WEBPACK_IMPORTED_MODULE_1__.AwesomeCordovaNativePlugin),
+/* harmony export */   "checkAvailability": () => (/* reexport safe */ _decorators_common__WEBPACK_IMPORTED_MODULE_2__.checkAvailability),
+/* harmony export */   "instanceAvailability": () => (/* reexport safe */ _decorators_common__WEBPACK_IMPORTED_MODULE_2__.instanceAvailability),
+/* harmony export */   "wrap": () => (/* reexport safe */ _decorators_common__WEBPACK_IMPORTED_MODULE_2__.wrap),
+/* harmony export */   "getPromise": () => (/* reexport safe */ _decorators_common__WEBPACK_IMPORTED_MODULE_2__.getPromise),
+/* harmony export */   "cordova": () => (/* reexport safe */ _decorators_cordova__WEBPACK_IMPORTED_MODULE_3__.cordova),
+/* harmony export */   "cordovaFunctionOverride": () => (/* reexport safe */ _decorators_cordova_function_override__WEBPACK_IMPORTED_MODULE_4__.cordovaFunctionOverride),
+/* harmony export */   "cordovaInstance": () => (/* reexport safe */ _decorators_cordova_instance__WEBPACK_IMPORTED_MODULE_5__.cordovaInstance),
+/* harmony export */   "cordovaPropertyGet": () => (/* reexport safe */ _decorators_cordova_property__WEBPACK_IMPORTED_MODULE_6__.cordovaPropertyGet),
+/* harmony export */   "cordovaPropertySet": () => (/* reexport safe */ _decorators_cordova_property__WEBPACK_IMPORTED_MODULE_6__.cordovaPropertySet),
+/* harmony export */   "instancePropertyGet": () => (/* reexport safe */ _decorators_instance_property__WEBPACK_IMPORTED_MODULE_7__.instancePropertyGet),
+/* harmony export */   "instancePropertySet": () => (/* reexport safe */ _decorators_instance_property__WEBPACK_IMPORTED_MODULE_7__.instancePropertySet)
+/* harmony export */ });
+/* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap */ 3512);
+/* harmony import */ var _awesome_cordova_plugin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./awesome-cordova-plugin */ 5400);
+/* harmony import */ var _decorators_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./decorators/common */ 2474);
+/* harmony import */ var _decorators_cordova__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./decorators/cordova */ 4461);
+/* harmony import */ var _decorators_cordova_function_override__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./decorators/cordova-function-override */ 1485);
+/* harmony import */ var _decorators_cordova_instance__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./decorators/cordova-instance */ 5084);
+/* harmony import */ var _decorators_cordova_property__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./decorators/cordova-property */ 1830);
+/* harmony import */ var _decorators_instance_property__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./decorators/instance-property */ 6936);
+/* harmony import */ var _decorators_interfaces__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./decorators/interfaces */ 3142);
+
+
+// Decorators
+
+
+
+
+
+
+
+(0,_bootstrap__WEBPACK_IMPORTED_MODULE_0__.checkReady)();
+
+
+
+/***/ }),
+
+/***/ 8219:
+/*!*************************************************************************!*\
+  !*** ./node_modules/@awesome-cordova-plugins/core/__ivy_ngcc__/util.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "get": () => (/* binding */ get),
+/* harmony export */   "getPromise": () => (/* binding */ getPromise)
+/* harmony export */ });
+/**
+ * @param element
+ * @param path
+ * @private
+ */
+function get(element, path) {
+    var paths = path.split('.');
+    var obj = element;
+    for (var i = 0; i < paths.length; i++) {
+        if (!obj) {
+            return null;
+        }
+        obj = obj[paths[i]];
+    }
+    return obj;
+}
+/**
+ * @param callback
+ * @private
+ */
+function getPromise(callback) {
+    if (callback === void 0) { callback = function () { }; }
+    var tryNativePromise = function () {
+        if (typeof Promise === 'function' || (typeof window !== 'undefined' && window.Promise)) {
+            return new Promise(function (resolve, reject) {
+                callback(resolve, reject);
+            });
+        }
+        else {
+            console.error('No Promise support or polyfill found. To enable Ionic Native support, please add the es6-promise polyfill before this script, or run with a library like Angular or on a recent browser.');
+        }
+    };
+    return tryNativePromise();
+}
+
+
+/***/ }),
+
+/***/ 971:
+/*!*****************************************************************************!*\
+  !*** ./node_modules/@awesome-cordova-plugins/fcm/__ivy_ngcc__/ngx/index.js ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "FCM": () => (/* binding */ FCM)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var _awesome_cordova_plugins_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @awesome-cordova-plugins/core */ 4624);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 3184);
+
+
+
+
+
+var FCM = /** @class */ (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__extends)(FCM, _super);
+    function FCM() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    FCM.prototype.getAPNSToken = function () { return (0,_awesome_cordova_plugins_core__WEBPACK_IMPORTED_MODULE_0__.cordova)(this, "getAPNSToken", {}, arguments); };
+    FCM.prototype.getToken = function () { return (0,_awesome_cordova_plugins_core__WEBPACK_IMPORTED_MODULE_0__.cordova)(this, "getToken", {}, arguments); };
+    FCM.prototype.onTokenRefresh = function () { return (0,_awesome_cordova_plugins_core__WEBPACK_IMPORTED_MODULE_0__.cordova)(this, "onTokenRefresh", { "observable": true }, arguments); };
+    FCM.prototype.subscribeToTopic = function (topic) { return (0,_awesome_cordova_plugins_core__WEBPACK_IMPORTED_MODULE_0__.cordova)(this, "subscribeToTopic", {}, arguments); };
+    FCM.prototype.unsubscribeFromTopic = function (topic) { return (0,_awesome_cordova_plugins_core__WEBPACK_IMPORTED_MODULE_0__.cordova)(this, "unsubscribeFromTopic", {}, arguments); };
+    FCM.prototype.hasPermission = function () { return (0,_awesome_cordova_plugins_core__WEBPACK_IMPORTED_MODULE_0__.cordova)(this, "hasPermission", {}, arguments); };
+    FCM.prototype.onNotification = function () { return (0,_awesome_cordova_plugins_core__WEBPACK_IMPORTED_MODULE_0__.cordova)(this, "onNotification", { "observable": true, "successIndex": 0, "errorIndex": 2 }, arguments); };
+    FCM.prototype.clearAllNotifications = function () { return (0,_awesome_cordova_plugins_core__WEBPACK_IMPORTED_MODULE_0__.cordova)(this, "clearAllNotifications", {}, arguments); };
+    FCM.prototype.requestPushPermissionIOS = function (options) { return (0,_awesome_cordova_plugins_core__WEBPACK_IMPORTED_MODULE_0__.cordova)(this, "requestPushPermissionIOS", {}, arguments); };
+    FCM.prototype.createNotificationChannelAndroid = function (channelConfig) { return (0,_awesome_cordova_plugins_core__WEBPACK_IMPORTED_MODULE_0__.cordova)(this, "createNotificationChannelAndroid", {}, arguments); };
+    FCM.pluginName = "FCM";
+    FCM.plugin = "cordova-plugin-fcm-with-dependecy-updated";
+    FCM.pluginRef = "FCMPlugin";
+    FCM.repo = "https://github.com/andrehtissot/cordova-plugin-fcm-with-dependecy-updated";
+    FCM.platforms = ["Android", "iOS"];
+FCM.ɵfac = /*@__PURE__*/ function () { var ɵFCM_BaseFactory; return function FCM_Factory(t) { return (ɵFCM_BaseFactory || (ɵFCM_BaseFactory = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵgetInheritedFactory"](FCM)))(t || FCM); }; }();
+FCM.ɵprov = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdefineInjectable"]({ token: FCM, factory: function (t) { return FCM.ɵfac(t); } });
+(function () { (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵsetClassMetadata"](FCM, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Injectable
+    }], null, null); })();
+    return FCM;
+}(_awesome_cordova_plugins_core__WEBPACK_IMPORTED_MODULE_0__.AwesomeCordovaNativePlugin));
+
+
+
+
+/***/ }),
+
 /***/ 5099:
 /*!****************************************************!*\
   !*** ./node_modules/@capacitor/core/dist/index.js ***!
@@ -539,6 +1519,39 @@ const WebView = /*#__PURE__*/registerPlugin('WebView');
 
 /***/ }),
 
+/***/ 3470:
+/*!****************************************************************************!*\
+  !*** ./node_modules/@capacitor/push-notifications/dist/esm/definitions.js ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/// <reference types="@capacitor/cli" />
+
+
+
+/***/ }),
+
+/***/ 1704:
+/*!**********************************************************************!*\
+  !*** ./node_modules/@capacitor/push-notifications/dist/esm/index.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "PushNotifications": () => (/* binding */ PushNotifications)
+/* harmony export */ });
+/* harmony import */ var _capacitor_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @capacitor/core */ 5099);
+/* harmony import */ var _definitions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./definitions */ 3470);
+
+const PushNotifications = (0,_capacitor_core__WEBPACK_IMPORTED_MODULE_0__.registerPlugin)('PushNotifications', {});
+
+
+
+
+/***/ }),
+
 /***/ 7394:
 /*!*****************************************************************!*\
   !*** ./node_modules/@capacitor/storage/dist/esm/definitions.js ***!
@@ -768,6 +1781,10 @@ const raf = h => {
   }
 
   return setTimeout(h);
+};
+
+const isComponentFactoryResolver = item => {
+  return !!item.resolveComponentFactory;
 };
 
 class ValueAccessor {
@@ -6193,8 +7210,8 @@ class AngularDelegate {
     this.appRef = appRef;
   }
 
-  create(resolver, injector, location) {
-    return new AngularFrameworkDelegate(resolver, injector, location, this.appRef, this.zone);
+  create(resolverOrInjector, injector, location) {
+    return new AngularFrameworkDelegate(resolverOrInjector, injector, location, this.appRef, this.zone);
   }
 
 }
@@ -6225,8 +7242,8 @@ AngularDelegate.ɵprov = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2
 })();
 
 class AngularFrameworkDelegate {
-  constructor(resolver, injector, location, appRef, zone) {
-    this.resolver = resolver;
+  constructor(resolverOrInjector, injector, location, appRef, zone) {
+    this.resolverOrInjector = resolverOrInjector;
     this.injector = injector;
     this.location = location;
     this.appRef = appRef;
@@ -6238,7 +7255,7 @@ class AngularFrameworkDelegate {
   attachViewToDom(container, component, params, cssClasses) {
     return this.zone.run(() => {
       return new Promise(resolve => {
-        const el = attachView(this.zone, this.resolver, this.injector, this.location, this.appRef, this.elRefMap, this.elEventsMap, container, component, params, cssClasses);
+        const el = attachView(this.zone, this.resolverOrInjector, this.injector, this.location, this.appRef, this.elRefMap, this.elEventsMap, container, component, params, cssClasses);
         resolve(el);
       });
     });
@@ -6267,13 +7284,29 @@ class AngularFrameworkDelegate {
 
 }
 
-const attachView = (zone, resolver, injector, location, appRef, elRefMap, elEventsMap, container, component, params, cssClasses) => {
-  const factory = resolver.resolveComponentFactory(component);
+const attachView = (zone, resolverOrInjector, injector, location, appRef, elRefMap, elEventsMap, container, component, params, cssClasses) => {
+  let componentRef;
   const childInjector = _angular_core__WEBPACK_IMPORTED_MODULE_2__.Injector.create({
     providers: getProviders(params),
     parent: injector
   });
-  const componentRef = location ? location.createComponent(factory, location.length, childInjector) : factory.create(childInjector);
+
+  if (resolverOrInjector && isComponentFactoryResolver(resolverOrInjector)) {
+    // Angular 13 and lower
+    const factory = resolverOrInjector.resolveComponentFactory(component);
+    componentRef = location ? location.createComponent(factory, location.length, childInjector) : factory.create(childInjector);
+  } else if (location) {
+    // Angular 14
+    const environmentInjector = resolverOrInjector;
+    componentRef = location.createComponent(component, {
+      index: location.indexOf,
+      injector: childInjector,
+      environmentInjector
+    });
+  } else {
+    return null;
+  }
+
   const instance = componentRef.instance;
   const hostElement = componentRef.location.nativeElement;
 
@@ -7382,15 +8415,24 @@ const getAnimation = (direction, animated, animationDirection) => {
 };
 
 const DEFAULT_DIRECTION = 'auto';
-const DEFAULT_ANIMATED = undefined; // eslint-disable-next-line @angular-eslint/directive-class-suffix
+const DEFAULT_ANIMATED = undefined;
+/**
+ * An `Injector` that's part of the environment injector hierarchy, which exists outside of the
+ * component tree.
+ *
+ * @developerPreview
+ */
+
+class EnvironmentInjector {} // eslint-disable-next-line @angular-eslint/directive-class-suffix
+
 
 class IonRouterOutlet {
-  constructor(parentContexts, location, resolver, name, tabs, config, navCtrl, commonLocation, elementRef, router, zone, activatedRoute, parentOutlet) {
+  constructor(parentContexts, location, name, tabs, config, navCtrl, environmentInjector, commonLocation, elementRef, router, zone, activatedRoute, parentOutlet) {
     this.parentContexts = parentContexts;
     this.location = location;
-    this.resolver = resolver;
     this.config = config;
     this.navCtrl = navCtrl;
+    this.environmentInjector = environmentInjector;
     this.parentOutlet = parentOutlet;
     this.activated = null;
     this.activatedView = null;
@@ -7542,7 +8584,7 @@ class IonRouterOutlet {
     }
   }
 
-  activateWith(activatedRoute, resolver) {
+  activateWith(activatedRoute, resolverOrInjector) {
     if (this.isActivated) {
       throw new Error('Cannot activate an already activated outlet');
     }
@@ -7568,15 +8610,42 @@ class IonRouterOutlet {
       const snapshot = activatedRoute._futureSnapshot; // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 
       const component = snapshot.routeConfig.component;
-      resolver = resolver || this.resolver;
-      const factory = resolver.resolveComponentFactory(component);
       const childContexts = this.parentContexts.getOrCreateContext(this.name).children; // We create an activated route proxy object that will maintain future updates for this component
       // over its lifecycle in the stack.
 
       const component$ = new rxjs__WEBPACK_IMPORTED_MODULE_9__.BehaviorSubject(null);
       const activatedRouteProxy = this.createActivatedRouteProxy(component$, activatedRoute);
       const injector = new OutletInjector(activatedRouteProxy, childContexts, this.location.injector);
-      cmpRef = this.activated = this.location.createComponent(factory, this.location.length, injector); // Once the component is created we can push it to our local subject supplied to the proxy
+
+      if (resolverOrInjector && isComponentFactoryResolver(resolverOrInjector)) {
+        // Backwards compatibility for Angular 13 and lower
+        const factory = resolverOrInjector.resolveComponentFactory(component);
+        cmpRef = this.activated = this.location.createComponent(factory, this.location.length, injector);
+      } else {
+        /**
+         * Angular 14 and higher.
+         *
+         * TODO: FW-1641: Migrate once Angular 13 support is dropped.
+         *
+         * When we drop < Angular 14, we can replace the following code with:
+         * ```ts
+          const environmentInjector = resolverOrInjector ?? this.environmentInjector;
+            cmpRef = this.activated = location.createComponent(component, {
+              index: location.length,
+              injector,
+              environmentInjector,
+            });
+         * ```
+         * where `this.environmentInjector` is a provider of `EnvironmentInjector` from @angular/core.
+         */
+        const environmentInjector = resolverOrInjector !== null && resolverOrInjector !== void 0 ? resolverOrInjector : this.environmentInjector;
+        cmpRef = this.activated = this.location.createComponent(component, {
+          index: this.location.length,
+          injector,
+          environmentInjector
+        });
+      } // Once the component is created we can push it to our local subject supplied to the proxy
+
 
       component$.next(cmpRef.instance); // Calling `markForCheck` to make sure we will run the change detection when the
       // `RouterOutlet` is inside a `ChangeDetectionStrategy.OnPush` component.
@@ -7708,7 +8777,7 @@ class IonRouterOutlet {
 
 
 IonRouterOutlet.ɵfac = function IonRouterOutlet_Factory(t) {
-  return new (t || IonRouterOutlet)(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_8__.ChildrenOutletContexts), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.ViewContainerRef), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.ComponentFactoryResolver), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinjectAttribute"]('name'), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinjectAttribute"]('tabs'), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](Config), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](NavController), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_common__WEBPACK_IMPORTED_MODULE_7__.Location), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.ElementRef), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_8__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.NgZone), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_8__.ActivatedRoute), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](IonRouterOutlet, 12));
+  return new (t || IonRouterOutlet)(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_8__.ChildrenOutletContexts), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.ViewContainerRef), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinjectAttribute"]('name'), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinjectAttribute"]('tabs'), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](Config), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](NavController), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](EnvironmentInjector, 8), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_common__WEBPACK_IMPORTED_MODULE_7__.Location), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.ElementRef), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_8__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.NgZone), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_8__.ActivatedRoute), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](IonRouterOutlet, 12));
 };
 /** @nocollapse */
 
@@ -7744,8 +8813,6 @@ IonRouterOutlet.ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2_
     }, {
       type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ViewContainerRef
     }, {
-      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ComponentFactoryResolver
-    }, {
       type: undefined,
       decorators: [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Attribute,
@@ -7763,6 +8830,11 @@ IonRouterOutlet.ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2_
       type: Config
     }, {
       type: NavController
+    }, {
+      type: EnvironmentInjector,
+      decorators: [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Optional
+      }]
     }, {
       type: _angular_common__WEBPACK_IMPORTED_MODULE_7__.Location
     }, {
@@ -9199,16 +10271,20 @@ PickerController.ɵprov = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_
 })();
 
 class ModalController extends OverlayBaseController {
-  constructor(angularDelegate, resolver, injector) {
+  constructor(angularDelegate, resolver, injector, // TODO: FW-1641: Migrate to Angular's version once Angular 13 is dropped
+  environmentInjector) {
     super(_ionic_core__WEBPACK_IMPORTED_MODULE_0__.modalController);
     this.angularDelegate = angularDelegate;
     this.resolver = resolver;
     this.injector = injector;
+    this.environmentInjector = environmentInjector;
   }
 
   create(opts) {
+    var _a;
+
     return super.create(Object.assign(Object.assign({}, opts), {
-      delegate: this.angularDelegate.create(this.resolver, this.injector)
+      delegate: this.angularDelegate.create((_a = this.resolver) !== null && _a !== void 0 ? _a : this.environmentInjector, this.injector)
     }));
   }
 
@@ -9217,7 +10293,7 @@ class ModalController extends OverlayBaseController {
 
 
 ModalController.ɵfac = function ModalController_Factory(t) {
-  return new (t || ModalController)(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](AngularDelegate), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.ComponentFactoryResolver), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.Injector));
+  return new (t || ModalController)(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](AngularDelegate), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.ComponentFactoryResolver), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.Injector), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](EnvironmentInjector, 8));
 };
 /** @nocollapse */
 
@@ -9237,21 +10313,30 @@ ModalController.ɵprov = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2
       type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ComponentFactoryResolver
     }, {
       type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Injector
+    }, {
+      type: EnvironmentInjector,
+      decorators: [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Optional
+      }]
     }];
   }, null);
 })();
 
 class PopoverController extends OverlayBaseController {
-  constructor(angularDelegate, resolver, injector) {
+  constructor(angularDelegate, resolver, injector, // TODO: FW-1641: Migrate to Angular's version once Angular 13 is dropped
+  environmentInjector) {
     super(_ionic_core__WEBPACK_IMPORTED_MODULE_0__.popoverController);
     this.angularDelegate = angularDelegate;
     this.resolver = resolver;
     this.injector = injector;
+    this.environmentInjector = environmentInjector;
   }
 
   create(opts) {
+    var _a;
+
     return super.create(Object.assign(Object.assign({}, opts), {
-      delegate: this.angularDelegate.create(this.resolver, this.injector)
+      delegate: this.angularDelegate.create((_a = this.resolver) !== null && _a !== void 0 ? _a : this.environmentInjector, this.injector)
     }));
   }
 
@@ -9260,7 +10345,7 @@ class PopoverController extends OverlayBaseController {
 
 
 PopoverController.ɵfac = function PopoverController_Factory(t) {
-  return new (t || PopoverController)(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](AngularDelegate), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.ComponentFactoryResolver), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.Injector));
+  return new (t || PopoverController)(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](AngularDelegate), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.ComponentFactoryResolver), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_angular_core__WEBPACK_IMPORTED_MODULE_2__.Injector), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](EnvironmentInjector, 8));
 };
 /** @nocollapse */
 
@@ -9280,6 +10365,11 @@ PopoverController.ɵprov = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE
       type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ComponentFactoryResolver
     }, {
       type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Injector
+    }, {
+      type: EnvironmentInjector,
+      decorators: [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Optional
+      }]
     }];
   }, null);
 })();
@@ -10638,9 +11728,9 @@ const createAnimation = (animationId) => {
 
 /***/ }),
 
-/***/ 9350:
+/***/ 3686:
 /*!*******************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/app-globals-7511e593.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm/app-globals-5b6c8f4b.js ***!
   \*******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -10648,13 +11738,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "g": () => (/* binding */ globalScripts)
 /* harmony export */ });
-/* harmony import */ var _ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ionic-global-f1ce4d2d.js */ 7665);
+/* harmony import */ var _ionic_global_00475c3a_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ionic-global-00475c3a.js */ 537);
 /*!
  * (C) Ionic http://ionicframework.com - MIT License
  */
 
 
-const globalScripts = _ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_0__.i;
+const globalScripts = _ionic_global_00475c3a_js__WEBPACK_IMPORTED_MODULE_0__.i;
 
 
 
@@ -11519,327 +12609,6 @@ const shallowEqualStringMap = (map1, map2) => {
 
 /***/ }),
 
-/***/ 4243:
-/*!*************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/index-2b53f989.js ***!
-  \*************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "L": () => (/* binding */ LIFECYCLE_WILL_ENTER),
-/* harmony export */   "a": () => (/* binding */ LIFECYCLE_DID_ENTER),
-/* harmony export */   "b": () => (/* binding */ LIFECYCLE_WILL_LEAVE),
-/* harmony export */   "c": () => (/* binding */ LIFECYCLE_DID_LEAVE),
-/* harmony export */   "d": () => (/* binding */ LIFECYCLE_WILL_UNLOAD),
-/* harmony export */   "e": () => (/* binding */ deepReady),
-/* harmony export */   "g": () => (/* binding */ getIonPageElement),
-/* harmony export */   "l": () => (/* binding */ lifecycle),
-/* harmony export */   "s": () => (/* binding */ setPageHidden),
-/* harmony export */   "t": () => (/* binding */ transition)
-/* harmony export */ });
-/* harmony import */ var _Users_frenditriarista_MobileApps_ionic_realtime_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
-/* harmony import */ var _index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index-b3eecb14.js */ 1049);
-/* harmony import */ var _helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers-4d272360.js */ 9158);
-
-
-/*!
- * (C) Ionic http://ionicframework.com - MIT License
- */
-
-
-const LIFECYCLE_WILL_ENTER = 'ionViewWillEnter';
-const LIFECYCLE_DID_ENTER = 'ionViewDidEnter';
-const LIFECYCLE_WILL_LEAVE = 'ionViewWillLeave';
-const LIFECYCLE_DID_LEAVE = 'ionViewDidLeave';
-const LIFECYCLE_WILL_UNLOAD = 'ionViewWillUnload';
-
-const iosTransitionAnimation = () => Promise.resolve(/*! import() */).then(__webpack_require__.bind(__webpack_require__, /*! ./ios.transition-248dea7c.js */ 1339));
-
-const mdTransitionAnimation = () => Promise.resolve(/*! import() */).then(__webpack_require__.bind(__webpack_require__, /*! ./md.transition-d04040a2.js */ 4250));
-
-const transition = opts => {
-  return new Promise((resolve, reject) => {
-    (0,_index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_1__.c)(() => {
-      beforeTransition(opts);
-      runTransition(opts).then(result => {
-        if (result.animation) {
-          result.animation.destroy();
-        }
-
-        afterTransition(opts);
-        resolve(result);
-      }, error => {
-        afterTransition(opts);
-        reject(error);
-      });
-    });
-  });
-};
-
-const beforeTransition = opts => {
-  const enteringEl = opts.enteringEl;
-  const leavingEl = opts.leavingEl;
-  setZIndex(enteringEl, leavingEl, opts.direction);
-
-  if (opts.showGoBack) {
-    enteringEl.classList.add('can-go-back');
-  } else {
-    enteringEl.classList.remove('can-go-back');
-  }
-
-  setPageHidden(enteringEl, false);
-  /**
-   * When transitioning, the page should not
-   * respond to click events. This resolves small
-   * issues like users double tapping the ion-back-button.
-   * These pointer events are removed in `afterTransition`.
-   */
-
-  enteringEl.style.setProperty('pointer-events', 'none');
-
-  if (leavingEl) {
-    setPageHidden(leavingEl, false);
-    leavingEl.style.setProperty('pointer-events', 'none');
-  }
-};
-
-const runTransition = /*#__PURE__*/function () {
-  var _ref = (0,_Users_frenditriarista_MobileApps_ionic_realtime_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (opts) {
-    const animationBuilder = yield getAnimationBuilder(opts);
-    const ani = animationBuilder && _index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_1__.B.isBrowser ? animation(animationBuilder, opts) : noAnimation(opts); // fast path for no animation
-
-    return ani;
-  });
-
-  return function runTransition(_x) {
-    return _ref.apply(this, arguments);
-  };
-}();
-
-const afterTransition = opts => {
-  const enteringEl = opts.enteringEl;
-  const leavingEl = opts.leavingEl;
-  enteringEl.classList.remove('ion-page-invisible');
-  enteringEl.style.removeProperty('pointer-events');
-
-  if (leavingEl !== undefined) {
-    leavingEl.classList.remove('ion-page-invisible');
-    leavingEl.style.removeProperty('pointer-events');
-  }
-};
-
-const getAnimationBuilder = /*#__PURE__*/function () {
-  var _ref2 = (0,_Users_frenditriarista_MobileApps_ionic_realtime_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (opts) {
-    if (!opts.leavingEl || !opts.animated || opts.duration === 0) {
-      return undefined;
-    }
-
-    if (opts.animationBuilder) {
-      return opts.animationBuilder;
-    }
-
-    const getAnimation = opts.mode === 'ios' ? (yield iosTransitionAnimation()).iosTransitionAnimation : (yield mdTransitionAnimation()).mdTransitionAnimation;
-    return getAnimation;
-  });
-
-  return function getAnimationBuilder(_x2) {
-    return _ref2.apply(this, arguments);
-  };
-}();
-
-const animation = /*#__PURE__*/function () {
-  var _ref3 = (0,_Users_frenditriarista_MobileApps_ionic_realtime_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (animationBuilder, opts) {
-    yield waitForReady(opts, true);
-    const trans = animationBuilder(opts.baseEl, opts);
-    fireWillEvents(opts.enteringEl, opts.leavingEl);
-    const didComplete = yield playTransition(trans, opts);
-
-    if (opts.progressCallback) {
-      opts.progressCallback(undefined);
-    }
-
-    if (didComplete) {
-      fireDidEvents(opts.enteringEl, opts.leavingEl);
-    }
-
-    return {
-      hasCompleted: didComplete,
-      animation: trans
-    };
-  });
-
-  return function animation(_x3, _x4) {
-    return _ref3.apply(this, arguments);
-  };
-}();
-
-const noAnimation = /*#__PURE__*/function () {
-  var _ref4 = (0,_Users_frenditriarista_MobileApps_ionic_realtime_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (opts) {
-    const enteringEl = opts.enteringEl;
-    const leavingEl = opts.leavingEl;
-    yield waitForReady(opts, false);
-    fireWillEvents(enteringEl, leavingEl);
-    fireDidEvents(enteringEl, leavingEl);
-    return {
-      hasCompleted: true
-    };
-  });
-
-  return function noAnimation(_x5) {
-    return _ref4.apply(this, arguments);
-  };
-}();
-
-const waitForReady = /*#__PURE__*/function () {
-  var _ref5 = (0,_Users_frenditriarista_MobileApps_ionic_realtime_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (opts, defaultDeep) {
-    const deep = opts.deepWait !== undefined ? opts.deepWait : defaultDeep;
-    const promises = deep ? [deepReady(opts.enteringEl), deepReady(opts.leavingEl)] : [shallowReady(opts.enteringEl), shallowReady(opts.leavingEl)];
-    yield Promise.all(promises);
-    yield notifyViewReady(opts.viewIsReady, opts.enteringEl);
-  });
-
-  return function waitForReady(_x6, _x7) {
-    return _ref5.apply(this, arguments);
-  };
-}();
-
-const notifyViewReady = /*#__PURE__*/function () {
-  var _ref6 = (0,_Users_frenditriarista_MobileApps_ionic_realtime_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (viewIsReady, enteringEl) {
-    if (viewIsReady) {
-      yield viewIsReady(enteringEl);
-    }
-  });
-
-  return function notifyViewReady(_x8, _x9) {
-    return _ref6.apply(this, arguments);
-  };
-}();
-
-const playTransition = (trans, opts) => {
-  const progressCallback = opts.progressCallback;
-  const promise = new Promise(resolve => {
-    trans.onFinish(currentStep => resolve(currentStep === 1));
-  }); // cool, let's do this, start the transition
-
-  if (progressCallback) {
-    // this is a swipe to go back, just get the transition progress ready
-    // kick off the swipe animation start
-    trans.progressStart(true);
-    progressCallback(trans);
-  } else {
-    // only the top level transition should actually start "play"
-    // kick it off and let it play through
-    // ******** DOM WRITE ****************
-    trans.play();
-  } // create a callback for when the animation is done
-
-
-  return promise;
-};
-
-const fireWillEvents = (enteringEl, leavingEl) => {
-  lifecycle(leavingEl, LIFECYCLE_WILL_LEAVE);
-  lifecycle(enteringEl, LIFECYCLE_WILL_ENTER);
-};
-
-const fireDidEvents = (enteringEl, leavingEl) => {
-  lifecycle(enteringEl, LIFECYCLE_DID_ENTER);
-  lifecycle(leavingEl, LIFECYCLE_DID_LEAVE);
-};
-
-const lifecycle = (el, eventName) => {
-  if (el) {
-    const ev = new CustomEvent(eventName, {
-      bubbles: false,
-      cancelable: false
-    });
-    el.dispatchEvent(ev);
-  }
-};
-
-const shallowReady = el => {
-  if (el) {
-    return new Promise(resolve => (0,_helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_2__.c)(el, resolve));
-  }
-
-  return Promise.resolve();
-};
-
-const deepReady = /*#__PURE__*/function () {
-  var _ref7 = (0,_Users_frenditriarista_MobileApps_ionic_realtime_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (el) {
-    const element = el;
-
-    if (element) {
-      if (element.componentOnReady != null) {
-        const stencilEl = yield element.componentOnReady();
-
-        if (stencilEl != null) {
-          return;
-        }
-        /**
-         * Custom elements in Stencil will have __registerHost.
-         */
-
-      } else if (element.__registerHost != null) {
-        /**
-         * Non-lazy loaded custom elements need to wait
-         * one frame for component to be loaded.
-         */
-        const waitForCustomElement = new Promise(resolve => (0,_helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_2__.r)(resolve));
-        yield waitForCustomElement;
-        return;
-      }
-
-      yield Promise.all(Array.from(element.children).map(deepReady));
-    }
-  });
-
-  return function deepReady(_x10) {
-    return _ref7.apply(this, arguments);
-  };
-}();
-
-const setPageHidden = (el, hidden) => {
-  if (hidden) {
-    el.setAttribute('aria-hidden', 'true');
-    el.classList.add('ion-page-hidden');
-  } else {
-    el.hidden = false;
-    el.removeAttribute('aria-hidden');
-    el.classList.remove('ion-page-hidden');
-  }
-};
-
-const setZIndex = (enteringEl, leavingEl, direction) => {
-  if (enteringEl !== undefined) {
-    enteringEl.style.zIndex = direction === 'back' ? '99' : '101';
-  }
-
-  if (leavingEl !== undefined) {
-    leavingEl.style.zIndex = '100';
-  }
-};
-
-const getIonPageElement = element => {
-  if (element.classList.contains('ion-page')) {
-    return element;
-  }
-
-  const ionPage = element.querySelector(':scope > .ion-page, :scope > ion-nav, :scope > ion-tabs');
-
-  if (ionPage) {
-    return ionPage;
-  } // idk, return the original element so at least something animates and we don't have a null pointer
-
-
-  return element;
-};
-
-
-
-/***/ }),
-
 /***/ 2172:
 /*!*************************************************************!*\
   !*** ./node_modules/@ionic/core/dist/esm/index-3f1a7d95.js ***!
@@ -12310,9 +13079,330 @@ const now = (ev) => {
 
 /***/ }),
 
-/***/ 1049:
+/***/ 4736:
 /*!*************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/index-b3eecb14.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm/index-7e1d3e32.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "L": () => (/* binding */ LIFECYCLE_WILL_ENTER),
+/* harmony export */   "a": () => (/* binding */ LIFECYCLE_DID_ENTER),
+/* harmony export */   "b": () => (/* binding */ LIFECYCLE_WILL_LEAVE),
+/* harmony export */   "c": () => (/* binding */ LIFECYCLE_DID_LEAVE),
+/* harmony export */   "d": () => (/* binding */ LIFECYCLE_WILL_UNLOAD),
+/* harmony export */   "e": () => (/* binding */ deepReady),
+/* harmony export */   "g": () => (/* binding */ getIonPageElement),
+/* harmony export */   "l": () => (/* binding */ lifecycle),
+/* harmony export */   "s": () => (/* binding */ setPageHidden),
+/* harmony export */   "t": () => (/* binding */ transition)
+/* harmony export */ });
+/* harmony import */ var _Users_frenditriarista_MobileApps_ionic_realtime_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
+/* harmony import */ var _index_88bdeaae_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index-88bdeaae.js */ 9479);
+/* harmony import */ var _helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers-4d272360.js */ 9158);
+
+
+/*!
+ * (C) Ionic http://ionicframework.com - MIT License
+ */
+
+
+const LIFECYCLE_WILL_ENTER = 'ionViewWillEnter';
+const LIFECYCLE_DID_ENTER = 'ionViewDidEnter';
+const LIFECYCLE_WILL_LEAVE = 'ionViewWillLeave';
+const LIFECYCLE_DID_LEAVE = 'ionViewDidLeave';
+const LIFECYCLE_WILL_UNLOAD = 'ionViewWillUnload';
+
+const iosTransitionAnimation = () => Promise.resolve(/*! import() */).then(__webpack_require__.bind(__webpack_require__, /*! ./ios.transition-0e6ef329.js */ 5794));
+
+const mdTransitionAnimation = () => Promise.resolve(/*! import() */).then(__webpack_require__.bind(__webpack_require__, /*! ./md.transition-60a7da81.js */ 932));
+
+const transition = opts => {
+  return new Promise((resolve, reject) => {
+    (0,_index_88bdeaae_js__WEBPACK_IMPORTED_MODULE_1__.c)(() => {
+      beforeTransition(opts);
+      runTransition(opts).then(result => {
+        if (result.animation) {
+          result.animation.destroy();
+        }
+
+        afterTransition(opts);
+        resolve(result);
+      }, error => {
+        afterTransition(opts);
+        reject(error);
+      });
+    });
+  });
+};
+
+const beforeTransition = opts => {
+  const enteringEl = opts.enteringEl;
+  const leavingEl = opts.leavingEl;
+  setZIndex(enteringEl, leavingEl, opts.direction);
+
+  if (opts.showGoBack) {
+    enteringEl.classList.add('can-go-back');
+  } else {
+    enteringEl.classList.remove('can-go-back');
+  }
+
+  setPageHidden(enteringEl, false);
+  /**
+   * When transitioning, the page should not
+   * respond to click events. This resolves small
+   * issues like users double tapping the ion-back-button.
+   * These pointer events are removed in `afterTransition`.
+   */
+
+  enteringEl.style.setProperty('pointer-events', 'none');
+
+  if (leavingEl) {
+    setPageHidden(leavingEl, false);
+    leavingEl.style.setProperty('pointer-events', 'none');
+  }
+};
+
+const runTransition = /*#__PURE__*/function () {
+  var _ref = (0,_Users_frenditriarista_MobileApps_ionic_realtime_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (opts) {
+    const animationBuilder = yield getAnimationBuilder(opts);
+    const ani = animationBuilder && _index_88bdeaae_js__WEBPACK_IMPORTED_MODULE_1__.B.isBrowser ? animation(animationBuilder, opts) : noAnimation(opts); // fast path for no animation
+
+    return ani;
+  });
+
+  return function runTransition(_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+const afterTransition = opts => {
+  const enteringEl = opts.enteringEl;
+  const leavingEl = opts.leavingEl;
+  enteringEl.classList.remove('ion-page-invisible');
+  enteringEl.style.removeProperty('pointer-events');
+
+  if (leavingEl !== undefined) {
+    leavingEl.classList.remove('ion-page-invisible');
+    leavingEl.style.removeProperty('pointer-events');
+  }
+};
+
+const getAnimationBuilder = /*#__PURE__*/function () {
+  var _ref2 = (0,_Users_frenditriarista_MobileApps_ionic_realtime_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (opts) {
+    if (!opts.leavingEl || !opts.animated || opts.duration === 0) {
+      return undefined;
+    }
+
+    if (opts.animationBuilder) {
+      return opts.animationBuilder;
+    }
+
+    const getAnimation = opts.mode === 'ios' ? (yield iosTransitionAnimation()).iosTransitionAnimation : (yield mdTransitionAnimation()).mdTransitionAnimation;
+    return getAnimation;
+  });
+
+  return function getAnimationBuilder(_x2) {
+    return _ref2.apply(this, arguments);
+  };
+}();
+
+const animation = /*#__PURE__*/function () {
+  var _ref3 = (0,_Users_frenditriarista_MobileApps_ionic_realtime_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (animationBuilder, opts) {
+    yield waitForReady(opts, true);
+    const trans = animationBuilder(opts.baseEl, opts);
+    fireWillEvents(opts.enteringEl, opts.leavingEl);
+    const didComplete = yield playTransition(trans, opts);
+
+    if (opts.progressCallback) {
+      opts.progressCallback(undefined);
+    }
+
+    if (didComplete) {
+      fireDidEvents(opts.enteringEl, opts.leavingEl);
+    }
+
+    return {
+      hasCompleted: didComplete,
+      animation: trans
+    };
+  });
+
+  return function animation(_x3, _x4) {
+    return _ref3.apply(this, arguments);
+  };
+}();
+
+const noAnimation = /*#__PURE__*/function () {
+  var _ref4 = (0,_Users_frenditriarista_MobileApps_ionic_realtime_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (opts) {
+    const enteringEl = opts.enteringEl;
+    const leavingEl = opts.leavingEl;
+    yield waitForReady(opts, false);
+    fireWillEvents(enteringEl, leavingEl);
+    fireDidEvents(enteringEl, leavingEl);
+    return {
+      hasCompleted: true
+    };
+  });
+
+  return function noAnimation(_x5) {
+    return _ref4.apply(this, arguments);
+  };
+}();
+
+const waitForReady = /*#__PURE__*/function () {
+  var _ref5 = (0,_Users_frenditriarista_MobileApps_ionic_realtime_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (opts, defaultDeep) {
+    const deep = opts.deepWait !== undefined ? opts.deepWait : defaultDeep;
+    const promises = deep ? [deepReady(opts.enteringEl), deepReady(opts.leavingEl)] : [shallowReady(opts.enteringEl), shallowReady(opts.leavingEl)];
+    yield Promise.all(promises);
+    yield notifyViewReady(opts.viewIsReady, opts.enteringEl);
+  });
+
+  return function waitForReady(_x6, _x7) {
+    return _ref5.apply(this, arguments);
+  };
+}();
+
+const notifyViewReady = /*#__PURE__*/function () {
+  var _ref6 = (0,_Users_frenditriarista_MobileApps_ionic_realtime_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (viewIsReady, enteringEl) {
+    if (viewIsReady) {
+      yield viewIsReady(enteringEl);
+    }
+  });
+
+  return function notifyViewReady(_x8, _x9) {
+    return _ref6.apply(this, arguments);
+  };
+}();
+
+const playTransition = (trans, opts) => {
+  const progressCallback = opts.progressCallback;
+  const promise = new Promise(resolve => {
+    trans.onFinish(currentStep => resolve(currentStep === 1));
+  }); // cool, let's do this, start the transition
+
+  if (progressCallback) {
+    // this is a swipe to go back, just get the transition progress ready
+    // kick off the swipe animation start
+    trans.progressStart(true);
+    progressCallback(trans);
+  } else {
+    // only the top level transition should actually start "play"
+    // kick it off and let it play through
+    // ******** DOM WRITE ****************
+    trans.play();
+  } // create a callback for when the animation is done
+
+
+  return promise;
+};
+
+const fireWillEvents = (enteringEl, leavingEl) => {
+  lifecycle(leavingEl, LIFECYCLE_WILL_LEAVE);
+  lifecycle(enteringEl, LIFECYCLE_WILL_ENTER);
+};
+
+const fireDidEvents = (enteringEl, leavingEl) => {
+  lifecycle(enteringEl, LIFECYCLE_DID_ENTER);
+  lifecycle(leavingEl, LIFECYCLE_DID_LEAVE);
+};
+
+const lifecycle = (el, eventName) => {
+  if (el) {
+    const ev = new CustomEvent(eventName, {
+      bubbles: false,
+      cancelable: false
+    });
+    el.dispatchEvent(ev);
+  }
+};
+
+const shallowReady = el => {
+  if (el) {
+    return new Promise(resolve => (0,_helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_2__.c)(el, resolve));
+  }
+
+  return Promise.resolve();
+};
+
+const deepReady = /*#__PURE__*/function () {
+  var _ref7 = (0,_Users_frenditriarista_MobileApps_ionic_realtime_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (el) {
+    const element = el;
+
+    if (element) {
+      if (element.componentOnReady != null) {
+        const stencilEl = yield element.componentOnReady();
+
+        if (stencilEl != null) {
+          return;
+        }
+        /**
+         * Custom elements in Stencil will have __registerHost.
+         */
+
+      } else if (element.__registerHost != null) {
+        /**
+         * Non-lazy loaded custom elements need to wait
+         * one frame for component to be loaded.
+         */
+        const waitForCustomElement = new Promise(resolve => (0,_helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_2__.r)(resolve));
+        yield waitForCustomElement;
+        return;
+      }
+
+      yield Promise.all(Array.from(element.children).map(deepReady));
+    }
+  });
+
+  return function deepReady(_x10) {
+    return _ref7.apply(this, arguments);
+  };
+}();
+
+const setPageHidden = (el, hidden) => {
+  if (hidden) {
+    el.setAttribute('aria-hidden', 'true');
+    el.classList.add('ion-page-hidden');
+  } else {
+    el.hidden = false;
+    el.removeAttribute('aria-hidden');
+    el.classList.remove('ion-page-hidden');
+  }
+};
+
+const setZIndex = (enteringEl, leavingEl, direction) => {
+  if (enteringEl !== undefined) {
+    enteringEl.style.zIndex = direction === 'back' ? '99' : '101';
+  }
+
+  if (leavingEl !== undefined) {
+    leavingEl.style.zIndex = '100';
+  }
+};
+
+const getIonPageElement = element => {
+  if (element.classList.contains('ion-page')) {
+    return element;
+  }
+
+  const ionPage = element.querySelector(':scope > .ion-page, :scope > ion-nav, :scope > ion-tabs');
+
+  if (ionPage) {
+    return ionPage;
+  } // idk, return the original element so at least something animates and we don't have a null pointer
+
+
+  return element;
+};
+
+
+
+/***/ }),
+
+/***/ 9479:
+/*!*************************************************************!*\
+  !*** ./node_modules/@ionic/core/dist/esm/index-88bdeaae.js ***!
   \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -12473,7 +13563,7 @@ const registerStyle = (scopeId, cssText, allowCS) => {
 
 const addStyle = (styleContainerNode, cmpMeta, mode, hostElm) => {
   let scopeId = getScopeId(cmpMeta, mode);
-  let style = styles.get(scopeId); // if an element is NOT connected then getRootNode() will return the wrong root node
+  const style = styles.get(scopeId); // if an element is NOT connected then getRootNode() will return the wrong root node
   // so the fallback is to always use the document for the root node in those cases
 
   styleContainerNode = styleContainerNode.nodeType === 11
@@ -12601,7 +13691,7 @@ const h = (nodeName, vnodeData, ...children) => {
   let slotName = null;
   let simple = false;
   let lastSimple = false;
-  let vNodeChildren = [];
+  const vNodeChildren = [];
 
   const walk = c => {
     for (let i = 0; i < c.length; i++) {
@@ -12821,7 +13911,7 @@ const setAccessor = (elm, memberName, oldValue, newValue, isSvg, flags) => {
       if ((isProp || isComplex && newValue !== null) && !isSvg) {
         try {
           if (!elm.tagName.includes('-')) {
-            let n = newValue == null ? '' : newValue; // Workaround for Safari, moving the <input> caret when re-assigning the same valued
+            const n = newValue == null ? '' : newValue; // Workaround for Safari, moving the <input> caret when re-assigning the same valued
 
             if (memberName === 'list') {
               isProp = false;
@@ -12902,7 +13992,7 @@ const updateElement = (oldVnode, newVnode, isSvgMode, memberName) => {
 
 const createElm = (oldParentVNode, newParentVNode, childIndex, parentElm) => {
   // tslint:disable-next-line: prefer-const
-  let newVNode = newParentVNode.$children$[childIndex];
+  const newVNode = newParentVNode.$children$[childIndex];
   let i = 0;
   let elm;
   let childNode;
@@ -13268,7 +14358,7 @@ const patch = (oldVNode, newVNode) => {
 
 const updateFallbackSlotVisibility = elm => {
   // tslint:disable-next-line: prefer-const
-  let childNodes = elm.childNodes;
+  const childNodes = elm.childNodes;
   let childNode;
   let i;
   let ilen;
@@ -13334,8 +14424,8 @@ const relocateSlotContent = elm => {
   let relocateNodeData;
   let j;
   let i = 0;
-  let childNodes = elm.childNodes;
-  let ilen = childNodes.length;
+  const childNodes = elm.childNodes;
+  const ilen = childNodes.length;
 
   for (; i < ilen; i++) {
     childNode = childNodes[i];
@@ -14753,6 +15843,8 @@ const loadModule = (cmpMeta, hostRef, hmrVersionId) => {
   if (module) {
     return module[exportName];
   }
+  /*!__STENCIL_STATIC_IMPORT_SWITCH__*/
+
 
   return __webpack_require__(863)(`./${bundleId}.entry.js`).then(importedModule => {
     {
@@ -14826,9 +15918,9 @@ const Build = {
 
 /***/ }),
 
-/***/ 8773:
+/***/ 9506:
 /*!*************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/index-b5382161.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm/index-b3ffdd38.js ***!
   \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -14839,7 +15931,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Users_frenditriarista_MobileApps_ionic_realtime_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
 /* harmony import */ var _hardware_back_button_490df115_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./hardware-back-button-490df115.js */ 159);
 /* harmony import */ var _helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers-4d272360.js */ 9158);
-/* harmony import */ var _ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ionic-global-f1ce4d2d.js */ 7665);
+/* harmony import */ var _ionic_global_00475c3a_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ionic-global-00475c3a.js */ 537);
 /* harmony import */ var _animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./animation-36c1d77d.js */ 2597);
 
 
@@ -14893,7 +15985,7 @@ const menuOverlayAnimation = menu => {
   }
 
   menuAnimation.addElement(menu.menuInnerEl).fromTo('transform', `translateX(${closedX})`, `translateX(${openedX})`);
-  const mode = (0,_ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_3__.b)(menu);
+  const mode = (0,_ionic_global_00475c3a_js__WEBPACK_IMPORTED_MODULE_3__.b)(menu);
   const isIos = mode === 'ios';
   const opacity = isIos ? 0.2 : 0.25;
   backdropAnimation.addElement(menu.backdropEl).fromTo('opacity', 0.01, opacity);
@@ -14909,7 +16001,7 @@ const menuOverlayAnimation = menu => {
 const menuPushAnimation = menu => {
   let contentOpenedX;
   let menuClosedX;
-  const mode = (0,_ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_3__.b)(menu);
+  const mode = (0,_ionic_global_00475c3a_js__WEBPACK_IMPORTED_MODULE_3__.b)(menu);
   const width = menu.width;
 
   if (menu.isEndSide) {
@@ -14933,7 +16025,7 @@ const menuPushAnimation = menu => {
 
 
 const menuRevealAnimation = menu => {
-  const mode = (0,_ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_3__.b)(menu);
+  const mode = (0,_ionic_global_00475c3a_js__WEBPACK_IMPORTED_MODULE_3__.b)(menu);
   const openedX = menu.width * (menu.isEndSide ? -1 : 1) + 'px';
   const contentOpen = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_4__.c)().addElement(menu.contentEl) // REVIEW
   .fromTo('transform', 'translateX(0px)', `translateX(${openedX})`);
@@ -15434,46 +16526,46 @@ class IonicSafeString {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "createAnimation": () => (/* reexport safe */ _animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c),
-/* harmony export */   "iosTransitionAnimation": () => (/* reexport safe */ _ios_transition_248dea7c_js__WEBPACK_IMPORTED_MODULE_1__.iosTransitionAnimation),
-/* harmony export */   "mdTransitionAnimation": () => (/* reexport safe */ _md_transition_d04040a2_js__WEBPACK_IMPORTED_MODULE_2__.mdTransitionAnimation),
+/* harmony export */   "iosTransitionAnimation": () => (/* reexport safe */ _ios_transition_0e6ef329_js__WEBPACK_IMPORTED_MODULE_1__.iosTransitionAnimation),
+/* harmony export */   "mdTransitionAnimation": () => (/* reexport safe */ _md_transition_60a7da81_js__WEBPACK_IMPORTED_MODULE_2__.mdTransitionAnimation),
 /* harmony export */   "getTimeGivenProgression": () => (/* reexport safe */ _cubic_bezier_c313947a_js__WEBPACK_IMPORTED_MODULE_3__.g),
 /* harmony export */   "createGesture": () => (/* reexport safe */ _index_3f1a7d95_js__WEBPACK_IMPORTED_MODULE_4__.createGesture),
-/* harmony export */   "getPlatforms": () => (/* reexport safe */ _ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_5__.g),
-/* harmony export */   "initialize": () => (/* reexport safe */ _ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_5__.i),
-/* harmony export */   "isPlatform": () => (/* reexport safe */ _ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_5__.a),
+/* harmony export */   "getPlatforms": () => (/* reexport safe */ _ionic_global_00475c3a_js__WEBPACK_IMPORTED_MODULE_5__.g),
+/* harmony export */   "initialize": () => (/* reexport safe */ _ionic_global_00475c3a_js__WEBPACK_IMPORTED_MODULE_5__.i),
+/* harmony export */   "isPlatform": () => (/* reexport safe */ _ionic_global_00475c3a_js__WEBPACK_IMPORTED_MODULE_5__.a),
 /* harmony export */   "componentOnReady": () => (/* reexport safe */ _helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_6__.c),
 /* harmony export */   "IonicSafeString": () => (/* reexport safe */ _index_dff497fb_js__WEBPACK_IMPORTED_MODULE_7__.I),
-/* harmony export */   "LIFECYCLE_DID_ENTER": () => (/* reexport safe */ _index_2b53f989_js__WEBPACK_IMPORTED_MODULE_8__.a),
-/* harmony export */   "LIFECYCLE_DID_LEAVE": () => (/* reexport safe */ _index_2b53f989_js__WEBPACK_IMPORTED_MODULE_8__.c),
-/* harmony export */   "LIFECYCLE_WILL_ENTER": () => (/* reexport safe */ _index_2b53f989_js__WEBPACK_IMPORTED_MODULE_8__.L),
-/* harmony export */   "LIFECYCLE_WILL_LEAVE": () => (/* reexport safe */ _index_2b53f989_js__WEBPACK_IMPORTED_MODULE_8__.b),
-/* harmony export */   "LIFECYCLE_WILL_UNLOAD": () => (/* reexport safe */ _index_2b53f989_js__WEBPACK_IMPORTED_MODULE_8__.d),
-/* harmony export */   "menuController": () => (/* reexport safe */ _index_b5382161_js__WEBPACK_IMPORTED_MODULE_9__.m),
-/* harmony export */   "actionSheetController": () => (/* reexport safe */ _overlays_ff47fddd_js__WEBPACK_IMPORTED_MODULE_10__.b),
-/* harmony export */   "alertController": () => (/* reexport safe */ _overlays_ff47fddd_js__WEBPACK_IMPORTED_MODULE_10__.a),
-/* harmony export */   "loadingController": () => (/* reexport safe */ _overlays_ff47fddd_js__WEBPACK_IMPORTED_MODULE_10__.l),
-/* harmony export */   "modalController": () => (/* reexport safe */ _overlays_ff47fddd_js__WEBPACK_IMPORTED_MODULE_10__.m),
-/* harmony export */   "pickerController": () => (/* reexport safe */ _overlays_ff47fddd_js__WEBPACK_IMPORTED_MODULE_10__.p),
-/* harmony export */   "popoverController": () => (/* reexport safe */ _overlays_ff47fddd_js__WEBPACK_IMPORTED_MODULE_10__.c),
-/* harmony export */   "toastController": () => (/* reexport safe */ _overlays_ff47fddd_js__WEBPACK_IMPORTED_MODULE_10__.t),
+/* harmony export */   "LIFECYCLE_DID_ENTER": () => (/* reexport safe */ _index_7e1d3e32_js__WEBPACK_IMPORTED_MODULE_8__.a),
+/* harmony export */   "LIFECYCLE_DID_LEAVE": () => (/* reexport safe */ _index_7e1d3e32_js__WEBPACK_IMPORTED_MODULE_8__.c),
+/* harmony export */   "LIFECYCLE_WILL_ENTER": () => (/* reexport safe */ _index_7e1d3e32_js__WEBPACK_IMPORTED_MODULE_8__.L),
+/* harmony export */   "LIFECYCLE_WILL_LEAVE": () => (/* reexport safe */ _index_7e1d3e32_js__WEBPACK_IMPORTED_MODULE_8__.b),
+/* harmony export */   "LIFECYCLE_WILL_UNLOAD": () => (/* reexport safe */ _index_7e1d3e32_js__WEBPACK_IMPORTED_MODULE_8__.d),
+/* harmony export */   "menuController": () => (/* reexport safe */ _index_b3ffdd38_js__WEBPACK_IMPORTED_MODULE_9__.m),
+/* harmony export */   "actionSheetController": () => (/* reexport safe */ _overlays_fd4e69d9_js__WEBPACK_IMPORTED_MODULE_10__.b),
+/* harmony export */   "alertController": () => (/* reexport safe */ _overlays_fd4e69d9_js__WEBPACK_IMPORTED_MODULE_10__.a),
+/* harmony export */   "loadingController": () => (/* reexport safe */ _overlays_fd4e69d9_js__WEBPACK_IMPORTED_MODULE_10__.l),
+/* harmony export */   "modalController": () => (/* reexport safe */ _overlays_fd4e69d9_js__WEBPACK_IMPORTED_MODULE_10__.m),
+/* harmony export */   "pickerController": () => (/* reexport safe */ _overlays_fd4e69d9_js__WEBPACK_IMPORTED_MODULE_10__.p),
+/* harmony export */   "popoverController": () => (/* reexport safe */ _overlays_fd4e69d9_js__WEBPACK_IMPORTED_MODULE_10__.c),
+/* harmony export */   "toastController": () => (/* reexport safe */ _overlays_fd4e69d9_js__WEBPACK_IMPORTED_MODULE_10__.t),
 /* harmony export */   "IonicSlides": () => (/* binding */ IonicSlides),
 /* harmony export */   "IonicSwiper": () => (/* binding */ IonicSwiper),
 /* harmony export */   "getMode": () => (/* binding */ getMode),
 /* harmony export */   "setupConfig": () => (/* binding */ setupConfig)
 /* harmony export */ });
 /* harmony import */ var _animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./animation-36c1d77d.js */ 2597);
-/* harmony import */ var _ios_transition_248dea7c_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ios.transition-248dea7c.js */ 1339);
-/* harmony import */ var _md_transition_d04040a2_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./md.transition-d04040a2.js */ 4250);
+/* harmony import */ var _ios_transition_0e6ef329_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ios.transition-0e6ef329.js */ 5794);
+/* harmony import */ var _md_transition_60a7da81_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./md.transition-60a7da81.js */ 932);
 /* harmony import */ var _cubic_bezier_c313947a_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./cubic-bezier-c313947a.js */ 1077);
 /* harmony import */ var _index_3f1a7d95_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./index-3f1a7d95.js */ 2172);
-/* harmony import */ var _ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ionic-global-f1ce4d2d.js */ 7665);
+/* harmony import */ var _ionic_global_00475c3a_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ionic-global-00475c3a.js */ 537);
 /* harmony import */ var _helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./helpers-4d272360.js */ 9158);
 /* harmony import */ var _index_dff497fb_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./index-dff497fb.js */ 1652);
-/* harmony import */ var _index_2b53f989_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./index-2b53f989.js */ 4243);
-/* harmony import */ var _index_b5382161_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./index-b5382161.js */ 8773);
-/* harmony import */ var _overlays_ff47fddd_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./overlays-ff47fddd.js */ 6523);
+/* harmony import */ var _index_7e1d3e32_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./index-7e1d3e32.js */ 4736);
+/* harmony import */ var _index_b3ffdd38_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./index-b3ffdd38.js */ 9506);
+/* harmony import */ var _overlays_fd4e69d9_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./overlays-fd4e69d9.js */ 877);
 /* harmony import */ var _gesture_controller_17e82006_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./gesture-controller-17e82006.js */ 607);
-/* harmony import */ var _index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./index-b3eecb14.js */ 1049);
+/* harmony import */ var _index_88bdeaae_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./index-88bdeaae.js */ 9479);
 /* harmony import */ var _hardware_back_button_490df115_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./hardware-back-button-490df115.js */ 159);
 /*!
  * (C) Ionic http://ionicframework.com - MIT License
@@ -15743,9 +16835,9 @@ const IonicSlides = (opts) => {
 
 /***/ }),
 
-/***/ 7665:
+/***/ 537:
 /*!********************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/ionic-global-f1ce4d2d.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm/ionic-global-00475c3a.js ***!
   \********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -15757,7 +16849,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "g": () => (/* binding */ getPlatforms),
 /* harmony export */   "i": () => (/* binding */ initialize)
 /* harmony export */ });
-/* harmony import */ var _index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index-b3eecb14.js */ 1049);
+/* harmony import */ var _index_88bdeaae_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index-88bdeaae.js */ 9479);
 /*!
  * (C) Ionic http://ionicframework.com - MIT License
  */
@@ -15920,7 +17012,7 @@ const PLATFORMS_MAP = {
 
 let defaultMode;
 const getIonMode = (ref) => {
-  return (ref && (0,_index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_0__.g)(ref)) || defaultMode;
+  return (ref && (0,_index_88bdeaae_js__WEBPACK_IMPORTED_MODULE_0__.g)(ref)) || defaultMode;
 };
 const initialize = (userConfig = {}) => {
   if (typeof window === 'undefined') {
@@ -15939,7 +17031,7 @@ const initialize = (userConfig = {}) => {
   if (userConfig._ce) {
     platformHelpers.ce = userConfig._ce;
   }
-  (0,_index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_0__.s)(platformHelpers);
+  (0,_index_88bdeaae_js__WEBPACK_IMPORTED_MODULE_0__.s)(platformHelpers);
   // create the Ionic.config from raw config object (if it exists)
   // and convert Ionic.config into a ConfigApi that has a get() fn
   const configObj = Object.assign(Object.assign(Object.assign(Object.assign(Object.assign({}, configFromSession(win)), { persistConfig: false }), Ionic.config), configFromURL(win)), userConfig);
@@ -15962,7 +17054,7 @@ const initialize = (userConfig = {}) => {
   }
   const isIonicElement = (elm) => { var _a; return (_a = elm.tagName) === null || _a === void 0 ? void 0 : _a.startsWith('ION-'); };
   const isAllowedIonicModeValue = (elmMode) => ['ios', 'md'].includes(elmMode);
-  (0,_index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_0__.a)((elm) => {
+  (0,_index_88bdeaae_js__WEBPACK_IMPORTED_MODULE_0__.a)((elm) => {
     while (elm) {
       const elmMode = elm.mode || elm.getAttribute('mode');
       if (elmMode) {
@@ -15984,9 +17076,9 @@ const initialize = (userConfig = {}) => {
 
 /***/ }),
 
-/***/ 1339:
+/***/ 5794:
 /*!**********************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/ios.transition-248dea7c.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm/ios.transition-0e6ef329.js ***!
   \**********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -15996,9 +17088,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "shadow": () => (/* binding */ shadow)
 /* harmony export */ });
 /* harmony import */ var _animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./animation-36c1d77d.js */ 2597);
-/* harmony import */ var _index_2b53f989_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index-2b53f989.js */ 4243);
+/* harmony import */ var _index_7e1d3e32_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index-7e1d3e32.js */ 4736);
 /* harmony import */ var _helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers-4d272360.js */ 9158);
-/* harmony import */ var _index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./index-b3eecb14.js */ 1049);
+/* harmony import */ var _index_88bdeaae_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./index-88bdeaae.js */ 9479);
 /*!
  * (C) Ionic http://ionicframework.com - MIT License
  */
@@ -16352,7 +17444,7 @@ const iosTransitionAnimation = (navEl, opts) => {
         leavingContent
           .beforeClearStyles([OPACITY])
           .fromTo('transform', `translateX(${CENTER})`, isRTL ? 'translateX(-100%)' : 'translateX(100%)');
-        const leavingPage = (0,_index_2b53f989_js__WEBPACK_IMPORTED_MODULE_1__.g)(leavingEl);
+        const leavingPage = (0,_index_7e1d3e32_js__WEBPACK_IMPORTED_MODULE_1__.g)(leavingEl);
         rootAnimation.afterAddWrite(() => {
           if (rootAnimation.getDirection() === 'normal') {
             leavingPage.style.setProperty('display', 'none');
@@ -16492,9 +17584,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "defineCustomElements": () => (/* binding */ defineCustomElements)
 /* harmony export */ });
-/* harmony import */ var _index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index-b3eecb14.js */ 1049);
-/* harmony import */ var _app_globals_7511e593_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app-globals-7511e593.js */ 9350);
-/* harmony import */ var _ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ionic-global-f1ce4d2d.js */ 7665);
+/* harmony import */ var _index_88bdeaae_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index-88bdeaae.js */ 9479);
+/* harmony import */ var _app_globals_5b6c8f4b_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app-globals-5b6c8f4b.js */ 3686);
+/* harmony import */ var _ionic_global_00475c3a_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ionic-global-00475c3a.js */ 537);
 /*!
  * (C) Ionic http://ionicframework.com - MIT License
  */
@@ -16503,17 +17595,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /*
- Stencil Client Patch Esm v2.14.2 | MIT Licensed | https://stenciljs.com
+ Stencil Client Patch Esm v2.16.0 | MIT Licensed | https://stenciljs.com
  */
 const patchEsm = () => {
-    return (0,_index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_0__.p)();
+    return (0,_index_88bdeaae_js__WEBPACK_IMPORTED_MODULE_0__.p)();
 };
 
 const defineCustomElements = (win, options) => {
   if (typeof window === 'undefined') return Promise.resolve();
   return patchEsm().then(() => {
-  (0,_app_globals_7511e593_js__WEBPACK_IMPORTED_MODULE_1__.g)();
-  return (0,_index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_0__.b)(JSON.parse("[[\"ion-menu_3\",[[33,\"ion-menu-button\",{\"color\":[513],\"disabled\":[4],\"menu\":[1],\"autoHide\":[4,\"auto-hide\"],\"type\":[1],\"visible\":[32]},[[16,\"ionMenuChange\",\"visibilityChanged\"],[16,\"ionSplitPaneVisible\",\"visibilityChanged\"]]],[33,\"ion-menu\",{\"contentId\":[513,\"content-id\"],\"menuId\":[513,\"menu-id\"],\"type\":[1025],\"disabled\":[1028],\"side\":[513],\"swipeGesture\":[4,\"swipe-gesture\"],\"maxEdgeStart\":[2,\"max-edge-start\"],\"isPaneVisible\":[32],\"isEndSide\":[32],\"isOpen\":[64],\"isActive\":[64],\"open\":[64],\"close\":[64],\"toggle\":[64],\"setOpen\":[64]},[[16,\"ionSplitPaneVisible\",\"onSplitPaneChanged\"],[2,\"click\",\"onBackdropClick\"],[0,\"keydown\",\"onKeydown\"]]],[1,\"ion-menu-toggle\",{\"menu\":[1],\"autoHide\":[4,\"auto-hide\"],\"visible\":[32]},[[16,\"ionMenuChange\",\"visibilityChanged\"],[16,\"ionSplitPaneVisible\",\"visibilityChanged\"]]]]],[\"ion-fab_3\",[[33,\"ion-fab-button\",{\"color\":[513],\"activated\":[4],\"disabled\":[4],\"download\":[1],\"href\":[1],\"rel\":[1],\"routerDirection\":[1,\"router-direction\"],\"routerAnimation\":[16],\"target\":[1],\"show\":[4],\"translucent\":[4],\"type\":[1],\"size\":[1],\"closeIcon\":[1,\"close-icon\"]}],[1,\"ion-fab\",{\"horizontal\":[1],\"vertical\":[1],\"edge\":[4],\"activated\":[1028],\"close\":[64]}],[1,\"ion-fab-list\",{\"activated\":[4],\"side\":[1]}]]],[\"ion-refresher_2\",[[0,\"ion-refresher-content\",{\"pullingIcon\":[1025,\"pulling-icon\"],\"pullingText\":[1,\"pulling-text\"],\"refreshingSpinner\":[1025,\"refreshing-spinner\"],\"refreshingText\":[1,\"refreshing-text\"]}],[32,\"ion-refresher\",{\"pullMin\":[2,\"pull-min\"],\"pullMax\":[2,\"pull-max\"],\"closeDuration\":[1,\"close-duration\"],\"snapbackDuration\":[1,\"snapback-duration\"],\"pullFactor\":[2,\"pull-factor\"],\"disabled\":[4],\"nativeRefresher\":[32],\"state\":[32],\"complete\":[64],\"cancel\":[64],\"getProgress\":[64]}]]],[\"ion-back-button\",[[33,\"ion-back-button\",{\"color\":[513],\"defaultHref\":[1025,\"default-href\"],\"disabled\":[516],\"icon\":[1],\"text\":[1],\"type\":[1],\"routerAnimation\":[16]}]]],[\"ion-toast\",[[33,\"ion-toast\",{\"overlayIndex\":[2,\"overlay-index\"],\"color\":[513],\"enterAnimation\":[16],\"leaveAnimation\":[16],\"cssClass\":[1,\"css-class\"],\"duration\":[2],\"header\":[1],\"message\":[1],\"keyboardClose\":[4,\"keyboard-close\"],\"position\":[1],\"buttons\":[16],\"translucent\":[4],\"animated\":[4],\"icon\":[1],\"htmlAttributes\":[16],\"present\":[64],\"dismiss\":[64],\"onDidDismiss\":[64],\"onWillDismiss\":[64]}]]],[\"ion-card_5\",[[33,\"ion-card\",{\"color\":[513],\"button\":[4],\"type\":[1],\"disabled\":[4],\"download\":[1],\"href\":[1],\"rel\":[1],\"routerDirection\":[1,\"router-direction\"],\"routerAnimation\":[16],\"target\":[1]}],[32,\"ion-card-content\"],[33,\"ion-card-header\",{\"color\":[513],\"translucent\":[4]}],[33,\"ion-card-subtitle\",{\"color\":[513]}],[33,\"ion-card-title\",{\"color\":[513]}]]],[\"ion-item-option_3\",[[33,\"ion-item-option\",{\"color\":[513],\"disabled\":[4],\"download\":[1],\"expandable\":[4],\"href\":[1],\"rel\":[1],\"target\":[1],\"type\":[1]}],[32,\"ion-item-options\",{\"side\":[1],\"fireSwipeEvent\":[64]}],[0,\"ion-item-sliding\",{\"disabled\":[4],\"state\":[32],\"getOpenAmount\":[64],\"getSlidingRatio\":[64],\"open\":[64],\"close\":[64],\"closeOpened\":[64]}]]],[\"ion-accordion_2\",[[49,\"ion-accordion\",{\"value\":[1],\"disabled\":[4],\"readonly\":[4],\"toggleIcon\":[1,\"toggle-icon\"],\"toggleIconSlot\":[1,\"toggle-icon-slot\"],\"state\":[32],\"isNext\":[32],\"isPrevious\":[32]}],[33,\"ion-accordion-group\",{\"animated\":[4],\"multiple\":[4],\"value\":[1025],\"disabled\":[4],\"readonly\":[4],\"expand\":[1],\"requestAccordionToggle\":[64],\"getAccordions\":[64]},[[0,\"keydown\",\"onKeydown\"]]]]],[\"ion-infinite-scroll_2\",[[32,\"ion-infinite-scroll-content\",{\"loadingSpinner\":[1025,\"loading-spinner\"],\"loadingText\":[1,\"loading-text\"]}],[0,\"ion-infinite-scroll\",{\"threshold\":[1],\"disabled\":[4],\"position\":[1],\"isLoading\":[32],\"complete\":[64]}]]],[\"ion-reorder_2\",[[33,\"ion-reorder\",null,[[2,\"click\",\"onClick\"]]],[0,\"ion-reorder-group\",{\"disabled\":[4],\"state\":[32],\"complete\":[64]}]]],[\"ion-segment_2\",[[33,\"ion-segment-button\",{\"disabled\":[4],\"layout\":[1],\"type\":[1],\"value\":[1],\"checked\":[32]}],[33,\"ion-segment\",{\"color\":[513],\"disabled\":[4],\"scrollable\":[4],\"swipeGesture\":[4,\"swipe-gesture\"],\"value\":[1025],\"selectOnFocus\":[4,\"select-on-focus\"],\"activated\":[32]},[[0,\"keydown\",\"onKeyDown\"]]]]],[\"ion-tab-bar_2\",[[33,\"ion-tab-button\",{\"disabled\":[4],\"download\":[1],\"href\":[1],\"rel\":[1],\"layout\":[1025],\"selected\":[1028],\"tab\":[1],\"target\":[1]},[[8,\"ionTabBarChanged\",\"onTabBarChanged\"]]],[33,\"ion-tab-bar\",{\"color\":[513],\"selectedTab\":[1,\"selected-tab\"],\"translucent\":[4],\"keyboardVisible\":[32]}]]],[\"ion-chip\",[[33,\"ion-chip\",{\"color\":[513],\"outline\":[4],\"disabled\":[4]}]]],[\"ion-searchbar\",[[34,\"ion-searchbar\",{\"color\":[513],\"animated\":[4],\"autocomplete\":[1],\"autocorrect\":[1],\"cancelButtonIcon\":[1,\"cancel-button-icon\"],\"cancelButtonText\":[1,\"cancel-button-text\"],\"clearIcon\":[1,\"clear-icon\"],\"debounce\":[2],\"disabled\":[4],\"inputmode\":[1],\"enterkeyhint\":[1],\"placeholder\":[1],\"searchIcon\":[1,\"search-icon\"],\"showCancelButton\":[1,\"show-cancel-button\"],\"showClearButton\":[1,\"show-clear-button\"],\"spellcheck\":[4],\"type\":[1],\"value\":[1025],\"focused\":[32],\"noAnimate\":[32],\"setFocus\":[64],\"getInputElement\":[64]}]]],[\"ion-nav_2\",[[1,\"ion-nav\",{\"delegate\":[16],\"swipeGesture\":[1028,\"swipe-gesture\"],\"animated\":[4],\"animation\":[16],\"rootParams\":[16],\"root\":[1],\"push\":[64],\"insert\":[64],\"insertPages\":[64],\"pop\":[64],\"popTo\":[64],\"popToRoot\":[64],\"removeIndex\":[64],\"setRoot\":[64],\"setPages\":[64],\"setRouteId\":[64],\"getRouteId\":[64],\"getActive\":[64],\"getByIndex\":[64],\"canGoBack\":[64],\"getPrevious\":[64]}],[0,\"ion-nav-link\",{\"component\":[1],\"componentProps\":[16],\"routerDirection\":[1,\"router-direction\"],\"routerAnimation\":[16]}]]],[\"ion-slide_2\",[[0,\"ion-slide\"],[36,\"ion-slides\",{\"options\":[8],\"pager\":[4],\"scrollbar\":[4],\"update\":[64],\"updateAutoHeight\":[64],\"slideTo\":[64],\"slideNext\":[64],\"slidePrev\":[64],\"getActiveIndex\":[64],\"getPreviousIndex\":[64],\"length\":[64],\"isEnd\":[64],\"isBeginning\":[64],\"startAutoplay\":[64],\"stopAutoplay\":[64],\"lockSwipeToNext\":[64],\"lockSwipeToPrev\":[64],\"lockSwipes\":[64],\"getSwiper\":[64]}]]],[\"ion-tab_2\",[[1,\"ion-tab\",{\"active\":[1028],\"delegate\":[16],\"tab\":[1],\"component\":[1],\"setActive\":[64]}],[1,\"ion-tabs\",{\"useRouter\":[1028,\"use-router\"],\"selectedTab\":[32],\"select\":[64],\"getTab\":[64],\"getSelected\":[64],\"setRouteId\":[64],\"getRouteId\":[64]}]]],[\"ion-input\",[[34,\"ion-input\",{\"fireFocusEvents\":[4,\"fire-focus-events\"],\"color\":[513],\"accept\":[1],\"autocapitalize\":[1],\"autocomplete\":[1],\"autocorrect\":[1],\"autofocus\":[4],\"clearInput\":[4,\"clear-input\"],\"clearOnEdit\":[4,\"clear-on-edit\"],\"debounce\":[2],\"disabled\":[4],\"enterkeyhint\":[1],\"inputmode\":[1],\"max\":[8],\"maxlength\":[2],\"min\":[8],\"minlength\":[2],\"multiple\":[4],\"name\":[1],\"pattern\":[1],\"placeholder\":[1],\"readonly\":[4],\"required\":[4],\"spellcheck\":[4],\"step\":[1],\"size\":[2],\"type\":[1],\"value\":[1032],\"hasFocus\":[32],\"setFocus\":[64],\"setBlur\":[64],\"getInputElement\":[64]}]]],[\"ion-textarea\",[[34,\"ion-textarea\",{\"fireFocusEvents\":[4,\"fire-focus-events\"],\"color\":[513],\"autocapitalize\":[1],\"autofocus\":[4],\"clearOnEdit\":[1028,\"clear-on-edit\"],\"debounce\":[2],\"disabled\":[4],\"inputmode\":[1],\"enterkeyhint\":[1],\"maxlength\":[2],\"minlength\":[2],\"name\":[1],\"placeholder\":[1],\"readonly\":[4],\"required\":[4],\"spellcheck\":[4],\"cols\":[2],\"rows\":[2],\"wrap\":[1],\"autoGrow\":[4,\"auto-grow\"],\"value\":[1025],\"hasFocus\":[32],\"setFocus\":[64],\"setBlur\":[64],\"getInputElement\":[64]}]]],[\"ion-backdrop\",[[33,\"ion-backdrop\",{\"visible\":[4],\"tappable\":[4],\"stopPropagation\":[4,\"stop-propagation\"]},[[2,\"click\",\"onMouseDown\"]]]]],[\"ion-loading\",[[34,\"ion-loading\",{\"overlayIndex\":[2,\"overlay-index\"],\"keyboardClose\":[4,\"keyboard-close\"],\"enterAnimation\":[16],\"leaveAnimation\":[16],\"message\":[1],\"cssClass\":[1,\"css-class\"],\"duration\":[2],\"backdropDismiss\":[4,\"backdrop-dismiss\"],\"showBackdrop\":[4,\"show-backdrop\"],\"spinner\":[1025],\"translucent\":[4],\"animated\":[4],\"htmlAttributes\":[16],\"present\":[64],\"dismiss\":[64],\"onDidDismiss\":[64],\"onWillDismiss\":[64]}]]],[\"ion-breadcrumb_2\",[[33,\"ion-breadcrumb\",{\"collapsed\":[4],\"last\":[4],\"showCollapsedIndicator\":[4,\"show-collapsed-indicator\"],\"color\":[1],\"active\":[4],\"disabled\":[4],\"download\":[1],\"href\":[1],\"rel\":[1],\"separator\":[4],\"target\":[1],\"routerDirection\":[1,\"router-direction\"],\"routerAnimation\":[16]}],[33,\"ion-breadcrumbs\",{\"color\":[1],\"maxItems\":[2,\"max-items\"],\"itemsBeforeCollapse\":[2,\"items-before-collapse\"],\"itemsAfterCollapse\":[2,\"items-after-collapse\"],\"collapsed\":[32],\"activeChanged\":[32]},[[0,\"collapsedClick\",\"onCollapsedClick\"]]]]],[\"ion-modal\",[[33,\"ion-modal\",{\"hasController\":[4,\"has-controller\"],\"overlayIndex\":[2,\"overlay-index\"],\"delegate\":[16],\"keyboardClose\":[4,\"keyboard-close\"],\"enterAnimation\":[16],\"leaveAnimation\":[16],\"breakpoints\":[16],\"initialBreakpoint\":[2,\"initial-breakpoint\"],\"backdropBreakpoint\":[2,\"backdrop-breakpoint\"],\"handle\":[4],\"component\":[1],\"componentProps\":[16],\"cssClass\":[1,\"css-class\"],\"backdropDismiss\":[4,\"backdrop-dismiss\"],\"showBackdrop\":[4,\"show-backdrop\"],\"animated\":[4],\"swipeToClose\":[4,\"swipe-to-close\"],\"presentingElement\":[16],\"htmlAttributes\":[16],\"isOpen\":[4,\"is-open\"],\"trigger\":[1],\"canDismiss\":[4,\"can-dismiss\"],\"presented\":[32],\"present\":[64],\"dismiss\":[64],\"onDidDismiss\":[64],\"onWillDismiss\":[64],\"setCurrentBreakpoint\":[64],\"getCurrentBreakpoint\":[64]}]]],[\"ion-route_4\",[[0,\"ion-route\",{\"url\":[1],\"component\":[1],\"componentProps\":[16],\"beforeLeave\":[16],\"beforeEnter\":[16]}],[0,\"ion-route-redirect\",{\"from\":[1],\"to\":[1]}],[0,\"ion-router\",{\"root\":[1],\"useHash\":[4,\"use-hash\"],\"canTransition\":[64],\"push\":[64],\"back\":[64],\"printDebug\":[64],\"navChanged\":[64]},[[8,\"popstate\",\"onPopState\"],[4,\"ionBackButton\",\"onBackButton\"]]],[1,\"ion-router-link\",{\"color\":[513],\"href\":[1],\"rel\":[1],\"routerDirection\":[1,\"router-direction\"],\"routerAnimation\":[16],\"target\":[1]}]]],[\"ion-avatar_3\",[[33,\"ion-avatar\"],[33,\"ion-badge\",{\"color\":[513]}],[1,\"ion-thumbnail\"]]],[\"ion-col_3\",[[1,\"ion-col\",{\"offset\":[1],\"offsetXs\":[1,\"offset-xs\"],\"offsetSm\":[1,\"offset-sm\"],\"offsetMd\":[1,\"offset-md\"],\"offsetLg\":[1,\"offset-lg\"],\"offsetXl\":[1,\"offset-xl\"],\"pull\":[1],\"pullXs\":[1,\"pull-xs\"],\"pullSm\":[1,\"pull-sm\"],\"pullMd\":[1,\"pull-md\"],\"pullLg\":[1,\"pull-lg\"],\"pullXl\":[1,\"pull-xl\"],\"push\":[1],\"pushXs\":[1,\"push-xs\"],\"pushSm\":[1,\"push-sm\"],\"pushMd\":[1,\"push-md\"],\"pushLg\":[1,\"push-lg\"],\"pushXl\":[1,\"push-xl\"],\"size\":[1],\"sizeXs\":[1,\"size-xs\"],\"sizeSm\":[1,\"size-sm\"],\"sizeMd\":[1,\"size-md\"],\"sizeLg\":[1,\"size-lg\"],\"sizeXl\":[1,\"size-xl\"]},[[9,\"resize\",\"onResize\"]]],[1,\"ion-grid\",{\"fixed\":[4]}],[1,\"ion-row\"]]],[\"ion-img\",[[1,\"ion-img\",{\"alt\":[1],\"src\":[1],\"loadSrc\":[32],\"loadError\":[32]}]]],[\"ion-progress-bar\",[[33,\"ion-progress-bar\",{\"type\":[1],\"reversed\":[4],\"value\":[2],\"buffer\":[2],\"color\":[513]}]]],[\"ion-range\",[[33,\"ion-range\",{\"color\":[513],\"debounce\":[2],\"name\":[1],\"dualKnobs\":[4,\"dual-knobs\"],\"min\":[2],\"max\":[2],\"pin\":[4],\"pinFormatter\":[16],\"snaps\":[4],\"step\":[2],\"ticks\":[4],\"disabled\":[4],\"value\":[1026],\"ratioA\":[32],\"ratioB\":[32],\"pressedKnob\":[32]}]]],[\"ion-split-pane\",[[33,\"ion-split-pane\",{\"contentId\":[513,\"content-id\"],\"disabled\":[4],\"when\":[8],\"visible\":[32]}]]],[\"ion-text\",[[1,\"ion-text\",{\"color\":[513]}]]],[\"ion-toggle\",[[33,\"ion-toggle\",{\"color\":[513],\"name\":[1],\"checked\":[1028],\"disabled\":[4],\"value\":[1],\"activated\":[32]}]]],[\"ion-virtual-scroll\",[[0,\"ion-virtual-scroll\",{\"approxItemHeight\":[2,\"approx-item-height\"],\"approxHeaderHeight\":[2,\"approx-header-height\"],\"approxFooterHeight\":[2,\"approx-footer-height\"],\"headerFn\":[16],\"footerFn\":[16],\"items\":[16],\"itemHeight\":[16],\"headerHeight\":[16],\"footerHeight\":[16],\"renderItem\":[16],\"renderHeader\":[16],\"renderFooter\":[16],\"nodeRender\":[16],\"domRender\":[16],\"totalHeight\":[32],\"positionForItem\":[64],\"checkRange\":[64],\"checkEnd\":[64]},[[9,\"resize\",\"onResize\"]]]]],[\"ion-picker-column-internal\",[[33,\"ion-picker-column-internal\",{\"items\":[16],\"value\":[1032],\"color\":[513],\"numericInput\":[4,\"numeric-input\"],\"isActive\":[32],\"scrollActiveItemIntoView\":[64]}]]],[\"ion-picker-internal\",[[33,\"ion-picker-internal\"]]],[\"ion-radio_2\",[[33,\"ion-radio\",{\"color\":[513],\"name\":[1],\"disabled\":[4],\"value\":[8],\"checked\":[32],\"buttonTabindex\":[32],\"setFocus\":[64],\"setButtonTabindex\":[64]}],[0,\"ion-radio-group\",{\"allowEmptySelection\":[4,\"allow-empty-selection\"],\"name\":[1],\"value\":[1032]},[[4,\"keydown\",\"onKeydown\"]]]]],[\"ion-ripple-effect\",[[1,\"ion-ripple-effect\",{\"type\":[1],\"addRipple\":[64]}]]],[\"ion-button_2\",[[33,\"ion-button\",{\"color\":[513],\"buttonType\":[1025,\"button-type\"],\"disabled\":[516],\"expand\":[513],\"fill\":[1537],\"routerDirection\":[1,\"router-direction\"],\"routerAnimation\":[16],\"download\":[1],\"href\":[1],\"rel\":[1],\"shape\":[513],\"size\":[513],\"strong\":[4],\"target\":[1],\"type\":[1]}],[1,\"ion-icon\",{\"mode\":[1025],\"color\":[1],\"ios\":[1],\"md\":[1],\"flipRtl\":[4,\"flip-rtl\"],\"name\":[513],\"src\":[1],\"icon\":[8],\"size\":[1],\"lazy\":[4],\"sanitize\":[4],\"svgContent\":[32],\"isVisible\":[32],\"ariaLabel\":[32]}]]],[\"ion-datetime_3\",[[33,\"ion-datetime\",{\"color\":[1],\"name\":[1],\"disabled\":[4],\"readonly\":[4],\"isDateEnabled\":[16],\"min\":[1025],\"max\":[1025],\"presentation\":[1],\"cancelText\":[1,\"cancel-text\"],\"doneText\":[1,\"done-text\"],\"clearText\":[1,\"clear-text\"],\"yearValues\":[8,\"year-values\"],\"monthValues\":[8,\"month-values\"],\"dayValues\":[8,\"day-values\"],\"hourValues\":[8,\"hour-values\"],\"minuteValues\":[8,\"minute-values\"],\"locale\":[1],\"firstDayOfWeek\":[2,\"first-day-of-week\"],\"value\":[1025],\"showDefaultTitle\":[4,\"show-default-title\"],\"showDefaultButtons\":[4,\"show-default-buttons\"],\"showClearButton\":[4,\"show-clear-button\"],\"showDefaultTimeLabel\":[4,\"show-default-time-label\"],\"hourCycle\":[1,\"hour-cycle\"],\"size\":[1],\"showMonthAndYear\":[32],\"activeParts\":[32],\"workingParts\":[32],\"isPresented\":[32],\"isTimePopoverOpen\":[32],\"confirm\":[64],\"reset\":[64],\"cancel\":[64]}],[34,\"ion-picker\",{\"overlayIndex\":[2,\"overlay-index\"],\"keyboardClose\":[4,\"keyboard-close\"],\"enterAnimation\":[16],\"leaveAnimation\":[16],\"buttons\":[16],\"columns\":[16],\"cssClass\":[1,\"css-class\"],\"duration\":[2],\"showBackdrop\":[4,\"show-backdrop\"],\"backdropDismiss\":[4,\"backdrop-dismiss\"],\"animated\":[4],\"htmlAttributes\":[16],\"presented\":[32],\"present\":[64],\"dismiss\":[64],\"onDidDismiss\":[64],\"onWillDismiss\":[64],\"getColumn\":[64]}],[32,\"ion-picker-column\",{\"col\":[16]}]]],[\"ion-action-sheet\",[[34,\"ion-action-sheet\",{\"overlayIndex\":[2,\"overlay-index\"],\"keyboardClose\":[4,\"keyboard-close\"],\"enterAnimation\":[16],\"leaveAnimation\":[16],\"buttons\":[16],\"cssClass\":[1,\"css-class\"],\"backdropDismiss\":[4,\"backdrop-dismiss\"],\"header\":[1],\"subHeader\":[1,\"sub-header\"],\"translucent\":[4],\"animated\":[4],\"htmlAttributes\":[16],\"present\":[64],\"dismiss\":[64],\"onDidDismiss\":[64],\"onWillDismiss\":[64]}]]],[\"ion-alert\",[[34,\"ion-alert\",{\"overlayIndex\":[2,\"overlay-index\"],\"keyboardClose\":[4,\"keyboard-close\"],\"enterAnimation\":[16],\"leaveAnimation\":[16],\"cssClass\":[1,\"css-class\"],\"header\":[1],\"subHeader\":[1,\"sub-header\"],\"message\":[1],\"buttons\":[16],\"inputs\":[1040],\"backdropDismiss\":[4,\"backdrop-dismiss\"],\"translucent\":[4],\"animated\":[4],\"htmlAttributes\":[16],\"present\":[64],\"dismiss\":[64],\"onDidDismiss\":[64],\"onWillDismiss\":[64]},[[4,\"keydown\",\"onKeydown\"]]]]],[\"ion-popover\",[[33,\"ion-popover\",{\"hasController\":[4,\"has-controller\"],\"delegate\":[16],\"overlayIndex\":[2,\"overlay-index\"],\"enterAnimation\":[16],\"leaveAnimation\":[16],\"component\":[1],\"componentProps\":[16],\"keyboardClose\":[4,\"keyboard-close\"],\"cssClass\":[1,\"css-class\"],\"backdropDismiss\":[4,\"backdrop-dismiss\"],\"event\":[8],\"showBackdrop\":[4,\"show-backdrop\"],\"translucent\":[4],\"animated\":[4],\"htmlAttributes\":[16],\"triggerAction\":[1,\"trigger-action\"],\"trigger\":[1],\"size\":[1],\"dismissOnSelect\":[4,\"dismiss-on-select\"],\"reference\":[1],\"side\":[1],\"alignment\":[1025],\"arrow\":[4],\"isOpen\":[4,\"is-open\"],\"keyboardEvents\":[4,\"keyboard-events\"],\"presented\":[32],\"presentFromTrigger\":[64],\"present\":[64],\"dismiss\":[64],\"getParentPopover\":[64],\"onDidDismiss\":[64],\"onWillDismiss\":[64]}]]],[\"ion-checkbox\",[[33,\"ion-checkbox\",{\"color\":[513],\"name\":[1],\"checked\":[1028],\"indeterminate\":[1028],\"disabled\":[4],\"value\":[8]}]]],[\"ion-select_3\",[[33,\"ion-select\",{\"disabled\":[4],\"cancelText\":[1,\"cancel-text\"],\"okText\":[1,\"ok-text\"],\"placeholder\":[1],\"name\":[1],\"selectedText\":[1,\"selected-text\"],\"multiple\":[4],\"interface\":[1],\"interfaceOptions\":[8,\"interface-options\"],\"compareWith\":[1,\"compare-with\"],\"value\":[1032],\"isExpanded\":[32],\"open\":[64]}],[1,\"ion-select-option\",{\"disabled\":[4],\"value\":[8]}],[34,\"ion-select-popover\",{\"header\":[1],\"subHeader\":[1,\"sub-header\"],\"message\":[1],\"multiple\":[4],\"options\":[16]},[[0,\"ionChange\",\"onSelect\"]]]]],[\"ion-app_8\",[[0,\"ion-app\",{\"setFocus\":[64]}],[1,\"ion-content\",{\"color\":[513],\"fullscreen\":[4],\"forceOverscroll\":[1028,\"force-overscroll\"],\"scrollX\":[4,\"scroll-x\"],\"scrollY\":[4,\"scroll-y\"],\"scrollEvents\":[4,\"scroll-events\"],\"getScrollElement\":[64],\"scrollToTop\":[64],\"scrollToBottom\":[64],\"scrollByPoint\":[64],\"scrollToPoint\":[64]},[[8,\"appload\",\"onAppLoad\"]]],[36,\"ion-footer\",{\"collapse\":[1],\"translucent\":[4]}],[36,\"ion-header\",{\"collapse\":[1],\"translucent\":[4]}],[1,\"ion-router-outlet\",{\"mode\":[1025],\"delegate\":[16],\"animated\":[4],\"animation\":[16],\"swipeHandler\":[16],\"commit\":[64],\"setRouteId\":[64],\"getRouteId\":[64]}],[33,\"ion-title\",{\"color\":[513],\"size\":[1]}],[33,\"ion-toolbar\",{\"color\":[513]},[[0,\"ionStyle\",\"childrenStyle\"]]],[34,\"ion-buttons\",{\"collapse\":[4]}]]],[\"ion-spinner\",[[1,\"ion-spinner\",{\"color\":[513],\"duration\":[2],\"name\":[1],\"paused\":[4]}]]],[\"ion-item_8\",[[33,\"ion-item-divider\",{\"color\":[513],\"sticky\":[4]}],[32,\"ion-item-group\"],[1,\"ion-skeleton-text\",{\"animated\":[4]}],[32,\"ion-list\",{\"lines\":[1],\"inset\":[4],\"closeSlidingItems\":[64]}],[33,\"ion-list-header\",{\"color\":[513],\"lines\":[1]}],[49,\"ion-item\",{\"color\":[513],\"button\":[4],\"detail\":[4],\"detailIcon\":[1,\"detail-icon\"],\"disabled\":[4],\"download\":[1],\"fill\":[1],\"shape\":[1],\"href\":[1],\"rel\":[1],\"lines\":[1],\"counter\":[4],\"routerAnimation\":[16],\"routerDirection\":[1,\"router-direction\"],\"target\":[1],\"type\":[1],\"counterFormatter\":[16],\"multipleInputs\":[32],\"focusable\":[32],\"counterString\":[32]},[[0,\"ionChange\",\"handleIonChange\"],[0,\"ionColor\",\"labelColorChanged\"],[0,\"ionStyle\",\"itemStyle\"]]],[34,\"ion-label\",{\"color\":[513],\"position\":[1],\"noAnimate\":[32]}],[33,\"ion-note\",{\"color\":[513]}]]]]"), options);
+  (0,_app_globals_5b6c8f4b_js__WEBPACK_IMPORTED_MODULE_1__.g)();
+  return (0,_index_88bdeaae_js__WEBPACK_IMPORTED_MODULE_0__.b)(JSON.parse("[[\"ion-menu_3\",[[33,\"ion-menu-button\",{\"color\":[513],\"disabled\":[4],\"menu\":[1],\"autoHide\":[4,\"auto-hide\"],\"type\":[1],\"visible\":[32]},[[16,\"ionMenuChange\",\"visibilityChanged\"],[16,\"ionSplitPaneVisible\",\"visibilityChanged\"]]],[33,\"ion-menu\",{\"contentId\":[513,\"content-id\"],\"menuId\":[513,\"menu-id\"],\"type\":[1025],\"disabled\":[1028],\"side\":[513],\"swipeGesture\":[4,\"swipe-gesture\"],\"maxEdgeStart\":[2,\"max-edge-start\"],\"isPaneVisible\":[32],\"isEndSide\":[32],\"isOpen\":[64],\"isActive\":[64],\"open\":[64],\"close\":[64],\"toggle\":[64],\"setOpen\":[64]},[[16,\"ionSplitPaneVisible\",\"onSplitPaneChanged\"],[2,\"click\",\"onBackdropClick\"],[0,\"keydown\",\"onKeydown\"]]],[1,\"ion-menu-toggle\",{\"menu\":[1],\"autoHide\":[4,\"auto-hide\"],\"visible\":[32]},[[16,\"ionMenuChange\",\"visibilityChanged\"],[16,\"ionSplitPaneVisible\",\"visibilityChanged\"]]]]],[\"ion-fab_3\",[[33,\"ion-fab-button\",{\"color\":[513],\"activated\":[4],\"disabled\":[4],\"download\":[1],\"href\":[1],\"rel\":[1],\"routerDirection\":[1,\"router-direction\"],\"routerAnimation\":[16],\"target\":[1],\"show\":[4],\"translucent\":[4],\"type\":[1],\"size\":[1],\"closeIcon\":[1,\"close-icon\"]}],[1,\"ion-fab\",{\"horizontal\":[1],\"vertical\":[1],\"edge\":[4],\"activated\":[1028],\"close\":[64]}],[1,\"ion-fab-list\",{\"activated\":[4],\"side\":[1]}]]],[\"ion-refresher_2\",[[0,\"ion-refresher-content\",{\"pullingIcon\":[1025,\"pulling-icon\"],\"pullingText\":[1,\"pulling-text\"],\"refreshingSpinner\":[1025,\"refreshing-spinner\"],\"refreshingText\":[1,\"refreshing-text\"]}],[32,\"ion-refresher\",{\"pullMin\":[2,\"pull-min\"],\"pullMax\":[2,\"pull-max\"],\"closeDuration\":[1,\"close-duration\"],\"snapbackDuration\":[1,\"snapback-duration\"],\"pullFactor\":[2,\"pull-factor\"],\"disabled\":[4],\"nativeRefresher\":[32],\"state\":[32],\"complete\":[64],\"cancel\":[64],\"getProgress\":[64]}]]],[\"ion-back-button\",[[33,\"ion-back-button\",{\"color\":[513],\"defaultHref\":[1025,\"default-href\"],\"disabled\":[516],\"icon\":[1],\"text\":[1],\"type\":[1],\"routerAnimation\":[16]}]]],[\"ion-toast\",[[33,\"ion-toast\",{\"overlayIndex\":[2,\"overlay-index\"],\"color\":[513],\"enterAnimation\":[16],\"leaveAnimation\":[16],\"cssClass\":[1,\"css-class\"],\"duration\":[2],\"header\":[1],\"message\":[1],\"keyboardClose\":[4,\"keyboard-close\"],\"position\":[1],\"buttons\":[16],\"translucent\":[4],\"animated\":[4],\"icon\":[1],\"htmlAttributes\":[16],\"present\":[64],\"dismiss\":[64],\"onDidDismiss\":[64],\"onWillDismiss\":[64]}]]],[\"ion-card_5\",[[33,\"ion-card\",{\"color\":[513],\"button\":[4],\"type\":[1],\"disabled\":[4],\"download\":[1],\"href\":[1],\"rel\":[1],\"routerDirection\":[1,\"router-direction\"],\"routerAnimation\":[16],\"target\":[1]}],[32,\"ion-card-content\"],[33,\"ion-card-header\",{\"color\":[513],\"translucent\":[4]}],[33,\"ion-card-subtitle\",{\"color\":[513]}],[33,\"ion-card-title\",{\"color\":[513]}]]],[\"ion-item-option_3\",[[33,\"ion-item-option\",{\"color\":[513],\"disabled\":[4],\"download\":[1],\"expandable\":[4],\"href\":[1],\"rel\":[1],\"target\":[1],\"type\":[1]}],[32,\"ion-item-options\",{\"side\":[1],\"fireSwipeEvent\":[64]}],[0,\"ion-item-sliding\",{\"disabled\":[4],\"state\":[32],\"getOpenAmount\":[64],\"getSlidingRatio\":[64],\"open\":[64],\"close\":[64],\"closeOpened\":[64]}]]],[\"ion-accordion_2\",[[49,\"ion-accordion\",{\"value\":[1],\"disabled\":[4],\"readonly\":[4],\"toggleIcon\":[1,\"toggle-icon\"],\"toggleIconSlot\":[1,\"toggle-icon-slot\"],\"state\":[32],\"isNext\":[32],\"isPrevious\":[32]}],[33,\"ion-accordion-group\",{\"animated\":[4],\"multiple\":[4],\"value\":[1025],\"disabled\":[4],\"readonly\":[4],\"expand\":[1],\"requestAccordionToggle\":[64],\"getAccordions\":[64]},[[0,\"keydown\",\"onKeydown\"]]]]],[\"ion-infinite-scroll_2\",[[32,\"ion-infinite-scroll-content\",{\"loadingSpinner\":[1025,\"loading-spinner\"],\"loadingText\":[1,\"loading-text\"]}],[0,\"ion-infinite-scroll\",{\"threshold\":[1],\"disabled\":[4],\"position\":[1],\"isLoading\":[32],\"complete\":[64]}]]],[\"ion-reorder_2\",[[33,\"ion-reorder\",null,[[2,\"click\",\"onClick\"]]],[0,\"ion-reorder-group\",{\"disabled\":[4],\"state\":[32],\"complete\":[64]}]]],[\"ion-segment_2\",[[33,\"ion-segment-button\",{\"disabled\":[4],\"layout\":[1],\"type\":[1],\"value\":[1],\"checked\":[32]}],[33,\"ion-segment\",{\"color\":[513],\"disabled\":[4],\"scrollable\":[4],\"swipeGesture\":[4,\"swipe-gesture\"],\"value\":[1025],\"selectOnFocus\":[4,\"select-on-focus\"],\"activated\":[32]},[[0,\"keydown\",\"onKeyDown\"]]]]],[\"ion-tab-bar_2\",[[33,\"ion-tab-button\",{\"disabled\":[4],\"download\":[1],\"href\":[1],\"rel\":[1],\"layout\":[1025],\"selected\":[1028],\"tab\":[1],\"target\":[1]},[[8,\"ionTabBarChanged\",\"onTabBarChanged\"]]],[33,\"ion-tab-bar\",{\"color\":[513],\"selectedTab\":[1,\"selected-tab\"],\"translucent\":[4],\"keyboardVisible\":[32]}]]],[\"ion-chip\",[[33,\"ion-chip\",{\"color\":[513],\"outline\":[4],\"disabled\":[4]}]]],[\"ion-searchbar\",[[34,\"ion-searchbar\",{\"color\":[513],\"animated\":[4],\"autocomplete\":[1],\"autocorrect\":[1],\"cancelButtonIcon\":[1,\"cancel-button-icon\"],\"cancelButtonText\":[1,\"cancel-button-text\"],\"clearIcon\":[1,\"clear-icon\"],\"debounce\":[2],\"disabled\":[4],\"inputmode\":[1],\"enterkeyhint\":[1],\"placeholder\":[1],\"searchIcon\":[1,\"search-icon\"],\"showCancelButton\":[1,\"show-cancel-button\"],\"showClearButton\":[1,\"show-clear-button\"],\"spellcheck\":[4],\"type\":[1],\"value\":[1025],\"focused\":[32],\"noAnimate\":[32],\"setFocus\":[64],\"getInputElement\":[64]}]]],[\"ion-nav_2\",[[1,\"ion-nav\",{\"delegate\":[16],\"swipeGesture\":[1028,\"swipe-gesture\"],\"animated\":[4],\"animation\":[16],\"rootParams\":[16],\"root\":[1],\"push\":[64],\"insert\":[64],\"insertPages\":[64],\"pop\":[64],\"popTo\":[64],\"popToRoot\":[64],\"removeIndex\":[64],\"setRoot\":[64],\"setPages\":[64],\"setRouteId\":[64],\"getRouteId\":[64],\"getActive\":[64],\"getByIndex\":[64],\"canGoBack\":[64],\"getPrevious\":[64]}],[0,\"ion-nav-link\",{\"component\":[1],\"componentProps\":[16],\"routerDirection\":[1,\"router-direction\"],\"routerAnimation\":[16]}]]],[\"ion-slide_2\",[[0,\"ion-slide\"],[36,\"ion-slides\",{\"options\":[8],\"pager\":[4],\"scrollbar\":[4],\"update\":[64],\"updateAutoHeight\":[64],\"slideTo\":[64],\"slideNext\":[64],\"slidePrev\":[64],\"getActiveIndex\":[64],\"getPreviousIndex\":[64],\"length\":[64],\"isEnd\":[64],\"isBeginning\":[64],\"startAutoplay\":[64],\"stopAutoplay\":[64],\"lockSwipeToNext\":[64],\"lockSwipeToPrev\":[64],\"lockSwipes\":[64],\"getSwiper\":[64]}]]],[\"ion-tab_2\",[[1,\"ion-tab\",{\"active\":[1028],\"delegate\":[16],\"tab\":[1],\"component\":[1],\"setActive\":[64]}],[1,\"ion-tabs\",{\"useRouter\":[1028,\"use-router\"],\"selectedTab\":[32],\"select\":[64],\"getTab\":[64],\"getSelected\":[64],\"setRouteId\":[64],\"getRouteId\":[64]}]]],[\"ion-input\",[[34,\"ion-input\",{\"fireFocusEvents\":[4,\"fire-focus-events\"],\"color\":[513],\"accept\":[1],\"autocapitalize\":[1],\"autocomplete\":[1],\"autocorrect\":[1],\"autofocus\":[4],\"clearInput\":[4,\"clear-input\"],\"clearOnEdit\":[4,\"clear-on-edit\"],\"debounce\":[2],\"disabled\":[4],\"enterkeyhint\":[1],\"inputmode\":[1],\"max\":[8],\"maxlength\":[2],\"min\":[8],\"minlength\":[2],\"multiple\":[4],\"name\":[1],\"pattern\":[1],\"placeholder\":[1],\"readonly\":[4],\"required\":[4],\"spellcheck\":[4],\"step\":[1],\"size\":[2],\"type\":[1],\"value\":[1032],\"hasFocus\":[32],\"setFocus\":[64],\"setBlur\":[64],\"getInputElement\":[64]}]]],[\"ion-textarea\",[[34,\"ion-textarea\",{\"fireFocusEvents\":[4,\"fire-focus-events\"],\"color\":[513],\"autocapitalize\":[1],\"autofocus\":[4],\"clearOnEdit\":[1028,\"clear-on-edit\"],\"debounce\":[2],\"disabled\":[4],\"inputmode\":[1],\"enterkeyhint\":[1],\"maxlength\":[2],\"minlength\":[2],\"name\":[1],\"placeholder\":[1],\"readonly\":[4],\"required\":[4],\"spellcheck\":[4],\"cols\":[2],\"rows\":[2],\"wrap\":[1],\"autoGrow\":[4,\"auto-grow\"],\"value\":[1025],\"hasFocus\":[32],\"setFocus\":[64],\"setBlur\":[64],\"getInputElement\":[64]}]]],[\"ion-backdrop\",[[33,\"ion-backdrop\",{\"visible\":[4],\"tappable\":[4],\"stopPropagation\":[4,\"stop-propagation\"]},[[2,\"click\",\"onMouseDown\"]]]]],[\"ion-loading\",[[34,\"ion-loading\",{\"overlayIndex\":[2,\"overlay-index\"],\"keyboardClose\":[4,\"keyboard-close\"],\"enterAnimation\":[16],\"leaveAnimation\":[16],\"message\":[1],\"cssClass\":[1,\"css-class\"],\"duration\":[2],\"backdropDismiss\":[4,\"backdrop-dismiss\"],\"showBackdrop\":[4,\"show-backdrop\"],\"spinner\":[1025],\"translucent\":[4],\"animated\":[4],\"htmlAttributes\":[16],\"present\":[64],\"dismiss\":[64],\"onDidDismiss\":[64],\"onWillDismiss\":[64]}]]],[\"ion-breadcrumb_2\",[[33,\"ion-breadcrumb\",{\"collapsed\":[4],\"last\":[4],\"showCollapsedIndicator\":[4,\"show-collapsed-indicator\"],\"color\":[1],\"active\":[4],\"disabled\":[4],\"download\":[1],\"href\":[1],\"rel\":[1],\"separator\":[4],\"target\":[1],\"routerDirection\":[1,\"router-direction\"],\"routerAnimation\":[16]}],[33,\"ion-breadcrumbs\",{\"color\":[1],\"maxItems\":[2,\"max-items\"],\"itemsBeforeCollapse\":[2,\"items-before-collapse\"],\"itemsAfterCollapse\":[2,\"items-after-collapse\"],\"collapsed\":[32],\"activeChanged\":[32]},[[0,\"collapsedClick\",\"onCollapsedClick\"]]]]],[\"ion-modal\",[[33,\"ion-modal\",{\"hasController\":[4,\"has-controller\"],\"overlayIndex\":[2,\"overlay-index\"],\"delegate\":[16],\"keyboardClose\":[4,\"keyboard-close\"],\"enterAnimation\":[16],\"leaveAnimation\":[16],\"breakpoints\":[16],\"initialBreakpoint\":[2,\"initial-breakpoint\"],\"backdropBreakpoint\":[2,\"backdrop-breakpoint\"],\"handle\":[4],\"component\":[1],\"componentProps\":[16],\"cssClass\":[1,\"css-class\"],\"backdropDismiss\":[4,\"backdrop-dismiss\"],\"showBackdrop\":[4,\"show-backdrop\"],\"animated\":[4],\"swipeToClose\":[4,\"swipe-to-close\"],\"presentingElement\":[16],\"htmlAttributes\":[16],\"isOpen\":[4,\"is-open\"],\"trigger\":[1],\"canDismiss\":[4,\"can-dismiss\"],\"presented\":[32],\"present\":[64],\"dismiss\":[64],\"onDidDismiss\":[64],\"onWillDismiss\":[64],\"setCurrentBreakpoint\":[64],\"getCurrentBreakpoint\":[64]}]]],[\"ion-route_4\",[[0,\"ion-route\",{\"url\":[1],\"component\":[1],\"componentProps\":[16],\"beforeLeave\":[16],\"beforeEnter\":[16]}],[0,\"ion-route-redirect\",{\"from\":[1],\"to\":[1]}],[0,\"ion-router\",{\"root\":[1],\"useHash\":[4,\"use-hash\"],\"canTransition\":[64],\"push\":[64],\"back\":[64],\"printDebug\":[64],\"navChanged\":[64]},[[8,\"popstate\",\"onPopState\"],[4,\"ionBackButton\",\"onBackButton\"]]],[1,\"ion-router-link\",{\"color\":[513],\"href\":[1],\"rel\":[1],\"routerDirection\":[1,\"router-direction\"],\"routerAnimation\":[16],\"target\":[1]}]]],[\"ion-avatar_3\",[[33,\"ion-avatar\"],[33,\"ion-badge\",{\"color\":[513]}],[1,\"ion-thumbnail\"]]],[\"ion-col_3\",[[1,\"ion-col\",{\"offset\":[1],\"offsetXs\":[1,\"offset-xs\"],\"offsetSm\":[1,\"offset-sm\"],\"offsetMd\":[1,\"offset-md\"],\"offsetLg\":[1,\"offset-lg\"],\"offsetXl\":[1,\"offset-xl\"],\"pull\":[1],\"pullXs\":[1,\"pull-xs\"],\"pullSm\":[1,\"pull-sm\"],\"pullMd\":[1,\"pull-md\"],\"pullLg\":[1,\"pull-lg\"],\"pullXl\":[1,\"pull-xl\"],\"push\":[1],\"pushXs\":[1,\"push-xs\"],\"pushSm\":[1,\"push-sm\"],\"pushMd\":[1,\"push-md\"],\"pushLg\":[1,\"push-lg\"],\"pushXl\":[1,\"push-xl\"],\"size\":[1],\"sizeXs\":[1,\"size-xs\"],\"sizeSm\":[1,\"size-sm\"],\"sizeMd\":[1,\"size-md\"],\"sizeLg\":[1,\"size-lg\"],\"sizeXl\":[1,\"size-xl\"]},[[9,\"resize\",\"onResize\"]]],[1,\"ion-grid\",{\"fixed\":[4]}],[1,\"ion-row\"]]],[\"ion-img\",[[1,\"ion-img\",{\"alt\":[1],\"src\":[1],\"loadSrc\":[32],\"loadError\":[32]}]]],[\"ion-progress-bar\",[[33,\"ion-progress-bar\",{\"type\":[1],\"reversed\":[4],\"value\":[2],\"buffer\":[2],\"color\":[513]}]]],[\"ion-range\",[[33,\"ion-range\",{\"color\":[513],\"debounce\":[2],\"name\":[1],\"dualKnobs\":[4,\"dual-knobs\"],\"min\":[2],\"max\":[2],\"pin\":[4],\"pinFormatter\":[16],\"snaps\":[4],\"step\":[2],\"ticks\":[4],\"disabled\":[4],\"value\":[1026],\"ratioA\":[32],\"ratioB\":[32],\"pressedKnob\":[32]}]]],[\"ion-split-pane\",[[33,\"ion-split-pane\",{\"contentId\":[513,\"content-id\"],\"disabled\":[4],\"when\":[8],\"visible\":[32]}]]],[\"ion-text\",[[1,\"ion-text\",{\"color\":[513]}]]],[\"ion-toggle\",[[33,\"ion-toggle\",{\"color\":[513],\"name\":[1],\"checked\":[1028],\"disabled\":[4],\"value\":[1],\"activated\":[32]}]]],[\"ion-virtual-scroll\",[[0,\"ion-virtual-scroll\",{\"approxItemHeight\":[2,\"approx-item-height\"],\"approxHeaderHeight\":[2,\"approx-header-height\"],\"approxFooterHeight\":[2,\"approx-footer-height\"],\"headerFn\":[16],\"footerFn\":[16],\"items\":[16],\"itemHeight\":[16],\"headerHeight\":[16],\"footerHeight\":[16],\"renderItem\":[16],\"renderHeader\":[16],\"renderFooter\":[16],\"nodeRender\":[16],\"domRender\":[16],\"totalHeight\":[32],\"positionForItem\":[64],\"checkRange\":[64],\"checkEnd\":[64]},[[9,\"resize\",\"onResize\"]]]]],[\"ion-picker-column-internal\",[[33,\"ion-picker-column-internal\",{\"items\":[16],\"value\":[1032],\"color\":[513],\"numericInput\":[4,\"numeric-input\"],\"isActive\":[32],\"scrollActiveItemIntoView\":[64]}]]],[\"ion-picker-internal\",[[33,\"ion-picker-internal\"]]],[\"ion-radio_2\",[[33,\"ion-radio\",{\"color\":[513],\"name\":[1],\"disabled\":[4],\"value\":[8],\"checked\":[32],\"buttonTabindex\":[32],\"setFocus\":[64],\"setButtonTabindex\":[64]}],[0,\"ion-radio-group\",{\"allowEmptySelection\":[4,\"allow-empty-selection\"],\"name\":[1],\"value\":[1032]},[[4,\"keydown\",\"onKeydown\"]]]]],[\"ion-ripple-effect\",[[1,\"ion-ripple-effect\",{\"type\":[1],\"addRipple\":[64]}]]],[\"ion-button_2\",[[33,\"ion-button\",{\"color\":[513],\"buttonType\":[1025,\"button-type\"],\"disabled\":[516],\"expand\":[513],\"fill\":[1537],\"routerDirection\":[1,\"router-direction\"],\"routerAnimation\":[16],\"download\":[1],\"href\":[1],\"rel\":[1],\"shape\":[513],\"size\":[513],\"strong\":[4],\"target\":[1],\"type\":[1]}],[1,\"ion-icon\",{\"mode\":[1025],\"color\":[1],\"ios\":[1],\"md\":[1],\"flipRtl\":[4,\"flip-rtl\"],\"name\":[513],\"src\":[1],\"icon\":[8],\"size\":[1],\"lazy\":[4],\"sanitize\":[4],\"svgContent\":[32],\"isVisible\":[32],\"ariaLabel\":[32]}]]],[\"ion-datetime_3\",[[33,\"ion-datetime\",{\"color\":[1],\"name\":[1],\"disabled\":[4],\"readonly\":[4],\"isDateEnabled\":[16],\"min\":[1025],\"max\":[1025],\"presentation\":[1],\"cancelText\":[1,\"cancel-text\"],\"doneText\":[1,\"done-text\"],\"clearText\":[1,\"clear-text\"],\"yearValues\":[8,\"year-values\"],\"monthValues\":[8,\"month-values\"],\"dayValues\":[8,\"day-values\"],\"hourValues\":[8,\"hour-values\"],\"minuteValues\":[8,\"minute-values\"],\"locale\":[1],\"firstDayOfWeek\":[2,\"first-day-of-week\"],\"value\":[1025],\"showDefaultTitle\":[4,\"show-default-title\"],\"showDefaultButtons\":[4,\"show-default-buttons\"],\"showClearButton\":[4,\"show-clear-button\"],\"showDefaultTimeLabel\":[4,\"show-default-time-label\"],\"hourCycle\":[1,\"hour-cycle\"],\"size\":[1],\"showMonthAndYear\":[32],\"activeParts\":[32],\"workingParts\":[32],\"isPresented\":[32],\"isTimePopoverOpen\":[32],\"confirm\":[64],\"reset\":[64],\"cancel\":[64]}],[34,\"ion-picker\",{\"overlayIndex\":[2,\"overlay-index\"],\"keyboardClose\":[4,\"keyboard-close\"],\"enterAnimation\":[16],\"leaveAnimation\":[16],\"buttons\":[16],\"columns\":[16],\"cssClass\":[1,\"css-class\"],\"duration\":[2],\"showBackdrop\":[4,\"show-backdrop\"],\"backdropDismiss\":[4,\"backdrop-dismiss\"],\"animated\":[4],\"htmlAttributes\":[16],\"presented\":[32],\"present\":[64],\"dismiss\":[64],\"onDidDismiss\":[64],\"onWillDismiss\":[64],\"getColumn\":[64]}],[32,\"ion-picker-column\",{\"col\":[16]}]]],[\"ion-action-sheet\",[[34,\"ion-action-sheet\",{\"overlayIndex\":[2,\"overlay-index\"],\"keyboardClose\":[4,\"keyboard-close\"],\"enterAnimation\":[16],\"leaveAnimation\":[16],\"buttons\":[16],\"cssClass\":[1,\"css-class\"],\"backdropDismiss\":[4,\"backdrop-dismiss\"],\"header\":[1],\"subHeader\":[1,\"sub-header\"],\"translucent\":[4],\"animated\":[4],\"htmlAttributes\":[16],\"present\":[64],\"dismiss\":[64],\"onDidDismiss\":[64],\"onWillDismiss\":[64]}]]],[\"ion-alert\",[[34,\"ion-alert\",{\"overlayIndex\":[2,\"overlay-index\"],\"keyboardClose\":[4,\"keyboard-close\"],\"enterAnimation\":[16],\"leaveAnimation\":[16],\"cssClass\":[1,\"css-class\"],\"header\":[1],\"subHeader\":[1,\"sub-header\"],\"message\":[1],\"buttons\":[16],\"inputs\":[1040],\"backdropDismiss\":[4,\"backdrop-dismiss\"],\"translucent\":[4],\"animated\":[4],\"htmlAttributes\":[16],\"present\":[64],\"dismiss\":[64],\"onDidDismiss\":[64],\"onWillDismiss\":[64]},[[4,\"keydown\",\"onKeydown\"]]]]],[\"ion-popover\",[[33,\"ion-popover\",{\"hasController\":[4,\"has-controller\"],\"delegate\":[16],\"overlayIndex\":[2,\"overlay-index\"],\"enterAnimation\":[16],\"leaveAnimation\":[16],\"component\":[1],\"componentProps\":[16],\"keyboardClose\":[4,\"keyboard-close\"],\"cssClass\":[1,\"css-class\"],\"backdropDismiss\":[4,\"backdrop-dismiss\"],\"event\":[8],\"showBackdrop\":[4,\"show-backdrop\"],\"translucent\":[4],\"animated\":[4],\"htmlAttributes\":[16],\"triggerAction\":[1,\"trigger-action\"],\"trigger\":[1],\"size\":[1],\"dismissOnSelect\":[4,\"dismiss-on-select\"],\"reference\":[1],\"side\":[1],\"alignment\":[1025],\"arrow\":[4],\"isOpen\":[4,\"is-open\"],\"keyboardEvents\":[4,\"keyboard-events\"],\"presented\":[32],\"presentFromTrigger\":[64],\"present\":[64],\"dismiss\":[64],\"getParentPopover\":[64],\"onDidDismiss\":[64],\"onWillDismiss\":[64]}]]],[\"ion-checkbox\",[[33,\"ion-checkbox\",{\"color\":[513],\"name\":[1],\"checked\":[1028],\"indeterminate\":[1028],\"disabled\":[4],\"value\":[8]}]]],[\"ion-select_3\",[[33,\"ion-select\",{\"disabled\":[4],\"cancelText\":[1,\"cancel-text\"],\"okText\":[1,\"ok-text\"],\"placeholder\":[1],\"name\":[1],\"selectedText\":[1,\"selected-text\"],\"multiple\":[4],\"interface\":[1],\"interfaceOptions\":[8,\"interface-options\"],\"compareWith\":[1,\"compare-with\"],\"value\":[1032],\"isExpanded\":[32],\"open\":[64]}],[1,\"ion-select-option\",{\"disabled\":[4],\"value\":[8]}],[34,\"ion-select-popover\",{\"header\":[1],\"subHeader\":[1,\"sub-header\"],\"message\":[1],\"multiple\":[4],\"options\":[16]},[[0,\"ionChange\",\"onSelect\"]]]]],[\"ion-app_8\",[[0,\"ion-app\",{\"setFocus\":[64]}],[1,\"ion-content\",{\"color\":[513],\"fullscreen\":[4],\"forceOverscroll\":[1028,\"force-overscroll\"],\"scrollX\":[4,\"scroll-x\"],\"scrollY\":[4,\"scroll-y\"],\"scrollEvents\":[4,\"scroll-events\"],\"getScrollElement\":[64],\"scrollToTop\":[64],\"scrollToBottom\":[64],\"scrollByPoint\":[64],\"scrollToPoint\":[64]},[[8,\"appload\",\"onAppLoad\"]]],[36,\"ion-footer\",{\"collapse\":[1],\"translucent\":[4]}],[36,\"ion-header\",{\"collapse\":[1],\"translucent\":[4]}],[1,\"ion-router-outlet\",{\"mode\":[1025],\"delegate\":[16],\"animated\":[4],\"animation\":[16],\"swipeHandler\":[16],\"commit\":[64],\"setRouteId\":[64],\"getRouteId\":[64]}],[33,\"ion-title\",{\"color\":[513],\"size\":[1]}],[33,\"ion-toolbar\",{\"color\":[513]},[[0,\"ionStyle\",\"childrenStyle\"]]],[34,\"ion-buttons\",{\"collapse\":[4]}]]],[\"ion-spinner\",[[1,\"ion-spinner\",{\"color\":[513],\"duration\":[2],\"name\":[1],\"paused\":[4]}]]],[\"ion-item_8\",[[33,\"ion-item-divider\",{\"color\":[513],\"sticky\":[4]}],[32,\"ion-item-group\"],[1,\"ion-skeleton-text\",{\"animated\":[4]}],[32,\"ion-list\",{\"lines\":[1],\"inset\":[4],\"closeSlidingItems\":[64]}],[33,\"ion-list-header\",{\"color\":[513],\"lines\":[1]}],[49,\"ion-item\",{\"color\":[513],\"button\":[4],\"detail\":[4],\"detailIcon\":[1,\"detail-icon\"],\"disabled\":[4],\"download\":[1],\"fill\":[1],\"shape\":[1],\"href\":[1],\"rel\":[1],\"lines\":[1],\"counter\":[4],\"routerAnimation\":[16],\"routerDirection\":[1,\"router-direction\"],\"target\":[1],\"type\":[1],\"counterFormatter\":[16],\"multipleInputs\":[32],\"focusable\":[32],\"counterString\":[32]},[[0,\"ionChange\",\"handleIonChange\"],[0,\"ionColor\",\"labelColorChanged\"],[0,\"ionStyle\",\"itemStyle\"]]],[34,\"ion-label\",{\"color\":[513],\"position\":[1],\"noAnimate\":[32]}],[33,\"ion-note\",{\"color\":[513]}]]]]"), options);
   });
 };
 
@@ -16522,9 +17614,9 @@ const defineCustomElements = (win, options) => {
 
 /***/ }),
 
-/***/ 4250:
+/***/ 932:
 /*!*********************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/md.transition-d04040a2.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm/md.transition-60a7da81.js ***!
   \*********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -16533,9 +17625,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "mdTransitionAnimation": () => (/* binding */ mdTransitionAnimation)
 /* harmony export */ });
 /* harmony import */ var _animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./animation-36c1d77d.js */ 2597);
-/* harmony import */ var _index_2b53f989_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index-2b53f989.js */ 4243);
+/* harmony import */ var _index_7e1d3e32_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index-7e1d3e32.js */ 4736);
 /* harmony import */ var _helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers-4d272360.js */ 9158);
-/* harmony import */ var _index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./index-b3eecb14.js */ 1049);
+/* harmony import */ var _index_88bdeaae_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./index-88bdeaae.js */ 9479);
 /*!
  * (C) Ionic http://ionicframework.com - MIT License
  */
@@ -16550,7 +17642,7 @@ const mdTransitionAnimation = (_, opts) => {
   const backDirection = opts.direction === 'back';
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
-  const ionPageElement = (0,_index_2b53f989_js__WEBPACK_IMPORTED_MODULE_1__.g)(enteringEl);
+  const ionPageElement = (0,_index_7e1d3e32_js__WEBPACK_IMPORTED_MODULE_1__.g)(enteringEl);
   const enteringToolbarEle = ionPageElement.querySelector('ion-toolbar');
   const rootTransition = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
   rootTransition.addElement(ionPageElement).fill('both').beforeRemoveClass('ion-page-invisible');
@@ -16577,7 +17669,7 @@ const mdTransitionAnimation = (_, opts) => {
     rootTransition.duration(opts.duration || 200).easing('cubic-bezier(0.47,0,0.745,0.715)');
     const leavingPage = (0,_animation_36c1d77d_js__WEBPACK_IMPORTED_MODULE_0__.c)();
     leavingPage
-      .addElement((0,_index_2b53f989_js__WEBPACK_IMPORTED_MODULE_1__.g)(leavingEl))
+      .addElement((0,_index_7e1d3e32_js__WEBPACK_IMPORTED_MODULE_1__.g)(leavingEl))
       .onFinish((currentStep) => {
       if (currentStep === 1 && leavingPage.elements.length > 0) {
         leavingPage.elements[0].style.setProperty('display', 'none');
@@ -16595,9 +17687,9 @@ const mdTransitionAnimation = (_, opts) => {
 
 /***/ }),
 
-/***/ 6523:
+/***/ 877:
 /*!****************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/overlays-ff47fddd.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm/overlays-fd4e69d9.js ***!
   \****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -16622,7 +17714,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "t": () => (/* binding */ toastController)
 /* harmony export */ });
 /* harmony import */ var _Users_frenditriarista_MobileApps_ionic_realtime_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
-/* harmony import */ var _ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ionic-global-f1ce4d2d.js */ 7665);
+/* harmony import */ var _ionic_global_00475c3a_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ionic-global-00475c3a.js */ 537);
 /* harmony import */ var _hardware_back_button_490df115_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./hardware-back-button-490df115.js */ 159);
 /* harmony import */ var _helpers_4d272360_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./helpers-4d272360.js */ 9158);
 
@@ -17015,9 +18107,9 @@ const present = /*#__PURE__*/function () {
     overlay.presented = true;
     overlay.willPresent.emit();
     (_a = overlay.willPresentShorthand) === null || _a === void 0 ? void 0 : _a.emit();
-    const mode = (0,_ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_1__.b)(overlay); // get the user's animation fn if one was provided
+    const mode = (0,_ionic_global_00475c3a_js__WEBPACK_IMPORTED_MODULE_1__.b)(overlay); // get the user's animation fn if one was provided
 
-    const animationBuilder = overlay.enterAnimation ? overlay.enterAnimation : _ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_1__.c.get(name, mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
+    const animationBuilder = overlay.enterAnimation ? overlay.enterAnimation : _ionic_global_00475c3a_js__WEBPACK_IMPORTED_MODULE_1__.c.get(name, mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
     const completed = yield overlayAnimation(overlay, animationBuilder, overlay.el, opts);
 
     if (completed) {
@@ -17105,8 +18197,8 @@ const dismiss = /*#__PURE__*/function () {
         data,
         role
       });
-      const mode = (0,_ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_1__.b)(overlay);
-      const animationBuilder = overlay.leaveAnimation ? overlay.leaveAnimation : _ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_1__.c.get(name, mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation); // If dismissed via gesture, no need to play leaving animation again
+      const mode = (0,_ionic_global_00475c3a_js__WEBPACK_IMPORTED_MODULE_1__.b)(overlay);
+      const animationBuilder = overlay.leaveAnimation ? overlay.leaveAnimation : _ionic_global_00475c3a_js__WEBPACK_IMPORTED_MODULE_1__.c.get(name, mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation); // If dismissed via gesture, no need to play leaving animation again
 
       if (role !== 'gesture') {
         yield overlayAnimation(overlay, animationBuilder, overlay.el, opts);
@@ -17153,7 +18245,7 @@ const overlayAnimation = /*#__PURE__*/function () {
     const aniRoot = overlay.el;
     const animation = animationBuilder(aniRoot, opts);
 
-    if (!overlay.animated || !_ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_1__.c.getBoolean('animated', true)) {
+    if (!overlay.animated || !_ionic_global_00475c3a_js__WEBPACK_IMPORTED_MODULE_1__.c.getBoolean('animated', true)) {
       animation.duration(0);
     }
 
@@ -17212,7 +18304,7 @@ const defaultGate = h => h();
 
 const safeCall = (handler, arg) => {
   if (typeof handler === 'function') {
-    const jmp = _ionic_global_f1ce4d2d_js__WEBPACK_IMPORTED_MODULE_1__.c.get('_zoneGate', defaultGate);
+    const jmp = _ionic_global_00475c3a_js__WEBPACK_IMPORTED_MODULE_1__.c.get('_zoneGate', defaultGate);
     return jmp(() => {
       try {
         return handler(arg);
@@ -17380,96 +18472,6 @@ class InnerSubscriber extends _Subscriber__WEBPACK_IMPORTED_MODULE_0__.Subscribe
         this.unsubscribe();
     }
 }
-
-
-/***/ }),
-
-/***/ 7928:
-/*!*************************************************************!*\
-  !*** ./node_modules/rxjs/_esm2015/internal/Notification.js ***!
-  \*************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "NotificationKind": () => (/* binding */ NotificationKind),
-/* harmony export */   "Notification": () => (/* binding */ Notification)
-/* harmony export */ });
-/* harmony import */ var _observable_empty__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./observable/empty */ 6439);
-/* harmony import */ var _observable_of__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./observable/of */ 4139);
-/* harmony import */ var _observable_throwError__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./observable/throwError */ 6587);
-
-
-
-var NotificationKind;
-(function (NotificationKind) {
-    NotificationKind["NEXT"] = "N";
-    NotificationKind["ERROR"] = "E";
-    NotificationKind["COMPLETE"] = "C";
-})(NotificationKind || (NotificationKind = {}));
-class Notification {
-    constructor(kind, value, error) {
-        this.kind = kind;
-        this.value = value;
-        this.error = error;
-        this.hasValue = kind === 'N';
-    }
-    observe(observer) {
-        switch (this.kind) {
-            case 'N':
-                return observer.next && observer.next(this.value);
-            case 'E':
-                return observer.error && observer.error(this.error);
-            case 'C':
-                return observer.complete && observer.complete();
-        }
-    }
-    do(next, error, complete) {
-        const kind = this.kind;
-        switch (kind) {
-            case 'N':
-                return next && next(this.value);
-            case 'E':
-                return error && error(this.error);
-            case 'C':
-                return complete && complete();
-        }
-    }
-    accept(nextOrObserver, error, complete) {
-        if (nextOrObserver && typeof nextOrObserver.next === 'function') {
-            return this.observe(nextOrObserver);
-        }
-        else {
-            return this.do(nextOrObserver, error, complete);
-        }
-    }
-    toObservable() {
-        const kind = this.kind;
-        switch (kind) {
-            case 'N':
-                return (0,_observable_of__WEBPACK_IMPORTED_MODULE_0__.of)(this.value);
-            case 'E':
-                return (0,_observable_throwError__WEBPACK_IMPORTED_MODULE_1__.throwError)(this.error);
-            case 'C':
-                return (0,_observable_empty__WEBPACK_IMPORTED_MODULE_2__.empty)();
-        }
-        throw new Error('unexpected notification kind value');
-    }
-    static createNext(value) {
-        if (typeof value !== 'undefined') {
-            return new Notification('N', value);
-        }
-        return Notification.undefinedValueNotification;
-    }
-    static createError(err) {
-        return new Notification('E', undefined, err);
-    }
-    static createComplete() {
-        return Notification.completeNotification;
-    }
-}
-Notification.completeNotification = new Notification('C');
-Notification.undefinedValueNotification = new Notification('N', undefined);
 
 
 /***/ }),
@@ -17653,30 +18655,6 @@ class OuterSubscriber extends _Subscriber__WEBPACK_IMPORTED_MODULE_0__.Subscribe
         this.destination.complete();
     }
 }
-
-
-/***/ }),
-
-/***/ 1925:
-/*!**********************************************************!*\
-  !*** ./node_modules/rxjs/_esm2015/internal/Scheduler.js ***!
-  \**********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Scheduler": () => (/* binding */ Scheduler)
-/* harmony export */ });
-class Scheduler {
-    constructor(SchedulerAction, now = Scheduler.now) {
-        this.SchedulerAction = SchedulerAction;
-        this.now = now;
-    }
-    schedule(work, delay = 0, state) {
-        return new this.SchedulerAction(this, work).schedule(state, delay);
-    }
-}
-Scheduler.now = () => Date.now();
 
 
 /***/ }),
@@ -19004,29 +19982,6 @@ function merge(...observables) {
 
 /***/ }),
 
-/***/ 8130:
-/*!*****************************************************************!*\
-  !*** ./node_modules/rxjs/_esm2015/internal/observable/never.js ***!
-  \*****************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "NEVER": () => (/* binding */ NEVER),
-/* harmony export */   "never": () => (/* binding */ never)
-/* harmony export */ });
-/* harmony import */ var _Observable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Observable */ 2378);
-/* harmony import */ var _util_noop__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/noop */ 6882);
-
-
-const NEVER = new _Observable__WEBPACK_IMPORTED_MODULE_0__.Observable(_util_noop__WEBPACK_IMPORTED_MODULE_1__.noop);
-function never() {
-    return NEVER;
-}
-
-
-/***/ }),
-
 /***/ 4139:
 /*!**************************************************************!*\
   !*** ./node_modules/rxjs/_esm2015/internal/observable/of.js ***!
@@ -19217,106 +20172,6 @@ class DefaultIfEmptySubscriber extends _Subscriber__WEBPACK_IMPORTED_MODULE_0__.
             this.destination.next(this.defaultValue);
         }
         this.destination.complete();
-    }
-}
-
-
-/***/ }),
-
-/***/ 5843:
-/*!****************************************************************!*\
-  !*** ./node_modules/rxjs/_esm2015/internal/operators/delay.js ***!
-  \****************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "delay": () => (/* binding */ delay)
-/* harmony export */ });
-/* harmony import */ var _scheduler_async__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../scheduler/async */ 328);
-/* harmony import */ var _util_isDate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/isDate */ 1293);
-/* harmony import */ var _Subscriber__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Subscriber */ 14);
-/* harmony import */ var _Notification__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Notification */ 7928);
-
-
-
-
-function delay(delay, scheduler = _scheduler_async__WEBPACK_IMPORTED_MODULE_0__.async) {
-    const absoluteDelay = (0,_util_isDate__WEBPACK_IMPORTED_MODULE_1__.isDate)(delay);
-    const delayFor = absoluteDelay ? (+delay - scheduler.now()) : Math.abs(delay);
-    return (source) => source.lift(new DelayOperator(delayFor, scheduler));
-}
-class DelayOperator {
-    constructor(delay, scheduler) {
-        this.delay = delay;
-        this.scheduler = scheduler;
-    }
-    call(subscriber, source) {
-        return source.subscribe(new DelaySubscriber(subscriber, this.delay, this.scheduler));
-    }
-}
-class DelaySubscriber extends _Subscriber__WEBPACK_IMPORTED_MODULE_2__.Subscriber {
-    constructor(destination, delay, scheduler) {
-        super(destination);
-        this.delay = delay;
-        this.scheduler = scheduler;
-        this.queue = [];
-        this.active = false;
-        this.errored = false;
-    }
-    static dispatch(state) {
-        const source = state.source;
-        const queue = source.queue;
-        const scheduler = state.scheduler;
-        const destination = state.destination;
-        while (queue.length > 0 && (queue[0].time - scheduler.now()) <= 0) {
-            queue.shift().notification.observe(destination);
-        }
-        if (queue.length > 0) {
-            const delay = Math.max(0, queue[0].time - scheduler.now());
-            this.schedule(state, delay);
-        }
-        else {
-            this.unsubscribe();
-            source.active = false;
-        }
-    }
-    _schedule(scheduler) {
-        this.active = true;
-        const destination = this.destination;
-        destination.add(scheduler.schedule(DelaySubscriber.dispatch, this.delay, {
-            source: this, destination: this.destination, scheduler: scheduler
-        }));
-    }
-    scheduleNotification(notification) {
-        if (this.errored === true) {
-            return;
-        }
-        const scheduler = this.scheduler;
-        const message = new DelayMessage(scheduler.now() + this.delay, notification);
-        this.queue.push(message);
-        if (this.active === false) {
-            this._schedule(scheduler);
-        }
-    }
-    _next(value) {
-        this.scheduleNotification(_Notification__WEBPACK_IMPORTED_MODULE_3__.Notification.createNext(value));
-    }
-    _error(err) {
-        this.errored = true;
-        this.queue = [];
-        this.destination.error(err);
-        this.unsubscribe();
-    }
-    _complete() {
-        this.scheduleNotification(_Notification__WEBPACK_IMPORTED_MODULE_3__.Notification.createComplete());
-        this.unsubscribe();
-    }
-}
-class DelayMessage {
-    constructor(time, notification) {
-        this.time = time;
-        this.notification = notification;
     }
 }
 
@@ -19759,29 +20614,6 @@ class MulticastOperator {
         subscription.add(source.subscribe(subject));
         return subscription;
     }
-}
-
-
-/***/ }),
-
-/***/ 9708:
-/*!******************************************************************!*\
-  !*** ./node_modules/rxjs/_esm2015/internal/operators/publish.js ***!
-  \******************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "publish": () => (/* binding */ publish)
-/* harmony export */ });
-/* harmony import */ var _Subject__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Subject */ 2218);
-/* harmony import */ var _multicast__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./multicast */ 2787);
-
-
-function publish(selector) {
-    return selector ?
-        (0,_multicast__WEBPACK_IMPORTED_MODULE_0__.multicast)(() => new _Subject__WEBPACK_IMPORTED_MODULE_1__.Subject(), selector) :
-        (0,_multicast__WEBPACK_IMPORTED_MODULE_0__.multicast)(new _Subject__WEBPACK_IMPORTED_MODULE_1__.Subject());
 }
 
 
@@ -20551,205 +21383,6 @@ function scheduled(input, scheduler) {
 
 /***/ }),
 
-/***/ 5353:
-/*!*****************************************************************!*\
-  !*** ./node_modules/rxjs/_esm2015/internal/scheduler/Action.js ***!
-  \*****************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Action": () => (/* binding */ Action)
-/* harmony export */ });
-/* harmony import */ var _Subscription__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Subscription */ 2425);
-
-class Action extends _Subscription__WEBPACK_IMPORTED_MODULE_0__.Subscription {
-    constructor(scheduler, work) {
-        super();
-    }
-    schedule(state, delay = 0) {
-        return this;
-    }
-}
-
-
-/***/ }),
-
-/***/ 3670:
-/*!**********************************************************************!*\
-  !*** ./node_modules/rxjs/_esm2015/internal/scheduler/AsyncAction.js ***!
-  \**********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "AsyncAction": () => (/* binding */ AsyncAction)
-/* harmony export */ });
-/* harmony import */ var _Action__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Action */ 5353);
-
-class AsyncAction extends _Action__WEBPACK_IMPORTED_MODULE_0__.Action {
-    constructor(scheduler, work) {
-        super(scheduler, work);
-        this.scheduler = scheduler;
-        this.work = work;
-        this.pending = false;
-    }
-    schedule(state, delay = 0) {
-        if (this.closed) {
-            return this;
-        }
-        this.state = state;
-        const id = this.id;
-        const scheduler = this.scheduler;
-        if (id != null) {
-            this.id = this.recycleAsyncId(scheduler, id, delay);
-        }
-        this.pending = true;
-        this.delay = delay;
-        this.id = this.id || this.requestAsyncId(scheduler, this.id, delay);
-        return this;
-    }
-    requestAsyncId(scheduler, id, delay = 0) {
-        return setInterval(scheduler.flush.bind(scheduler, this), delay);
-    }
-    recycleAsyncId(scheduler, id, delay = 0) {
-        if (delay !== null && this.delay === delay && this.pending === false) {
-            return id;
-        }
-        clearInterval(id);
-        return undefined;
-    }
-    execute(state, delay) {
-        if (this.closed) {
-            return new Error('executing a cancelled action');
-        }
-        this.pending = false;
-        const error = this._execute(state, delay);
-        if (error) {
-            return error;
-        }
-        else if (this.pending === false && this.id != null) {
-            this.id = this.recycleAsyncId(this.scheduler, this.id, null);
-        }
-    }
-    _execute(state, delay) {
-        let errored = false;
-        let errorValue = undefined;
-        try {
-            this.work(state);
-        }
-        catch (e) {
-            errored = true;
-            errorValue = !!e && e || new Error(e);
-        }
-        if (errored) {
-            this.unsubscribe();
-            return errorValue;
-        }
-    }
-    _unsubscribe() {
-        const id = this.id;
-        const scheduler = this.scheduler;
-        const actions = scheduler.actions;
-        const index = actions.indexOf(this);
-        this.work = null;
-        this.state = null;
-        this.pending = false;
-        this.scheduler = null;
-        if (index !== -1) {
-            actions.splice(index, 1);
-        }
-        if (id != null) {
-            this.id = this.recycleAsyncId(scheduler, id, null);
-        }
-        this.delay = null;
-    }
-}
-
-
-/***/ }),
-
-/***/ 2901:
-/*!*************************************************************************!*\
-  !*** ./node_modules/rxjs/_esm2015/internal/scheduler/AsyncScheduler.js ***!
-  \*************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "AsyncScheduler": () => (/* binding */ AsyncScheduler)
-/* harmony export */ });
-/* harmony import */ var _Scheduler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Scheduler */ 1925);
-
-class AsyncScheduler extends _Scheduler__WEBPACK_IMPORTED_MODULE_0__.Scheduler {
-    constructor(SchedulerAction, now = _Scheduler__WEBPACK_IMPORTED_MODULE_0__.Scheduler.now) {
-        super(SchedulerAction, () => {
-            if (AsyncScheduler.delegate && AsyncScheduler.delegate !== this) {
-                return AsyncScheduler.delegate.now();
-            }
-            else {
-                return now();
-            }
-        });
-        this.actions = [];
-        this.active = false;
-        this.scheduled = undefined;
-    }
-    schedule(work, delay = 0, state) {
-        if (AsyncScheduler.delegate && AsyncScheduler.delegate !== this) {
-            return AsyncScheduler.delegate.schedule(work, delay, state);
-        }
-        else {
-            return super.schedule(work, delay, state);
-        }
-    }
-    flush(action) {
-        const { actions } = this;
-        if (this.active) {
-            actions.push(action);
-            return;
-        }
-        let error;
-        this.active = true;
-        do {
-            if (error = action.execute(action.state, action.delay)) {
-                break;
-            }
-        } while (action = actions.shift());
-        this.active = false;
-        if (error) {
-            while (action = actions.shift()) {
-                action.unsubscribe();
-            }
-            throw error;
-        }
-    }
-}
-
-
-/***/ }),
-
-/***/ 328:
-/*!****************************************************************!*\
-  !*** ./node_modules/rxjs/_esm2015/internal/scheduler/async.js ***!
-  \****************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "asyncScheduler": () => (/* binding */ asyncScheduler),
-/* harmony export */   "async": () => (/* binding */ async)
-/* harmony export */ });
-/* harmony import */ var _AsyncAction__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AsyncAction */ 3670);
-/* harmony import */ var _AsyncScheduler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AsyncScheduler */ 2901);
-
-
-const asyncScheduler = new _AsyncScheduler__WEBPACK_IMPORTED_MODULE_0__.AsyncScheduler(_AsyncAction__WEBPACK_IMPORTED_MODULE_1__.AsyncAction);
-const async = asyncScheduler;
-
-
-/***/ }),
-
 /***/ 2803:
 /*!****************************************************************!*\
   !*** ./node_modules/rxjs/_esm2015/internal/symbol/iterator.js ***!
@@ -21002,23 +21635,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "isArrayLike": () => (/* binding */ isArrayLike)
 /* harmony export */ });
 const isArrayLike = ((x) => x && typeof x.length === 'number' && typeof x !== 'function');
-
-
-/***/ }),
-
-/***/ 1293:
-/*!************************************************************!*\
-  !*** ./node_modules/rxjs/_esm2015/internal/util/isDate.js ***!
-  \************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "isDate": () => (/* binding */ isDate)
-/* harmony export */ });
-function isDate(value) {
-    return value instanceof Date && !isNaN(+value);
-}
 
 
 /***/ }),
@@ -103214,629 +103830,6 @@ const VERSION = new _angular_core__WEBPACK_IMPORTED_MODULE_0__.Version('13.2.7')
 /**
  * Generated bundle index. Do not edit.
  */
-
-
-
-/***/ }),
-
-/***/ 4933:
-/*!**************************************************************************!*\
-  !*** ./node_modules/@angular/service-worker/fesm2015/service-worker.mjs ***!
-  \**************************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "ServiceWorkerModule": () => (/* binding */ ServiceWorkerModule),
-/* harmony export */   "SwPush": () => (/* binding */ SwPush),
-/* harmony export */   "SwRegistrationOptions": () => (/* binding */ SwRegistrationOptions),
-/* harmony export */   "SwUpdate": () => (/* binding */ SwUpdate)
-/* harmony export */ });
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/common */ 6362);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/core */ 3184);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ 1635);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ 6587);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ 6312);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ 4139);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ 5828);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! rxjs */ 2218);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! rxjs */ 8130);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! rxjs */ 8623);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ 6942);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ 9151);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs/operators */ 9095);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs/operators */ 9708);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs/operators */ 3910);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs/operators */ 8759);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! rxjs/operators */ 5843);
-/**
- * @license Angular v13.2.7
- * (c) 2010-2022 Google LLC. https://angular.io/
- * License: MIT
- */
-
-
-
-
-
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-
-const ERR_SW_NOT_SUPPORTED = 'Service workers are disabled or not supported by this browser';
-
-function errorObservable(message) {
-  return (0,rxjs__WEBPACK_IMPORTED_MODULE_0__.defer)(() => (0,rxjs__WEBPACK_IMPORTED_MODULE_1__.throwError)(new Error(message)));
-}
-/**
- * @publicApi
- */
-
-
-class NgswCommChannel {
-  constructor(serviceWorker) {
-    this.serviceWorker = serviceWorker;
-
-    if (!serviceWorker) {
-      this.worker = this.events = this.registration = errorObservable(ERR_SW_NOT_SUPPORTED);
-    } else {
-      const controllerChangeEvents = (0,rxjs__WEBPACK_IMPORTED_MODULE_2__.fromEvent)(serviceWorker, 'controllerchange');
-      const controllerChanges = controllerChangeEvents.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.map)(() => serviceWorker.controller));
-      const currentController = (0,rxjs__WEBPACK_IMPORTED_MODULE_0__.defer)(() => (0,rxjs__WEBPACK_IMPORTED_MODULE_4__.of)(serviceWorker.controller));
-      const controllerWithChanges = (0,rxjs__WEBPACK_IMPORTED_MODULE_5__.concat)(currentController, controllerChanges);
-      this.worker = controllerWithChanges.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_6__.filter)(c => !!c));
-      this.registration = this.worker.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_7__.switchMap)(() => serviceWorker.getRegistration()));
-      const rawEvents = (0,rxjs__WEBPACK_IMPORTED_MODULE_2__.fromEvent)(serviceWorker, 'message');
-      const rawEventPayload = rawEvents.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.map)(event => event.data));
-      const eventsUnconnected = rawEventPayload.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_6__.filter)(event => event && event.type));
-      const events = eventsUnconnected.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_8__.publish)());
-      events.connect();
-      this.events = events;
-    }
-  }
-
-  postMessage(action, payload) {
-    return this.worker.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_9__.take)(1), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_10__.tap)(sw => {
-      sw.postMessage(Object.assign({
-        action
-      }, payload));
-    })).toPromise().then(() => undefined);
-  }
-
-  postMessageWithOperation(type, payload, operationNonce) {
-    const waitForOperationCompleted = this.waitForOperationCompleted(operationNonce);
-    const postMessage = this.postMessage(type, payload);
-    return Promise.all([postMessage, waitForOperationCompleted]).then(([, result]) => result);
-  }
-
-  generateNonce() {
-    return Math.round(Math.random() * 10000000);
-  }
-
-  eventsOfType(type) {
-    let filterFn;
-
-    if (typeof type === 'string') {
-      filterFn = event => event.type === type;
-    } else {
-      filterFn = event => type.includes(event.type);
-    }
-
-    return this.events.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_6__.filter)(filterFn));
-  }
-
-  nextEventOfType(type) {
-    return this.eventsOfType(type).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_9__.take)(1));
-  }
-
-  waitForOperationCompleted(nonce) {
-    return this.eventsOfType('OPERATION_COMPLETED').pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_6__.filter)(event => event.nonce === nonce), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_9__.take)(1), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.map)(event => {
-      if (event.result !== undefined) {
-        return event.result;
-      }
-
-      throw new Error(event.error);
-    })).toPromise();
-  }
-
-  get isEnabled() {
-    return !!this.serviceWorker;
-  }
-
-}
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-
-/**
- * Subscribe and listen to
- * [Web Push
- * Notifications](https://developer.mozilla.org/en-US/docs/Web/API/Push_API/Best_Practices) through
- * Angular Service Worker.
- *
- * @usageNotes
- *
- * You can inject a `SwPush` instance into any component or service
- * as a dependency.
- *
- * <code-example path="service-worker/push/module.ts" region="inject-sw-push"
- * header="app.component.ts"></code-example>
- *
- * To subscribe, call `SwPush.requestSubscription()`, which asks the user for permission.
- * The call returns a `Promise` with a new
- * [`PushSubscription`](https://developer.mozilla.org/en-US/docs/Web/API/PushSubscription)
- * instance.
- *
- * <code-example path="service-worker/push/module.ts" region="subscribe-to-push"
- * header="app.component.ts"></code-example>
- *
- * A request is rejected if the user denies permission, or if the browser
- * blocks or does not support the Push API or ServiceWorkers.
- * Check `SwPush.isEnabled` to confirm status.
- *
- * Invoke Push Notifications by pushing a message with the following payload.
- *
- * ```ts
- * {
- *   "notification": {
- *     "actions": NotificationAction[],
- *     "badge": USVString,
- *     "body": DOMString,
- *     "data": any,
- *     "dir": "auto"|"ltr"|"rtl",
- *     "icon": USVString,
- *     "image": USVString,
- *     "lang": DOMString,
- *     "renotify": boolean,
- *     "requireInteraction": boolean,
- *     "silent": boolean,
- *     "tag": DOMString,
- *     "timestamp": DOMTimeStamp,
- *     "title": DOMString,
- *     "vibrate": number[]
- *   }
- * }
- * ```
- *
- * Only `title` is required. See `Notification`
- * [instance
- * properties](https://developer.mozilla.org/en-US/docs/Web/API/Notification#Instance_properties).
- *
- * While the subscription is active, Service Worker listens for
- * [PushEvent](https://developer.mozilla.org/en-US/docs/Web/API/PushEvent)
- * occurrences and creates
- * [Notification](https://developer.mozilla.org/en-US/docs/Web/API/Notification)
- * instances in response.
- *
- * Unsubscribe using `SwPush.unsubscribe()`.
- *
- * An application can subscribe to `SwPush.notificationClicks` observable to be notified when a user
- * clicks on a notification. For example:
- *
- * <code-example path="service-worker/push/module.ts" region="subscribe-to-notification-clicks"
- * header="app.component.ts"></code-example>
- *
- * You can read more on handling notification clicks in the [Service worker notifications
- * guide](guide/service-worker-notifications).
- *
- * @see [Push Notifications](https://developers.google.com/web/fundamentals/codelabs/push-notifications/)
- * @see [Angular Push Notifications](https://blog.angular-university.io/angular-push-notifications/)
- * @see [MDN: Push API](https://developer.mozilla.org/en-US/docs/Web/API/Push_API)
- * @see [MDN: Notifications API](https://developer.mozilla.org/en-US/docs/Web/API/Notifications_API)
- * @see [MDN: Web Push API Notifications best practices](https://developer.mozilla.org/en-US/docs/Web/API/Push_API/Best_Practices)
- *
- * @publicApi
- */
-
-
-class SwPush {
-  constructor(sw) {
-    this.sw = sw;
-    this.subscriptionChanges = new rxjs__WEBPACK_IMPORTED_MODULE_11__.Subject();
-
-    if (!sw.isEnabled) {
-      this.messages = rxjs__WEBPACK_IMPORTED_MODULE_12__.NEVER;
-      this.notificationClicks = rxjs__WEBPACK_IMPORTED_MODULE_12__.NEVER;
-      this.subscription = rxjs__WEBPACK_IMPORTED_MODULE_12__.NEVER;
-      return;
-    }
-
-    this.messages = this.sw.eventsOfType('PUSH').pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.map)(message => message.data));
-    this.notificationClicks = this.sw.eventsOfType('NOTIFICATION_CLICK').pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.map)(message => message.data));
-    this.pushManager = this.sw.registration.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.map)(registration => registration.pushManager));
-    const workerDrivenSubscriptions = this.pushManager.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_7__.switchMap)(pm => pm.getSubscription()));
-    this.subscription = (0,rxjs__WEBPACK_IMPORTED_MODULE_13__.merge)(workerDrivenSubscriptions, this.subscriptionChanges);
-  }
-  /**
-   * True if the Service Worker is enabled (supported by the browser and enabled via
-   * `ServiceWorkerModule`).
-   */
-
-
-  get isEnabled() {
-    return this.sw.isEnabled;
-  }
-  /**
-   * Subscribes to Web Push Notifications,
-   * after requesting and receiving user permission.
-   *
-   * @param options An object containing the `serverPublicKey` string.
-   * @returns A Promise that resolves to the new subscription object.
-   */
-
-
-  requestSubscription(options) {
-    if (!this.sw.isEnabled) {
-      return Promise.reject(new Error(ERR_SW_NOT_SUPPORTED));
-    }
-
-    const pushOptions = {
-      userVisibleOnly: true
-    };
-    let key = this.decodeBase64(options.serverPublicKey.replace(/_/g, '/').replace(/-/g, '+'));
-    let applicationServerKey = new Uint8Array(new ArrayBuffer(key.length));
-
-    for (let i = 0; i < key.length; i++) {
-      applicationServerKey[i] = key.charCodeAt(i);
-    }
-
-    pushOptions.applicationServerKey = applicationServerKey;
-    return this.pushManager.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_7__.switchMap)(pm => pm.subscribe(pushOptions)), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_9__.take)(1)).toPromise().then(sub => {
-      this.subscriptionChanges.next(sub);
-      return sub;
-    });
-  }
-  /**
-   * Unsubscribes from Service Worker push notifications.
-   *
-   * @returns A Promise that is resolved when the operation succeeds, or is rejected if there is no
-   *          active subscription or the unsubscribe operation fails.
-   */
-
-
-  unsubscribe() {
-    if (!this.sw.isEnabled) {
-      return Promise.reject(new Error(ERR_SW_NOT_SUPPORTED));
-    }
-
-    const doUnsubscribe = sub => {
-      if (sub === null) {
-        throw new Error('Not subscribed to push notifications.');
-      }
-
-      return sub.unsubscribe().then(success => {
-        if (!success) {
-          throw new Error('Unsubscribe failed!');
-        }
-
-        this.subscriptionChanges.next(null);
-      });
-    };
-
-    return this.subscription.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_9__.take)(1), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_7__.switchMap)(doUnsubscribe)).toPromise();
-  }
-
-  decodeBase64(input) {
-    return atob(input);
-  }
-
-}
-
-SwPush.ɵfac = function SwPush_Factory(t) {
-  return new (t || SwPush)(_angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵinject"](NgswCommChannel));
-};
-
-SwPush.ɵprov = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵdefineInjectable"]({
-  token: SwPush,
-  factory: SwPush.ɵfac
-});
-
-(function () {
-  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵsetClassMetadata"](SwPush, [{
-    type: _angular_core__WEBPACK_IMPORTED_MODULE_14__.Injectable
-  }], function () {
-    return [{
-      type: NgswCommChannel
-    }];
-  }, null);
-})();
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-
-/**
- * Subscribe to update notifications from the Service Worker, trigger update
- * checks, and forcibly activate updates.
- *
- * @see {@link guide/service-worker-communications Service worker communication guide}
- *
- * @publicApi
- */
-
-
-class SwUpdate {
-  constructor(sw) {
-    this.sw = sw;
-
-    if (!sw.isEnabled) {
-      this.versionUpdates = rxjs__WEBPACK_IMPORTED_MODULE_12__.NEVER;
-      this.available = rxjs__WEBPACK_IMPORTED_MODULE_12__.NEVER;
-      this.activated = rxjs__WEBPACK_IMPORTED_MODULE_12__.NEVER;
-      this.unrecoverable = rxjs__WEBPACK_IMPORTED_MODULE_12__.NEVER;
-      return;
-    }
-
-    this.versionUpdates = this.sw.eventsOfType(['VERSION_DETECTED', 'VERSION_INSTALLATION_FAILED', 'VERSION_READY']);
-    this.available = this.versionUpdates.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_6__.filter)(evt => evt.type === 'VERSION_READY'), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.map)(evt => ({
-      type: 'UPDATE_AVAILABLE',
-      current: evt.currentVersion,
-      available: evt.latestVersion
-    })));
-    this.activated = this.sw.eventsOfType('UPDATE_ACTIVATED');
-    this.unrecoverable = this.sw.eventsOfType('UNRECOVERABLE_STATE');
-  }
-  /**
-   * True if the Service Worker is enabled (supported by the browser and enabled via
-   * `ServiceWorkerModule`).
-   */
-
-
-  get isEnabled() {
-    return this.sw.isEnabled;
-  }
-  /**
-   * Checks for an update and waits until the new version is downloaded from the server and ready
-   * for activation.
-   *
-   * @returns a promise that
-   * - resolves to `true` if a new version was found and is ready to be activated.
-   * - resolves to `false` if no new version was found
-   * - rejects if any error occurs
-   */
-
-
-  checkForUpdate() {
-    if (!this.sw.isEnabled) {
-      return Promise.reject(new Error(ERR_SW_NOT_SUPPORTED));
-    }
-
-    const nonce = this.sw.generateNonce();
-    return this.sw.postMessageWithOperation('CHECK_FOR_UPDATES', {
-      nonce
-    }, nonce);
-  }
-  /**
-   * Updates the current client (i.e. browser tab) to the latest version that is ready for
-   * activation.
-   *
-   * @returns a promise that
-   *  - resolves to `true` if an update was activated successfully
-   *  - resolves to `false` if no update was available (for example, the client was already on the
-   *    latest version).
-   *  - rejects if any error occurs
-   */
-
-
-  activateUpdate() {
-    if (!this.sw.isEnabled) {
-      return Promise.reject(new Error(ERR_SW_NOT_SUPPORTED));
-    }
-
-    const nonce = this.sw.generateNonce();
-    return this.sw.postMessageWithOperation('ACTIVATE_UPDATE', {
-      nonce
-    }, nonce);
-  }
-
-}
-
-SwUpdate.ɵfac = function SwUpdate_Factory(t) {
-  return new (t || SwUpdate)(_angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵinject"](NgswCommChannel));
-};
-
-SwUpdate.ɵprov = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵdefineInjectable"]({
-  token: SwUpdate,
-  factory: SwUpdate.ɵfac
-});
-
-(function () {
-  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵsetClassMetadata"](SwUpdate, [{
-    type: _angular_core__WEBPACK_IMPORTED_MODULE_14__.Injectable
-  }], function () {
-    return [{
-      type: NgswCommChannel
-    }];
-  }, null);
-})();
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-
-/**
- * Token that can be used to provide options for `ServiceWorkerModule` outside of
- * `ServiceWorkerModule.register()`.
- *
- * You can use this token to define a provider that generates the registration options at runtime,
- * for example via a function call:
- *
- * {@example service-worker/registration-options/module.ts region="registration-options"
- *     header="app.module.ts"}
- *
- * @publicApi
- */
-
-
-class SwRegistrationOptions {}
-
-const SCRIPT = new _angular_core__WEBPACK_IMPORTED_MODULE_14__.InjectionToken('NGSW_REGISTER_SCRIPT');
-
-function ngswAppInitializer(injector, script, options, platformId) {
-  const initializer = () => {
-    if (!((0,_angular_common__WEBPACK_IMPORTED_MODULE_15__.isPlatformBrowser)(platformId) && 'serviceWorker' in navigator && options.enabled !== false)) {
-      return;
-    } // Wait for service worker controller changes, and fire an INITIALIZE action when a new SW
-    // becomes active. This allows the SW to initialize itself even if there is no application
-    // traffic.
-
-
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-      if (navigator.serviceWorker.controller !== null) {
-        navigator.serviceWorker.controller.postMessage({
-          action: 'INITIALIZE'
-        });
-      }
-    });
-    let readyToRegister$;
-
-    if (typeof options.registrationStrategy === 'function') {
-      readyToRegister$ = options.registrationStrategy();
-    } else {
-      const [strategy, ...args] = (options.registrationStrategy || 'registerWhenStable:30000').split(':');
-
-      switch (strategy) {
-        case 'registerImmediately':
-          readyToRegister$ = (0,rxjs__WEBPACK_IMPORTED_MODULE_4__.of)(null);
-          break;
-
-        case 'registerWithDelay':
-          readyToRegister$ = delayWithTimeout(+args[0] || 0);
-          break;
-
-        case 'registerWhenStable':
-          readyToRegister$ = !args[0] ? whenStable(injector) : (0,rxjs__WEBPACK_IMPORTED_MODULE_13__.merge)(whenStable(injector), delayWithTimeout(+args[0]));
-          break;
-
-        default:
-          // Unknown strategy.
-          throw new Error(`Unknown ServiceWorker registration strategy: ${options.registrationStrategy}`);
-      }
-    } // Don't return anything to avoid blocking the application until the SW is registered.
-    // Also, run outside the Angular zone to avoid preventing the app from stabilizing (especially
-    // given that some registration strategies wait for the app to stabilize).
-    // Catch and log the error if SW registration fails to avoid uncaught rejection warning.
-
-
-    const ngZone = injector.get(_angular_core__WEBPACK_IMPORTED_MODULE_14__.NgZone);
-    ngZone.runOutsideAngular(() => readyToRegister$.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_9__.take)(1)).subscribe(() => navigator.serviceWorker.register(script, {
-      scope: options.scope
-    }).catch(err => console.error('Service worker registration failed with:', err))));
-  };
-
-  return initializer;
-}
-
-function delayWithTimeout(timeout) {
-  return (0,rxjs__WEBPACK_IMPORTED_MODULE_4__.of)(null).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_16__.delay)(timeout));
-}
-
-function whenStable(injector) {
-  const appRef = injector.get(_angular_core__WEBPACK_IMPORTED_MODULE_14__.ApplicationRef);
-  return appRef.isStable.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_6__.filter)(stable => stable));
-}
-
-function ngswCommChannelFactory(opts, platformId) {
-  return new NgswCommChannel((0,_angular_common__WEBPACK_IMPORTED_MODULE_15__.isPlatformBrowser)(platformId) && opts.enabled !== false ? navigator.serviceWorker : undefined);
-}
-/**
- * @publicApi
- */
-
-
-class ServiceWorkerModule {
-  /**
-   * Register the given Angular Service Worker script.
-   *
-   * If `enabled` is set to `false` in the given options, the module will behave as if service
-   * workers are not supported by the browser, and the service worker will not be registered.
-   */
-  static register(script, opts = {}) {
-    return {
-      ngModule: ServiceWorkerModule,
-      providers: [{
-        provide: SCRIPT,
-        useValue: script
-      }, {
-        provide: SwRegistrationOptions,
-        useValue: opts
-      }, {
-        provide: NgswCommChannel,
-        useFactory: ngswCommChannelFactory,
-        deps: [SwRegistrationOptions, _angular_core__WEBPACK_IMPORTED_MODULE_14__.PLATFORM_ID]
-      }, {
-        provide: _angular_core__WEBPACK_IMPORTED_MODULE_14__.APP_INITIALIZER,
-        useFactory: ngswAppInitializer,
-        deps: [_angular_core__WEBPACK_IMPORTED_MODULE_14__.Injector, SCRIPT, SwRegistrationOptions, _angular_core__WEBPACK_IMPORTED_MODULE_14__.PLATFORM_ID],
-        multi: true
-      }]
-    };
-  }
-
-}
-
-ServiceWorkerModule.ɵfac = function ServiceWorkerModule_Factory(t) {
-  return new (t || ServiceWorkerModule)();
-};
-
-ServiceWorkerModule.ɵmod = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵdefineNgModule"]({
-  type: ServiceWorkerModule
-});
-ServiceWorkerModule.ɵinj = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵdefineInjector"]({
-  providers: [SwPush, SwUpdate]
-});
-
-(function () {
-  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵsetClassMetadata"](ServiceWorkerModule, [{
-    type: _angular_core__WEBPACK_IMPORTED_MODULE_14__.NgModule,
-    args: [{
-      providers: [SwPush, SwUpdate]
-    }]
-  }], null, null);
-})();
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-// This file only reexports content of the `src` folder. Keep it that way.
-
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-
-/**
- * Generated bundle index. Do not edit.
- */
-
 
 
 

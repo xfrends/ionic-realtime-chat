@@ -32,7 +32,7 @@ const routes = [
     },
     {
         path: 'messages',
-        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_chat_messages_messages_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./chat/messages/messages.module */ 7763)).then(m => m.MessagesPageModule)
+        loadChildren: () => __webpack_require__.e(/*! import() */ "common").then(__webpack_require__.bind(__webpack_require__, /*! ./chat/messages/messages.module */ 7763)).then(m => m.MessagesPageModule)
     }
 ];
 let AppRoutingModule = class AppRoutingModule {
@@ -61,40 +61,87 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AppComponent": () => (/* binding */ AppComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 4929);
 /* harmony import */ var _app_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./app.component.html?ngResource */ 3383);
 /* harmony import */ var _app_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app.component.scss?ngResource */ 9259);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 3184);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ 2816);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ 2816);
 /* harmony import */ var _shared_api_content_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./shared/api/content.service */ 3558);
+/* harmony import */ var _awesome_cordova_plugins_fcm_ngx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @awesome-cordova-plugins/fcm/ngx */ 971);
+/* harmony import */ var _capacitor_push_notifications__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @capacitor/push-notifications */ 1704);
 
 
 
 
+
+
+// import { FCM } from '@ionic-native/fcm';
 
 
 let AppComponent = class AppComponent {
-    constructor(router, contentService) {
+    constructor(router, contentService, fcm) {
         this.router = router;
         this.contentService = contentService;
+        this.fcm = fcm;
         this.user = {};
         this.contentService.getToken()
             .then((data) => {
             if (data === null) {
-                // this.router.navigate(['/login']);
+                this.router.navigate(['/login']);
             }
         })
             .catch(() => {
-            // this.router.navigate(['/login']);
+            this.router.navigate(['/login']);
         });
+        _capacitor_push_notifications__WEBPACK_IMPORTED_MODULE_4__.PushNotifications.requestPermissions().then(result => {
+            if (result.receive === 'granted') {
+                // Register with Apple / Google to receive push via APNS/FCM
+                _capacitor_push_notifications__WEBPACK_IMPORTED_MODULE_4__.PushNotifications.register();
+            }
+            else {
+                // Show some error
+            }
+        });
+        _capacitor_push_notifications__WEBPACK_IMPORTED_MODULE_4__.PushNotifications.addListener('registration', (token) => {
+            alert('Push registration success, token: ' + token.value);
+        });
+        _capacitor_push_notifications__WEBPACK_IMPORTED_MODULE_4__.PushNotifications.addListener('registrationError', (error) => {
+            alert('Error on registration: ' + JSON.stringify(error));
+        });
+        _capacitor_push_notifications__WEBPACK_IMPORTED_MODULE_4__.PushNotifications.addListener('pushNotificationReceived', (notification) => {
+            alert('Push received: ' + JSON.stringify(notification));
+        });
+        _capacitor_push_notifications__WEBPACK_IMPORTED_MODULE_4__.PushNotifications.addListener('pushNotificationActionPerformed', (notification) => {
+            alert('Push action performed: ' + JSON.stringify(notification));
+        });
+        // this.fcm.subscribeToTopic('realtime-chat');
+        // this.fcm.getToken().then(token => {
+        //   this.contentService.setFcmToken(token);
+        // });
+        // this.fcm.onNotification().subscribe(data => {
+        //   if(data.wasTapped){
+        //     console.log('background: ', data);
+        //   } else {
+        //     console.log('foreground: ', data);
+        //   };
+        // });
+        // this.fcm.onTokenRefresh().subscribe(token => {
+        //   this.contentService.setFcmToken(token);
+        // });
+        // this.fcm.hasPermission().then(hasPermission => {
+        //   if (hasPermission) {
+        //     console.log('Has permission!');
+        //   }
+        // });
     }
 };
 AppComponent.ctorParameters = () => [
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__.Router },
-    { type: _shared_api_content_service__WEBPACK_IMPORTED_MODULE_2__.ContentService }
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__.Router },
+    { type: _shared_api_content_service__WEBPACK_IMPORTED_MODULE_2__.ContentService },
+    { type: _awesome_cordova_plugins_fcm_ngx__WEBPACK_IMPORTED_MODULE_3__.FCM }
 ];
-AppComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Component)({
+AppComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_7__.Component)({
         selector: 'app-root',
         template: _app_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
         styles: [_app_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
@@ -120,13 +167,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common/http */ 8784);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 3184);
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/platform-browser */ 318);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/router */ 2816);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/router */ 2816);
+/* harmony import */ var _awesome_cordova_plugins_fcm_ngx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @awesome-cordova-plugins/fcm/ngx */ 971);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic/angular */ 3819);
-/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./app-routing.module */ 158);
-/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app.component */ 5041);
-/* harmony import */ var _angular_service_worker__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/service-worker */ 4933);
-/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../environments/environment */ 2340);
-
+/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app-routing.module */ 158);
+/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./app.component */ 5041);
 
 
 
@@ -140,16 +185,11 @@ let AppModule = class AppModule {
 };
 AppModule = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
     (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.NgModule)({
-        declarations: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent],
+        declarations: [_app_component__WEBPACK_IMPORTED_MODULE_2__.AppComponent],
         entryComponents: [],
-        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_5__.BrowserModule, _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.IonicModule.forRoot(), _app_routing_module__WEBPACK_IMPORTED_MODULE_0__.AppRoutingModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_7__.HttpClientModule, _angular_service_worker__WEBPACK_IMPORTED_MODULE_8__.ServiceWorkerModule.register('ngsw-worker.js', {
-                enabled: _environments_environment__WEBPACK_IMPORTED_MODULE_2__.environment.production,
-                // Register the ServiceWorker as soon as the application is stable
-                // or after 30 seconds (whichever comes first).
-                registrationStrategy: 'registerWhenStable:30000'
-            })],
-        providers: [{ provide: _angular_router__WEBPACK_IMPORTED_MODULE_9__.RouteReuseStrategy, useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.IonicRouteStrategy }],
-        bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent],
+        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_5__.BrowserModule, _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.IonicModule.forRoot(), _app_routing_module__WEBPACK_IMPORTED_MODULE_1__.AppRoutingModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_7__.HttpClientModule],
+        providers: [{ provide: _angular_router__WEBPACK_IMPORTED_MODULE_8__.RouteReuseStrategy, useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.IonicRouteStrategy }, _awesome_cordova_plugins_fcm_ngx__WEBPACK_IMPORTED_MODULE_0__.FCM],
+        bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_2__.AppComponent],
     })
 ], AppModule);
 
@@ -185,11 +225,12 @@ let ContentService = class ContentService {
         this.http = http;
         this.httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpHeaders({
-                'Content-Type': 'application/x-www-form-urlencoded',
-                // 'Authorization': 'Bearer ' + this.getToken
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
             })
         };
     }
+    // Start Token
     setToken(data) {
         return _capacitor_storage__WEBPACK_IMPORTED_MODULE_0__.Storage.set({ key: 'token', value: data });
     }
@@ -202,13 +243,183 @@ let ContentService = class ContentService {
             return value;
         });
     }
+    setFcmToken(token) {
+        return _capacitor_storage__WEBPACK_IMPORTED_MODULE_0__.Storage.set({ key: 'fcmToken', value: token });
+    }
+    deleteFcmToken() {
+        return _capacitor_storage__WEBPACK_IMPORTED_MODULE_0__.Storage.remove({ key: 'fcmToken' });
+    }
+    getFcmToken() {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__awaiter)(this, void 0, void 0, function* () {
+            const { value } = yield _capacitor_storage__WEBPACK_IMPORTED_MODULE_0__.Storage.get({ key: 'fcmToken' });
+            return value;
+        });
+    }
+    // End Token
+    // Start Auth
+    getProfile(token) {
+        const url = _environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.baseUrl + '/api/auth/profile';
+        this.httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpHeaders({
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        };
+        return this.http.get(url, this.httpOptions);
+    }
     postLogin(data) {
         const url = _environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.baseUrl + '/api/login';
-        return this.http.post(url, data);
+        return this.http.post(url, data, this.httpOptions);
     }
-    postLogout() {
+    postLogout(token) {
         const url = _environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.baseUrl + '/api/auth/logout';
+        this.httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpHeaders({
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        };
         return this.http.post(url, {}, this.httpOptions);
+    }
+    putUser(token, id, data) {
+        const url = _environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.baseUrl + '/api/user/' + id;
+        this.httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpHeaders({
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        };
+        return this.http.put(url, data, this.httpOptions);
+    }
+    // End Auth
+    // Start User Contact
+    getUsers(token) {
+        const url = _environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.baseUrl + '/api/user';
+        this.httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpHeaders({
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        };
+        return this.http.get(url, this.httpOptions);
+    }
+    postContact(token, email) {
+        const url = _environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.baseUrl + '/api/contact';
+        this.httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpHeaders({
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        };
+        return this.http.post(url, { email }, this.httpOptions);
+    }
+    getContacts(token) {
+        const url = _environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.baseUrl + '/api/contact';
+        this.httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpHeaders({
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        };
+        return this.http.get(url, this.httpOptions);
+    }
+    deleteContact(token, contactId) {
+        const url = _environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.baseUrl + '/api/contact/' + contactId;
+        this.httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpHeaders({
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        };
+        return this.http.delete(url, this.httpOptions);
+    }
+    // End User Contact
+    // Start Chat
+    postChat(token, email) {
+        const url = _environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.baseUrl + '/api/chat';
+        this.httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpHeaders({
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        };
+        return this.http.post(url, { email }, this.httpOptions);
+    }
+    getChats(token) {
+        const url = _environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.baseUrl + '/api/chat';
+        this.httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpHeaders({
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        };
+        return this.http.get(url, this.httpOptions);
+    }
+    getChat(token, chatId) {
+        const url = _environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.baseUrl + '/api/chat/' + chatId;
+        this.httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpHeaders({
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        };
+        return this.http.get(url, this.httpOptions);
+    }
+    deleteChat(token, chatId) {
+        const url = _environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.baseUrl + '/api/chat/' + chatId;
+        this.httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpHeaders({
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        };
+        return this.http.delete(url, this.httpOptions);
+    }
+    pinChat(token, chatId, pin) {
+        const url = _environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.baseUrl + '/api/chat-pin/' + chatId;
+        this.httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpHeaders({
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        };
+        return this.http.post(url, { pin }, this.httpOptions);
+    }
+    // End Chat
+    // Start Messages
+    getMessages(token, chatId) {
+        const url = _environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.baseUrl + '/api/message?chat_id=' + chatId;
+        this.httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpHeaders({
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        };
+        return this.http.get(url, this.httpOptions);
+    }
+    postMessage(token, chat_id, reply, content, type, status) {
+        const url = _environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.baseUrl + '/api/message';
+        this.httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpHeaders({
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        };
+        return this.http.post(url, { chat_id, reply, content, type, status }, this.httpOptions);
     }
 };
 ContentService.ctorParameters = () => [

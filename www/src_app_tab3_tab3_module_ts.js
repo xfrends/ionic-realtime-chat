@@ -113,28 +113,93 @@ let Tab3Page = class Tab3Page {
         this.contentService = contentService;
         this.router = router;
         this.settingForm = {
+            id: null,
             email: '',
             name: '',
-            status: true,
+            avatar: '',
+            status: 'aktif',
         };
+        this.status = false;
+    }
+    ngOnInit() {
+        this.getProfile();
+    }
+    getProfile() {
+        this.contentService.getToken().then((token) => {
+            this.contentService.getProfile(token).subscribe((response) => {
+                this.settingForm.id = response.content.id;
+                this.settingForm.email = response.content.email;
+                this.settingForm.name = response.content.name;
+                this.settingForm.avatar = response.content.avatar;
+                this.settingForm.status = response.content.status;
+                if (this.settingForm.status === 'aktif') {
+                    this.status = true;
+                }
+                else {
+                    this.status = false;
+                }
+            });
+        });
     }
     editProfile() {
-        console.log('ganti gambar');
+        if (this.settingForm.avatar === 'https://avataaars.io?topType=LongHairStraight') {
+            this.settingForm.avatar = 'https://avataaars.io?topType=ShortHairShortWaved';
+        }
+        else {
+            this.settingForm.avatar = 'https://avataaars.io?topType=LongHairStraight';
+        }
+        this.contentService.getToken().then((token) => {
+            this.contentService.putUser(token, this.settingForm.id, { avatar: this.settingForm.avatar }).subscribe((response) => {
+                console.log('status: ', response);
+            });
+        });
     }
     statusChange(event) {
-        console.log(this.settingForm.status);
+        if (this.settingForm.id != null) {
+            if (this.status) {
+                this.settingForm.status = 'aktif';
+            }
+            else {
+                this.settingForm.status = 'nonaktif';
+            }
+            this.contentService.getToken().then((token) => {
+                this.contentService.putUser(token, this.settingForm.id, { status: this.settingForm.status }).subscribe((response) => {
+                    console.log('status: ', response);
+                });
+            });
+        }
     }
     saveName(event) {
-        console.log(this.settingForm.name);
+        this.contentService.getToken().then((token) => {
+            this.contentService.putUser(token, this.settingForm.id, { name: this.settingForm.name }).subscribe((response) => {
+                console.log('status: ', response);
+            });
+        });
     }
     saveEmail(event) {
-        console.log(this.settingForm.email);
+        this.contentService.getToken().then((token) => {
+            this.contentService.putUser(token, this.settingForm.id, { email: this.settingForm.email }).subscribe((response) => {
+                console.log('status: ', response);
+            });
+        });
     }
     logout() {
-        this.contentService.postLogout().subscribe((response) => {
-            this.contentService.deleteToken();
-            this.router.navigate(['/']);
+        this.contentService.getToken().then((token) => {
+            this.contentService.postLogout(token).subscribe((response) => {
+                this.contentService.deleteToken();
+                console.log('Success & delete token');
+            }, (error) => {
+                this.contentService.deleteToken();
+                console.log('Unauthorization & delete token');
+            });
         });
+        this.router.navigate(['/login']);
+    }
+    doRefresh(event) {
+        this.getProfile();
+        setTimeout(() => {
+            event.target.complete();
+        }, 2000);
     }
 };
 Tab3Page.ctorParameters = () => [
@@ -159,7 +224,7 @@ Tab3Page = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
   \************************************************/
 /***/ ((module) => {
 
-module.exports = ".profile {\n  border-radius: 50%;\n  width: 100%;\n  height: auto;\n  border: 0;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInRhYjMucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0Usa0JBQUE7RUFDQSxXQUFBO0VBQ0EsWUFBQTtFQUNBLFNBQUE7QUFDRiIsImZpbGUiOiJ0YWIzLnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5wcm9maWxle1xuICBib3JkZXItcmFkaXVzOiA1MCU7XG4gIHdpZHRoOiAxMDAlO1xuICBoZWlnaHQ6IGF1dG87XG4gIGJvcmRlcjogMDtcbn1cbiJdfQ== */";
+module.exports = ".profile {\n  border-radius: 50%;\n  width: auto;\n  height: auto;\n  border: 0;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInRhYjMucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0Usa0JBQUE7RUFDQSxXQUFBO0VBQ0EsWUFBQTtFQUNBLFNBQUE7QUFDRiIsImZpbGUiOiJ0YWIzLnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5wcm9maWxle1xuICBib3JkZXItcmFkaXVzOiA1MCU7XG4gIHdpZHRoOiBhdXRvO1xuICBoZWlnaHQ6IGF1dG87XG4gIGJvcmRlcjogMDtcbn1cbiJdfQ== */";
 
 /***/ }),
 
@@ -169,7 +234,7 @@ module.exports = ".profile {\n  border-radius: 50%;\n  width: 100%;\n  height: a
   \************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title>\n      Settings\n    </ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content [fullscreen]=\"true\">\n  <ion-header collapse=\"condense\">\n    <ion-toolbar>\n      <ion-title size=\"large\">Settings</ion-title>\n    </ion-toolbar>\n  </ion-header>\n\n  <ion-grid>\n    <ion-row class=\"ion-justify-content-center ion-margin-vertical\">\n      <ion-col size=\"6\" (click)=\"editProfile()\">\n        <img class=\"profile\" src=\"./assets/icon/favicon.png\" alt=\"username\"/>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <ion-grid>\n    <ion-row class=\"ion-justify-content-center\">\n      <ion-col size=\"12\">\n        <ion-item>\n          <ion-label>Online</ion-label>\n          <ion-toggle slot=\"end\" [(ngModel)]=\"settingForm.status\" [checked]=\"settingForm.status\" (ionChange)=\"statusChange($event)\"></ion-toggle>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <ion-grid>\n    <ion-row class=\"ion-justify-content-center\">\n      <ion-col size=\"12\">\n        <ion-item>\n          <ion-label position=\"floating\">Name</ion-label>\n          <ion-input [(ngModel)]=\"settingForm.name\" [ngModelOptions]=\"{standalone: true}\" (ionBlur)=\"saveName($event)\" type=\"text\" placeholder=\"Edit your name\"></ion-input>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <ion-grid>\n    <ion-row class=\"ion-justify-content-center\">\n      <ion-col size=\"12\">\n        <ion-item>\n          <ion-label position=\"floating\">Email</ion-label>\n          <ion-input [(ngModel)]=\"settingForm.email\" [ngModelOptions]=\"{standalone: true}\" (ionBlur)=\"saveEmail($event)\" type=\"email\" placeholder=\"Edit your email\"></ion-input>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <ion-grid>\n    <ion-row class=\"ion-justify-content-center ion-margin-vertical\">\n      <ion-col size=\"11\">\n        <ion-button expand=\"block\" fill=\"outline\" color=\"danger\" (click)=\"logout()\">Logout</ion-button>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n</ion-content>\n";
+module.exports = "<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title>\n      Settings\n    </ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content [fullscreen]=\"true\">\n  <ion-header collapse=\"condense\">\n    <ion-toolbar>\n      <ion-title size=\"large\">Settings</ion-title>\n    </ion-toolbar>\n  </ion-header>\n\n  <ion-grid>\n    <ion-row class=\"ion-justify-content-center ion-margin-vertical\">\n      <ion-col size=\"6\"  size-md=\"3\" (click)=\"editProfile()\">\n        <img class=\"profile\" src=\"{{settingForm.avatar}}\" alt=\"{{settingForm.name}}\"/>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <ion-grid>\n    <ion-row class=\"ion-justify-content-center\">\n      <ion-col size=\"12\">\n        <ion-item>\n          <ion-label>Online</ion-label>\n          <ion-toggle slot=\"end\" [(ngModel)]=\"status\" [checked]=\"status\" (ionChange)=\"statusChange($event)\"></ion-toggle>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <ion-grid>\n    <ion-row class=\"ion-justify-content-center\">\n      <ion-col size=\"12\">\n        <ion-item>\n          <ion-label position=\"floating\">Name</ion-label>\n          <ion-input [(ngModel)]=\"settingForm.name\" [ngModelOptions]=\"{standalone: true}\" (ionBlur)=\"saveName($event)\" type=\"text\" placeholder=\"Edit your name\"></ion-input>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <ion-grid>\n    <ion-row class=\"ion-justify-content-center\">\n      <ion-col size=\"12\">\n        <ion-item>\n          <ion-label position=\"floating\">Email</ion-label>\n          <ion-input [(ngModel)]=\"settingForm.email\" [ngModelOptions]=\"{standalone: true}\" (ionBlur)=\"saveEmail($event)\" type=\"email\" placeholder=\"Edit your email\"></ion-input>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <ion-grid>\n    <ion-row class=\"ion-justify-content-center ion-margin-vertical\">\n      <ion-col size=\"11\">\n        <ion-button expand=\"block\" fill=\"outline\" color=\"danger\" (click)=\"logout()\">Logout</ion-button>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher>\n</ion-content>\n";
 
 /***/ })
 

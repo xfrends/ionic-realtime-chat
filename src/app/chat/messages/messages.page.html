@@ -7,22 +7,41 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <app-explore-container name="Messages is empty"></app-explore-container>
+<ion-content [fullscreen]="true" [scrollEvents]="true" (ionScroll)="onScroll($event)">
+
+  <app-explore-container *ngIf="empty" name="Messages is empty"></app-explore-container>
+
   <ion-list>
     <ion-item-sliding *ngFor="let item of messages">
       <ion-item>
         <ion-avatar slot="start">
-          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada774{{item}}?d=identicon&f=y">
+          <img src="{{item.user.avatar}}">
         </ion-avatar>
         <span class="ion-margin-vertical">
-          <ion-label>{{item}}</ion-label>
-          <ion-text style="font-size: 14px; color: var(--ion-color-step-600, #666666);">Notes are text elements generally used as subtitles that provide more information. Notes are styled to appear grey by default. Notes can be used in an item as metadata text.</ion-text>
+          <!-- <ion-badge color="dark" style="font-size: 10px;">{{item.reply}}</ion-badge> -->
+          <ion-button size="small" expand="block" color="light" *ngIf="item.reply" id="{{item.id}}" style="font-size: 10px;">{{item.reply}}</ion-button>
+          <ion-popover trigger="{{item.id}}">
+            <ng-template>
+              <ion-content class="ion-padding">{{item.reply}}</ion-content>
+            </ng-template>
+          </ion-popover>
+          <!-- <ion-text color="dark" style="font-size: 10px;">{{item.reply}}</ion-text> -->
+          <ion-label>{{item.user.name}}</ion-label>
+          <ion-text style="font-size: 14px; color: var(--ion-color-step-600, #666666);">{{item.content}}</ion-text>
         </span>
+        <ion-note slot="end">
+            <ion-text color="medium" *ngIf="!item.today; else today">
+              <small>{{item.updated_at | date:"mediumDate"}}</small>
+            </ion-text>
+            <ng-template #today>
+              <ion-text color="medium">
+                <small>{{item.updated_at | date:"shortTime"}}</small>
+              </ion-text>
+            </ng-template>
+        </ion-note>
       </ion-item>
       <ion-item-options side="end">
-        <ion-item-option (click)="reply(item)">Reply</ion-item-option>
-        <ion-item-option (click)="deleteMessage(item)" color="danger">Delete</ion-item-option>
+        <ion-item-option (click)="reply(item.content)">Reply</ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
@@ -34,7 +53,7 @@
 
 <ion-footer collapse="fade" style="box-shadow: rgb(0 0 0 / 10%) 0px 0px 25px 1px;">
   <ion-item>
-    <ion-textarea class="ion-align-self-center" style="max-height: 200px!important;" auto-grow="true" (ionFocus)="writing()" (ionBlur)="stopWriting()" (ionChange)="editText()" [(ngModel)]="newMessage" placeholder="Enter message here..."></ion-textarea>
+    <ion-textarea class="ion-align-self-center" id="message-input" style="max-height: 200px!important;" auto-grow="true" (ionFocus)="writing()" (ionBlur)="stopWriting()" (ionChange)="editText()" [(ngModel)]="newMessage" placeholder="Enter message here..."></ion-textarea>
     <ion-button slot="end" fill="clear" class="ion-align-self-center" (click)="send()">
       <ion-icon name="send"></ion-icon>
     </ion-button>

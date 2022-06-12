@@ -1,6 +1,216 @@
 "use strict";
 (self["webpackChunkapp"] = self["webpackChunkapp"] || []).push([["common"],{
 
+/***/ 8520:
+/*!**********************************************************!*\
+  !*** ./src/app/chat/messages/messages-routing.module.ts ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MessagesPageRoutingModule": () => (/* binding */ MessagesPageRoutingModule)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ 2816);
+/* harmony import */ var _messages_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./messages.page */ 4093);
+
+
+
+
+const routes = [
+    {
+        path: '',
+        component: _messages_page__WEBPACK_IMPORTED_MODULE_0__.MessagesPage
+    }
+];
+let MessagesPageRoutingModule = class MessagesPageRoutingModule {
+};
+MessagesPageRoutingModule = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.NgModule)({
+        imports: [_angular_router__WEBPACK_IMPORTED_MODULE_3__.RouterModule.forChild(routes)],
+        exports: [_angular_router__WEBPACK_IMPORTED_MODULE_3__.RouterModule],
+    })
+], MessagesPageRoutingModule);
+
+
+
+/***/ }),
+
+/***/ 7763:
+/*!**************************************************!*\
+  !*** ./src/app/chat/messages/messages.module.ts ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MessagesPageModule": () => (/* binding */ MessagesPageModule)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common */ 6362);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/forms */ 587);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ 3819);
+/* harmony import */ var _messages_routing_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./messages-routing.module */ 8520);
+/* harmony import */ var _messages_page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./messages.page */ 4093);
+/* harmony import */ var src_app_explore_container_explore_container_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/explore-container/explore-container.module */ 581);
+
+
+
+
+
+
+
+
+let MessagesPageModule = class MessagesPageModule {
+};
+MessagesPageModule = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.NgModule)({
+        imports: [
+            _angular_common__WEBPACK_IMPORTED_MODULE_5__.CommonModule,
+            _angular_forms__WEBPACK_IMPORTED_MODULE_6__.FormsModule,
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.IonicModule,
+            _messages_routing_module__WEBPACK_IMPORTED_MODULE_0__.MessagesPageRoutingModule,
+            src_app_explore_container_explore_container_module__WEBPACK_IMPORTED_MODULE_2__.ExploreContainerComponentModule
+        ],
+        declarations: [_messages_page__WEBPACK_IMPORTED_MODULE_1__.MessagesPage]
+    })
+], MessagesPageModule);
+
+
+
+/***/ }),
+
+/***/ 4093:
+/*!************************************************!*\
+  !*** ./src/app/chat/messages/messages.page.ts ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MessagesPage": () => (/* binding */ MessagesPage)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var _messages_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./messages.page.html?ngResource */ 9261);
+/* harmony import */ var _messages_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./messages.page.scss?ngResource */ 1296);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ 2816);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/angular */ 3819);
+/* harmony import */ var src_app_shared_api_content_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/shared/api/content.service */ 3558);
+
+
+
+
+
+
+
+let MessagesPage = class MessagesPage {
+    constructor(platform, router, route, contentService) {
+        this.platform = platform;
+        this.router = router;
+        this.route = route;
+        this.contentService = contentService;
+        this.messages = null;
+        this.newMessage = '';
+        this.to = '';
+        this.chatId = null;
+        this.empty = true;
+        this.showButton = false;
+        this.replyMessage = null;
+    }
+    ngOnInit() {
+        this.route.queryParams.subscribe(params => {
+            this.chatId = params.id;
+            this.getMessages(this.chatId);
+        });
+    }
+    backButton() {
+        this.router.navigate(['tabs/chat']);
+    }
+    getMessages(chatId) {
+        this.contentService.getToken().then((token) => {
+            this.contentService.getMessages(token, chatId).subscribe((messages) => {
+                this.messages = messages.content.message;
+                this.to = messages.content.to.name;
+                if (this.messages.length !== 0) {
+                    this.empty = !true;
+                    const today = new Date();
+                    this.messages.forEach(element => {
+                        const last = new Date(element.updated_at);
+                        if (today.toDateString() === last.toDateString()) {
+                            element.today = true;
+                        }
+                    });
+                }
+            }, (error) => {
+                console.log('error: ', error);
+                if (error.status === 401) {
+                    this.contentService.deleteToken();
+                    this.router.navigate(['/login']);
+                }
+            });
+        });
+    }
+    send() {
+        this.contentService.getToken().then((token) => {
+            this.contentService.postMessage(token, this.chatId, this.replyMessage, this.newMessage, 'text', 'sending').subscribe(() => {
+                this.getMessages(this.chatId);
+            });
+        });
+    }
+    reply(reply) {
+        this.replyMessage = reply;
+        document.getElementById('message-input').focus();
+    }
+    writing() {
+        console.log('ngetik');
+    }
+    stopWriting() {
+        console.log('stop ngetik');
+    }
+    editText() {
+        console.log(this.newMessage);
+        // remove double enter
+        // while (this.newMessage.includes('\n\n')) {
+        //   this.newMessage = this.newMessage.replace('\n\n','\n');
+        // }
+    }
+    onScroll(event) {
+        if (event.detail.deltaY > 0) {
+            this.showButton = true;
+        }
+        else if (event.detail.deltaY < 0 && this.platform.is('ios')) {
+            this.showButton = false;
+        }
+    }
+    doRefresh(event) {
+        this.getMessages(this.chatId);
+        setTimeout(() => {
+            event.target.complete();
+        }, 2000);
+    }
+};
+MessagesPage.ctorParameters = () => [
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_3__.Platform },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__.Router },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__.ActivatedRoute },
+    { type: src_app_shared_api_content_service__WEBPACK_IMPORTED_MODULE_2__.ContentService }
+];
+MessagesPage = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.Component)({
+        selector: 'app-messages',
+        template: _messages_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
+        styles: [_messages_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
+    })
+], MessagesPage);
+
+
+
+/***/ }),
+
 /***/ 4762:
 /*!******************************************************************!*\
   !*** ./src/app/explore-container/explore-container.component.ts ***!
@@ -11,24 +221,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ExploreContainerComponent": () => (/* binding */ ExploreContainerComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 4929);
 /* harmony import */ var _explore_container_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./explore-container.component.html?ngResource */ 959);
 /* harmony import */ var _explore_container_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./explore-container.component.scss?ngResource */ 1509);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ 2816);
+
 
 
 
 
 let ExploreContainerComponent = class ExploreContainerComponent {
-    constructor() { }
+    constructor(router) {
+        this.router = router;
+    }
     ngOnInit() { }
+    redirect(navigate) {
+        this.router.navigate([navigate]);
+    }
 };
-ExploreContainerComponent.ctorParameters = () => [];
+ExploreContainerComponent.ctorParameters = () => [
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__.Router }
+];
 ExploreContainerComponent.propDecorators = {
-    name: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input }]
+    name: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Input }],
+    navigate: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Input }]
 };
-ExploreContainerComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.Component)({
+ExploreContainerComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Component)({
         selector: 'app-explore-container',
         template: _explore_container_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
         styles: [_explore_container_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
@@ -75,9 +295,9 @@ ExploreContainerComponentModule = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decora
 
 /***/ }),
 
-/***/ 9844:
+/***/ 3696:
 /*!*********************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/button-active-70de495b.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm/button-active-8937ead0.js ***!
   \*********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -85,7 +305,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "c": () => (/* binding */ createButtonActiveGesture)
 /* harmony export */ });
-/* harmony import */ var _index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index-b3eecb14.js */ 1049);
+/* harmony import */ var _index_88bdeaae_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index-88bdeaae.js */ 9479);
 /* harmony import */ var _haptic_683b3b3c_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./haptic-683b3b3c.js */ 634);
 /* harmony import */ var _index_3f1a7d95_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./index-3f1a7d95.js */ 2172);
 /*!
@@ -118,7 +338,7 @@ const createButtonActiveGesture = (el, isButton) => {
       initialTouchedButton = currentTouchedButton;
     }
     const buttonToModify = currentTouchedButton;
-    (0,_index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_0__.c)(() => buttonToModify.classList.add('ion-activated'));
+    (0,_index_88bdeaae_js__WEBPACK_IMPORTED_MODULE_0__.c)(() => buttonToModify.classList.add('ion-activated'));
     hapticFeedbackFn();
   };
   const clearActiveButton = (dispatchClick = false) => {
@@ -126,7 +346,7 @@ const createButtonActiveGesture = (el, isButton) => {
       return;
     }
     const buttonToModify = currentTouchedButton;
-    (0,_index_b3eecb14_js__WEBPACK_IMPORTED_MODULE_0__.c)(() => buttonToModify.classList.remove('ion-activated'));
+    (0,_index_88bdeaae_js__WEBPACK_IMPORTED_MODULE_0__.c)(() => buttonToModify.classList.remove('ion-activated'));
     /**
      * Clicking on one button, but releasing on another button
      * does not dispatch a click event in browsers, so we
@@ -569,20 +789,24 @@ const hapticImpact = (options) => {
 
 /***/ }),
 
-/***/ 9081:
+/***/ 1314:
 /*!*************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/index-7cd5eefa.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm/index-8bf9b0cd.js ***!
   \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "a": () => (/* binding */ findClosestIonContent),
-/* harmony export */   "b": () => (/* binding */ scrollByPoint),
-/* harmony export */   "f": () => (/* binding */ findIonContent),
+/* harmony export */   "I": () => (/* binding */ ION_CONTENT_ELEMENT_SELECTOR),
+/* harmony export */   "a": () => (/* binding */ findIonContent),
+/* harmony export */   "b": () => (/* binding */ ION_CONTENT_CLASS_SELECTOR),
+/* harmony export */   "c": () => (/* binding */ scrollByPoint),
+/* harmony export */   "d": () => (/* binding */ disableContentScrollY),
+/* harmony export */   "f": () => (/* binding */ findClosestIonContent),
 /* harmony export */   "g": () => (/* binding */ getScrollElement),
 /* harmony export */   "i": () => (/* binding */ isIonContent),
 /* harmony export */   "p": () => (/* binding */ printIonContentErrorMsg),
+/* harmony export */   "r": () => (/* binding */ resetContentScrollY),
 /* harmony export */   "s": () => (/* binding */ scrollToTop)
 /* harmony export */ });
 /* harmony import */ var _Users_frenditriarista_MobileApps_ionic_realtime_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
@@ -708,6 +932,40 @@ const scrollByPoint = (el, x, y, durationMs) => {
 const printIonContentErrorMsg = el => {
   return (0,_index_9ac92660_js__WEBPACK_IMPORTED_MODULE_2__.a)(el, ION_CONTENT_ELEMENT_SELECTOR);
 };
+/**
+ * Several components in Ionic need to prevent scrolling
+ * during a gesture (card modal, range, item sliding, etc).
+ * Use this utility to account for ion-content and custom content hosts.
+ */
+
+
+const disableContentScrollY = contentEl => {
+  if (isIonContent(contentEl)) {
+    const ionContent = contentEl;
+    const initialScrollY = ionContent.scrollY;
+    ionContent.scrollY = false;
+    /**
+     * This should be passed into resetContentScrollY
+     * so that we can revert ion-content's scrollY to the
+     * correct state. For example, if scrollY = false
+     * initially, we do not want to enable scrolling
+     * when we call resetContentScrollY.
+     */
+
+    return initialScrollY;
+  } else {
+    contentEl.style.setProperty('overflow', 'hidden');
+    return true;
+  }
+};
+
+const resetContentScrollY = (contentEl, initialScrollY) => {
+  if (isIonContent(contentEl)) {
+    contentEl.scrollY = initialScrollY;
+  } else {
+    contentEl.style.removeProperty('overflow');
+  }
+};
 
 
 
@@ -763,9 +1021,9 @@ const printRequiredElementError = (el, ...targetSelectors) => {
 
 /***/ }),
 
-/***/ 341:
+/***/ 3814:
 /*!*************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm/index-e3f61316.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm/index-d74f4afc.js ***!
   \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -794,7 +1052,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!
  * (C) Ionic http://ionicframework.com - MIT License
  */
-/* Ionicons v6.0.0, ES Modules */
+/* Ionicons v6.0.2, ES Modules */
 const arrowBackSharp = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><title>Arrow Back</title><path stroke-linecap='square' stroke-miterlimit='10' stroke-width='48' d='M244 400L100 256l144-144M120 256h292' class='ionicon-fill-none'/></svg>";
 const arrowDown = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><title>Arrow Down</title><path stroke-linecap='round' stroke-linejoin='round' stroke-width='48' d='M112 268l144 144 144-144M256 392V100' class='ionicon-fill-none'/></svg>";
 const caretBackSharp = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><title>Caret Back</title><path d='M368 64L144 256l224 192V64z'/></svg>";
@@ -1300,6 +1558,16 @@ const openURL = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ 1296:
+/*!*************************************************************!*\
+  !*** ./src/app/chat/messages/messages.page.scss?ngResource ***!
+  \*************************************************************/
+/***/ ((module) => {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJtZXNzYWdlcy5wYWdlLnNjc3MifQ== */";
+
+/***/ }),
+
 /***/ 1509:
 /*!*******************************************************************************!*\
   !*** ./src/app/explore-container/explore-container.component.scss?ngResource ***!
@@ -1310,13 +1578,23 @@ module.exports = "#container {\n  text-align: center;\n  position: absolute;\n  
 
 /***/ }),
 
+/***/ 9261:
+/*!*************************************************************!*\
+  !*** ./src/app/chat/messages/messages.page.html?ngResource ***!
+  \*************************************************************/
+/***/ ((module) => {
+
+module.exports = "<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title>{{to}}</ion-title>\n    <ion-button slot=\"start\" size=\"small\" fill=\"clear\" (click)=\"backButton()\">\n        <ion-icon name=\"chevron-back-outline\"></ion-icon>&nbsp;\n    </ion-button>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content [fullscreen]=\"true\" [scrollEvents]=\"true\" (ionScroll)=\"onScroll($event)\">\n\n  <app-explore-container *ngIf=\"empty\" name=\"Messages is empty\"></app-explore-container>\n\n  <ion-list>\n    <ion-item-sliding *ngFor=\"let item of messages\">\n      <ion-item>\n        <ion-avatar slot=\"start\">\n          <img src=\"{{item.user.avatar}}\">\n        </ion-avatar>\n        <span class=\"ion-margin-vertical\">\n          <!-- <ion-badge color=\"dark\" style=\"font-size: 10px;\">{{item.reply}}</ion-badge> -->\n          <ion-button size=\"small\" expand=\"block\" color=\"light\" *ngIf=\"item.reply\" id=\"{{item.id}}\" style=\"font-size: 10px;\">{{item.reply}}</ion-button>\n          <ion-popover trigger=\"{{item.id}}\">\n            <ng-template>\n              <ion-content class=\"ion-padding\">{{item.reply}}</ion-content>\n            </ng-template>\n          </ion-popover>\n          <!-- <ion-text color=\"dark\" style=\"font-size: 10px;\">{{item.reply}}</ion-text> -->\n          <ion-label>{{item.user.name}}</ion-label>\n          <ion-text style=\"font-size: 14px; color: var(--ion-color-step-600, #666666);\">{{item.content}}</ion-text>\n        </span>\n        <ion-note slot=\"end\">\n            <ion-text color=\"medium\" *ngIf=\"!item.today; else today\">\n              <small>{{item.updated_at | date:\"mediumDate\"}}</small>\n            </ion-text>\n            <ng-template #today>\n              <ion-text color=\"medium\">\n                <small>{{item.updated_at | date:\"shortTime\"}}</small>\n              </ion-text>\n            </ng-template>\n        </ion-note>\n      </ion-item>\n      <ion-item-options side=\"end\">\n        <ion-item-option (click)=\"reply(item.content)\">Reply</ion-item-option>\n      </ion-item-options>\n    </ion-item-sliding>\n  </ion-list>\n  <br>\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher>\n</ion-content>\n\n<ion-footer collapse=\"fade\" style=\"box-shadow: rgb(0 0 0 / 10%) 0px 0px 25px 1px;\">\n  <ion-item>\n    <ion-textarea class=\"ion-align-self-center\" id=\"message-input\" style=\"max-height: 200px!important;\" auto-grow=\"true\" (ionFocus)=\"writing()\" (ionBlur)=\"stopWriting()\" (ionChange)=\"editText()\" [(ngModel)]=\"newMessage\" placeholder=\"Enter message here...\"></ion-textarea>\n    <ion-button slot=\"end\" fill=\"clear\" class=\"ion-align-self-center\" (click)=\"send()\">\n      <ion-icon name=\"send\"></ion-icon>\n    </ion-button>\n  </ion-item>\n</ion-footer>\n";
+
+/***/ }),
+
 /***/ 959:
 /*!*******************************************************************************!*\
   !*** ./src/app/explore-container/explore-container.component.html?ngResource ***!
   \*******************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<div id=\"container\">\n  <strong>{{ name }}</strong>\n  <p><a rel=\"noopener noreferrer\" href=\"{{navigate}}\">Create New</a></p>\n</div>\n";
+module.exports = "<div id=\"container\">\n  <strong>{{ name }}</strong>\n  <p><a rel=\"noopener noreferrer\" (click)=\"redirect(navigate)\" *ngIf=\"navigate\">Add New</a></p>\n</div>\n";
 
 /***/ })
 

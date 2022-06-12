@@ -23,12 +23,22 @@ export class ContentService {
   setToken(data) {
     return Storage.set({key: 'token', value: data });
   }
-
   deleteToken() {
     return Storage.remove({ key: 'token' });
   }
   async getToken() {
     const { value } = await Storage.get({ key: 'token' });
+    return value;
+  }
+
+  setFcmToken(token) {
+    return Storage.set({key: 'fcmToken', value: token });
+  }
+  deleteFcmToken() {
+    return Storage.remove({ key: 'fcmToken' });
+  }
+  async getFcmToken() {
+    const { value } = await Storage.get({ key: 'fcmToken' });
     return value;
   }
   // End Token
@@ -107,6 +117,17 @@ export class ContentService {
     };
     return this.http.get<any>(url, this.httpOptions);
   }
+  deleteContact(token, contactId) {
+    const url = environment.baseUrl+'/api/contact/'+contactId;
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer '+token
+      })
+    };
+    return this.http.delete<any>(url, this.httpOptions);
+  }
   // End User Contact
 
   // Start Chat
@@ -132,8 +153,8 @@ export class ContentService {
     };
     return this.http.get<any>(url, this.httpOptions);
   }
-  getChat(token, $chatId) {
-    const url = environment.baseUrl+'/api/chat/'+$chatId;
+  getChat(token, chatId) {
+    const url = environment.baseUrl+'/api/chat/'+chatId;
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -143,5 +164,53 @@ export class ContentService {
     };
     return this.http.get<any>(url, this.httpOptions);
   }
+  deleteChat(token, chatId) {
+    const url = environment.baseUrl+'/api/chat/'+chatId;
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer '+token
+      })
+    };
+    return this.http.delete<any>(url, this.httpOptions);
+  }
+  pinChat(token, chatId, pin) {
+    const url = environment.baseUrl+'/api/chat-pin/'+chatId;
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer '+token
+      })
+    };
+    return this.http.post<any>(url, {pin}, this.httpOptions);
+
+  }
   // End Chat
+
+  // Start Messages
+  getMessages(token, chatId) {
+    const url = environment.baseUrl+'/api/message?chat_id='+chatId;
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer '+token
+      })
+    };
+    return this.http.get<any>(url, this.httpOptions);
+  }
+  postMessage(token, chat_id, reply, content, type, status) {
+    const url = environment.baseUrl+'/api/message';
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer '+token
+      })
+    };
+    return this.http.post<any>(url, {chat_id, reply, content, type, status}, this.httpOptions);
+  }
+  // End Messages
 }

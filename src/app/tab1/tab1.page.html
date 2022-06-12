@@ -29,12 +29,12 @@
         </ion-avatar>
         <ion-label>
           <h3>{{item.name}}</h3>
-          <p *ngIf="!item.messages;else message">...</p>
+          <p *ngIf="!item.lastMessages;else message">...</p>
           <ng-template #message>
-            <p>Whether auto correction should be enabled when the user is entering/editing the text value.</p>
+            <p>{{item.lastMessages}}</p>
           </ng-template>
         </ion-label>
-        <ion-note slot="end">
+        <ion-note slot="end" class="ion-text-end">
           <ion-text color="success" *ngIf="newMessage; else read">
             <small>{{item.updated_at | date:"shortTime"}}</small>
           </ion-text>
@@ -48,11 +48,19 @@
               </ion-text>
             </ng-template>
           </ng-template>
+          <br>
+          <small *ngIf="item.pin" >
+            <ion-icon name="pin-outline"></ion-icon>
+          </small>
         </ion-note>
       </ion-item>
       <ion-item-options side="end">
-        <ion-item-option (click)="openChat(item)">Open</ion-item-option>
-        <ion-item-option (click)="deleteChat(item)" color="danger">Delete</ion-item-option>
+        <ion-item-option *ngIf="!item.pin; else unpin" (click)="pinChat(item.id)" color="tertiary">Pin</ion-item-option>
+        <ng-template #unpin>
+        <ion-item-option (click)="unPinChat(item.id)" color="tertiary">Unpin</ion-item-option>
+        </ng-template>
+        <ion-item-option (click)="openChat(item.id)">Open</ion-item-option>
+        <ion-item-option (click)="deleteChat(item.id)" color="danger">Delete</ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
