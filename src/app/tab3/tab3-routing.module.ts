@@ -6,6 +6,10 @@ const routes: Routes = [
   {
     path: '',
     component: Tab3Page,
+  },
+  {
+    path: 'manage-user',
+    loadChildren: () => import('../manage/user/user.module').then( m => m.UserPageModule)
   }
 ];
 

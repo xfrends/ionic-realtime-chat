@@ -16,23 +16,31 @@
       <ion-col size="12" size-md class="ion-align-self-center">
         <ion-card>
           <ion-card-header>
-            <ion-card-title>Login</ion-card-title>
+            <ion-card-title>Register</ion-card-title>
           </ion-card-header>
 
           <ion-card-content class="ion-padding-vertical ion-margin-bottom">
             <form (ngSubmit)="onSubmit()" class="form-horizontal">
               <ion-item>
+                <ion-label position="floating">Name</ion-label>
+                <ion-input inputmode="text" [(ngModel)]="registerForm.name" [ngModelOptions]="{standalone: true}" type="text"></ion-input>
+              </ion-item>
+              <ion-item>
                 <ion-label position="floating">Email</ion-label>
-                <ion-input inputmode="email" [(ngModel)]="loginForm.email" [ngModelOptions]="{standalone: true}" type="email"></ion-input>
+                <ion-input inputmode="email" [(ngModel)]="registerForm.email" [ngModelOptions]="{standalone: true}" type="email"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Phone</ion-label>
+                <ion-input inputmode="text" [(ngModel)]="registerForm.phone" [ngModelOptions]="{standalone: true}" type="text"></ion-input>
               </ion-item>
               <ion-item class="ion-margin-bottom">
                 <ion-label position="floating">Password</ion-label>
-                <ion-input inputmode="text" [(ngModel)]="loginForm.password" [ngModelOptions]="{standalone: true}" required="true" type="password"></ion-input>
+                <ion-input inputmode="text" [(ngModel)]="registerForm.password" [ngModelOptions]="{standalone: true}" required="true" type="password"></ion-input>
               </ion-item>
-              <ion-button type="submit" expand="block">Login</ion-button>
+              <ion-button type="submit" expand="block">Register</ion-button>
             </form>
             <br>
-            <ion-text> Belum memiliki akun? <a href="register">Register</a></ion-text>
+            <ion-text> Sudah memiliki akun? <a href="login">Login</a></ion-text>
           </ion-card-content>
         </ion-card>
       </ion-col>

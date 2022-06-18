@@ -18,14 +18,12 @@
           <img src="{{item.user.avatar}}">
         </ion-avatar>
         <span class="ion-margin-vertical">
-          <!-- <ion-badge color="dark" style="font-size: 10px;">{{item.reply}}</ion-badge> -->
-          <ion-button size="small" expand="block" color="light" *ngIf="item.reply" id="{{item.id}}" style="font-size: 10px;">{{item.reply}}</ion-button>
+          <ion-text color="medium" *ngIf="item.reply" id="{{item.id}}" style="font-size: 10px;"><ion-icon name="arrow-redo-outline"></ion-icon> &nbsp; {{item.reply.substr(0, 30)}}<ion-text *ngIf="!greaterThan(item.reply.length, 30)">...</ion-text></ion-text>
           <ion-popover trigger="{{item.id}}">
             <ng-template>
               <ion-content class="ion-padding">{{item.reply}}</ion-content>
             </ng-template>
           </ion-popover>
-          <!-- <ion-text color="dark" style="font-size: 10px;">{{item.reply}}</ion-text> -->
           <ion-label>{{item.user.name}}</ion-label>
           <ion-text style="font-size: 14px; color: var(--ion-color-step-600, #666666);">{{item.content}}</ion-text>
         </span>

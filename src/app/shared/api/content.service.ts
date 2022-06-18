@@ -33,6 +33,16 @@ export class ContentService {
   // End Token
 
   // Start Auth
+  postRegister(data) {
+    const url = environment.baseUrl+'/api/user';
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      })
+    };
+    return this.http.post(url, data, this.httpOptions);
+  }
   getProfile(token) {
     const url = environment.baseUrl+'/api/auth/profile';
     this.httpOptions = {
@@ -61,6 +71,17 @@ export class ContentService {
   }
   putUser(token, id, data) {
     const url = environment.baseUrl+'/api/user/'+id;
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer '+token
+      })
+    };
+    return this.http.put(url, data, this.httpOptions);
+  }
+  manageUser(token, id, data) {
+    const url = environment.baseUrl+'/api/user-manage/'+id;
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

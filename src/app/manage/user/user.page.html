@@ -1,0 +1,108 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Manage Users</ion-title>
+    <ion-button slot="start" size="small" fill="clear" (click)="backButton()">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Manage Users</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list>
+    <span *ngFor="let item of users">
+      <ion-item *ngIf="item.isYou; else other">
+        <ion-avatar class="ion-margin-vertical ion-margin-end">
+          <img src="{{item.avatar}}">
+        </ion-avatar>
+        <ion-label>
+          <h4>{{item.name}}</h4>
+          <p>{{item.email}}</p>
+        </ion-label>
+        <ion-note slot="end">
+          <ion-text>
+            <small>{{item.role.name}} (You)</small>
+          </ion-text>
+        </ion-note>
+      </ion-item>
+      <ng-template #other>
+        <ion-item  id="{{item.id}}">
+          <ion-avatar class="ion-margin-vertical ion-margin-end">
+            <img src="{{item.avatar}}">
+          </ion-avatar>
+          <ion-label>
+            <h4>{{item.name}}</h4>
+            <p>{{item.email}}</p>
+          </ion-label>
+          <ion-note slot="end">
+            <ion-text>
+              <small>{{item.role.name}}</small>
+            </ion-text>
+          </ion-note>
+        </ion-item>
+        <ion-modal
+          trigger="{{item.id}}"
+          [breakpoints]="[0.1, 0.5, 1]"
+          [initialBreakpoint]="0.5"
+        >
+          <ng-template>
+            <ion-content>
+              <br>
+              <ion-grid>
+                <ion-row class="ion-justify-content-center">
+                  <ion-col size="12">
+                    <ion-item>
+                      <ion-label position="floating">Name</ion-label>
+                      <ion-input [(ngModel)]="item.name" [ngModelOptions]="{standalone: true}" (ionBlur)="saveName($event, item)" type="text" placeholder="Edit user name"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+              <ion-grid>
+                <ion-row class="ion-justify-content-center">
+                  <ion-col size="12">
+                    <ion-item>
+                      <ion-label position="floating">Email</ion-label>
+                      <ion-input [(ngModel)]="item.email" [ngModelOptions]="{standalone: true}" (ionBlur)="saveEmail($event, item)" type="email" placeholder="Edit user email"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+              <ion-grid>
+                <ion-row class="ion-justify-content-center">
+                  <ion-col size="12">
+                    <ion-item>
+                      <ion-label position="floating">Position</ion-label>
+                      <ion-select value="{{item.role_id}}" (ionChange)="saveRole($event, item)" okText="Save" cancelText="Cancel">
+                        <ion-select-option value="1">Direksi</ion-select-option>
+                        <ion-select-option value="2">Direktur</ion-select-option>
+                        <ion-select-option value="3">Manager</ion-select-option>
+                        <ion-select-option value="4">Senior Staff</ion-select-option>
+                        <ion-select-option value="5">Staff</ion-select-option>
+                        <ion-select-option value="6">Junior Staff</ion-select-option>
+                        <ion-select-option value="7">Guest</ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+
+            </ion-content>
+          </ng-template>
+        </ion-modal>
+      </ng-template>
+    </span>
+  </ion-list>
+
+
+  <br>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+</ion-content>

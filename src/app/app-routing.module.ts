@@ -17,6 +17,14 @@ const routes: Routes = [
   {
     path: 'messages',
     loadChildren: () => import('./chat/messages/messages.module').then( m => m.MessagesPageModule)
+  },
+  {
+    path: 'user',
+    loadChildren: () => import('./manage/user/user.module').then( m => m.UserPageModule)
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
   }
 ];
 @NgModule({

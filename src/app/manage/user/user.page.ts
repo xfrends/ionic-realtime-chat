@@ -3,14 +3,14 @@ import { Router } from '@angular/router';
 import { ContentService } from 'src/app/shared/api/content.service';
 
 @Component({
-  selector: 'app-add-contact',
-  templateUrl: './add-contact.page.html',
-  styleUrls: ['./add-contact.page.scss'],
+  selector: 'app-user',
+  templateUrl: './user.page.html',
+  styleUrls: ['./user.page.scss'],
 })
+export class UserPage implements OnInit {
 
-export class AddContactPage implements OnInit {
-  contacts = [];
-  profile = [];
+  users = [];
+
   constructor(
     private router: Router,
     private contentService: ContentService
@@ -25,10 +25,10 @@ export class AddContactPage implements OnInit {
     this.contentService.getToken().then((token) => {
       this.contentService.getUsers(token).subscribe(
         (users) => {
-          this.contacts = users.content;
+          this.users = users.content;
           this.contentService.getProfile(token).subscribe(
             (profile) => {
-              this.contacts.forEach(element => {
+              this.users.forEach(element => {
                 if (element.email === profile.content.email) {
                   element.isYou = true;
                 }
@@ -47,8 +47,35 @@ export class AddContactPage implements OnInit {
     });
   }
 
+  saveName(event, item) {
+    this.contentService.getToken().then((token) => {
+      this.contentService.manageUser(token, item.id, {name: item.name}).subscribe(
+        (response) => {
+          console.log('status: ', response);
+        });
+    });
+  }
+
+  saveEmail(event, item) {
+    this.contentService.getToken().then((token) => {
+      this.contentService.manageUser(token, item.id, {email: item.email}).subscribe(
+        (response) => {
+          console.log('status: ', response);
+        });
+    });
+  }
+
+  saveRole(event, item) {
+    this.contentService.getToken().then((token) => {
+      this.contentService.manageUser(token, item.id, {role_id: event.detail.value}).subscribe(
+        (response) => {
+          console.log('status: ', response);
+        });
+    });
+  }
+
   backButton() {
-    this.router.navigate(['tabs/contact']);
+    this.router.navigate(['tabs/setting']);
   }
 
   doRefresh(event) {

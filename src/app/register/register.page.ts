@@ -4,16 +4,18 @@ import { environment } from '../../environments/environment';
 import { ContentService } from '../shared/api/content.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  selector: 'app-register',
+  templateUrl: './register.page.html',
+  styleUrls: ['./register.page.scss'],
 })
-export class LoginPage implements OnInit {
+export class RegisterPage implements OnInit {
 
   appName = '';
-  loginForm = {
-    email: '',
-    password: ''
+  registerForm = {
+    name: null,
+    email: null,
+    phone: null,
+    password: null
   };
   data = {};
 
@@ -27,13 +29,11 @@ export class LoginPage implements OnInit {
   }
 
   async onSubmit() {
-    this.contentService.postLogin(this.loginForm).subscribe((response: any) => {
-      this.contentService.setToken(response.content.access_token);
-      this.router.navigate(['/']);
+    console.log(this.registerForm);
+    this.contentService.postRegister(this.registerForm).subscribe((response: any) => {
+      console.log(response);
+      this.router.navigate(['login']);
     });
   }
 
-  register() {
-    this.router.navigate(['/register']);
-  }
 }

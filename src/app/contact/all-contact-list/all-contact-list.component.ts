@@ -19,14 +19,23 @@ export class AllContactListComponent implements OnInit {
 
   contactClick(email) {
     this.contentService.getToken().then((token) => {
-      this.contentService.postChat(token, email).subscribe((response: any) => {
-        const navigationExtras: NavigationExtras = {
-          queryParams: {
-            id: response.content.id
+      this.contentService.postChat(token, email).subscribe(
+        (response: any) => {
+          const navigationExtras: NavigationExtras = {
+            queryParams: {
+              id: response.content.id
+            }
+          };
+          this.router.navigate(['tabs/chat/messages'], navigationExtras);
+        },
+        (error) => {
+          console.log('error: ', error);
+          if (error.status === 401) {
+            this.contentService.deleteToken();
+            this.router.navigate(['/login']);
           }
-        };
-        this.router.navigate(['tabs/chat/messages'], navigationExtras);
-      });
+        }
+      );
     });
   }
 

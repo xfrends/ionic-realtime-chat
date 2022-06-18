@@ -19,7 +19,8 @@ export class Tab2Page implements OnInit {
     private router: Router,
     private platform: Platform,
     private contentService: ContentService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.getContact();

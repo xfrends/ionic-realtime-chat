@@ -19,7 +19,8 @@ export class Tab1Page implements OnInit {
     private platform: Platform,
     private router: Router,
     private contentService: ContentService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.getChats();

@@ -101,4 +101,8 @@ export class MessagesPage implements OnInit {
       event.target.complete();
     }, 2000);
   }
+
+  public greaterThan(subj, num) {
+    return subj < num;
+  }
 }

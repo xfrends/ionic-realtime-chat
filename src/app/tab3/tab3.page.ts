@@ -14,16 +14,19 @@ export class Tab3Page implements OnInit {
     name: '',
     avatar: '',
     status: 'aktif',
+    role: null
   };
   status = false;
   constructor(
     private contentService: ContentService,
     private router: Router
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.getProfile();
   }
+
 
   getProfile() {
     this.contentService.getToken().then((token) => {
@@ -34,6 +37,7 @@ export class Tab3Page implements OnInit {
           this.settingForm.name = response.content.name;
           this.settingForm.avatar = response.content.avatar;
           this.settingForm.status = response.content.status;
+          this.settingForm.role = response.content.role_id;
           if (this.settingForm.status === 'aktif') {
             this.status = true;
           } else {
@@ -104,6 +108,14 @@ export class Tab3Page implements OnInit {
         );
     });
     this.router.navigate(['/login']);
+  }
+
+  manageUsers() {
+    this.router.navigate(['tabs/setting/manage-user']);
+  }
+
+  public greaterThan(subj, num) {
+    return subj < num;
   }
 
   doRefresh(event) {
