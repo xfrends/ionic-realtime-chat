@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   appName: 'Realtime Chat',
-  baseUrl: 'https://chat.legotech.id'
+  baseUrl: 'https://api.chat.legotech.id'
 };
