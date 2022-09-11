@@ -100,12 +100,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Tab3Page": () => (/* binding */ Tab3Page)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 4929);
 /* harmony import */ var _tab3_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tab3.page.html?ngResource */ 9769);
 /* harmony import */ var _tab3_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tab3.page.scss?ngResource */ 7087);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 3184);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ 2816);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ 2816);
 /* harmony import */ var _shared_api_content_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../shared/api/content.service */ 3558);
+/* harmony import */ var _shared_provider_pusher_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../shared/provider/pusher.service */ 3163);
+
 
 
 
@@ -113,9 +115,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let Tab3Page = class Tab3Page {
-    constructor(contentService, router) {
+    constructor(contentService, router, pusher) {
         this.contentService = contentService;
         this.router = router;
+        this.pusher = pusher;
         this.settingForm = {
             id: null,
             email: '',
@@ -127,6 +130,9 @@ let Tab3Page = class Tab3Page {
         this.status = false;
     }
     ngOnInit() {
+        this.getProfile();
+    }
+    ionViewWillEnter() {
         this.getProfile();
     }
     getProfile() {
@@ -192,9 +198,11 @@ let Tab3Page = class Tab3Page {
     logout() {
         this.contentService.getToken().then((token) => {
             this.contentService.postLogout(token).subscribe((response) => {
+                this.pusher.unbind();
                 this.contentService.deleteToken();
                 console.log('Success & delete token');
             }, (error) => {
+                this.pusher.unbind();
                 this.contentService.deleteToken();
                 console.log('Unauthorization & delete token');
             });
@@ -216,10 +224,11 @@ let Tab3Page = class Tab3Page {
 };
 Tab3Page.ctorParameters = () => [
     { type: _shared_api_content_service__WEBPACK_IMPORTED_MODULE_2__.ContentService },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__.Router }
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__.Router },
+    { type: _shared_provider_pusher_service__WEBPACK_IMPORTED_MODULE_3__.PusherService }
 ];
-Tab3Page = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Component)({
+Tab3Page = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.Component)({
         selector: 'app-tab3',
         template: _tab3_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
         styles: [_tab3_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
@@ -246,7 +255,7 @@ module.exports = ".profile {\n  border-radius: 50%;\n  width: auto;\n  height: a
   \************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title>\n      Settings\n    </ion-title>\n    <ion-button slot=\"end\" size=\"small\" fill=\"clear\" (click)=\"manageUsers()\" *ngIf=\"greaterThan(settingForm.role, 4)\">\n      <ion-icon name=\"person-outline\"></ion-icon>\n    </ion-button>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content [fullscreen]=\"true\">\n  <ion-header collapse=\"condense\">\n    <ion-toolbar>\n      <ion-title size=\"large\">Settings</ion-title>\n    </ion-toolbar>\n  </ion-header>\n\n  <ion-grid>\n    <ion-row class=\"ion-justify-content-center ion-margin-vertical\">\n      <ion-col size=\"6\"  size-md=\"3\" (click)=\"editProfile()\">\n        <img class=\"profile\" src=\"{{settingForm.avatar}}\" alt=\"{{settingForm.name}}\"/>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <ion-grid>\n    <ion-row class=\"ion-justify-content-center\">\n      <ion-col size=\"12\">\n        <ion-item>\n          <ion-label>Online</ion-label>\n          <ion-toggle slot=\"end\" [(ngModel)]=\"status\" [checked]=\"status\" (ionChange)=\"statusChange($event)\"></ion-toggle>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <ion-grid>\n    <ion-row class=\"ion-justify-content-center\">\n      <ion-col size=\"12\">\n        <ion-item>\n          <ion-label position=\"floating\">Name</ion-label>\n          <ion-input [(ngModel)]=\"settingForm.name\" [ngModelOptions]=\"{standalone: true}\" (ionBlur)=\"saveName($event)\" type=\"text\" placeholder=\"Edit your name\"></ion-input>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <ion-grid>\n    <ion-row class=\"ion-justify-content-center\">\n      <ion-col size=\"12\">\n        <ion-item>\n          <ion-label position=\"floating\">Email</ion-label>\n          <ion-input [(ngModel)]=\"settingForm.email\" [ngModelOptions]=\"{standalone: true}\" (ionBlur)=\"saveEmail($event)\" type=\"email\" placeholder=\"Edit your email\"></ion-input>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <ion-grid>\n    <ion-row class=\"ion-justify-content-center ion-margin-vertical\">\n      <ion-col size=\"11\">\n        <ion-button expand=\"block\" fill=\"outline\" color=\"danger\" (click)=\"logout()\">Logout</ion-button>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher>\n</ion-content>\n";
+module.exports = "<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title class=\"default\">\n      Settings\n    </ion-title>\n    <ion-button slot=\"end\" size=\"small\" fill=\"clear\" (click)=\"manageUsers()\" *ngIf=\"greaterThan(settingForm.role, 4)\">\n      <ion-icon name=\"person-outline\"></ion-icon>\n    </ion-button>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content [fullscreen]=\"true\">\n  <ion-header collapse=\"condense\">\n    <ion-toolbar>\n      <ion-title size=\"large\">Settings</ion-title>\n    </ion-toolbar>\n  </ion-header>\n\n  <ion-grid>\n    <ion-row class=\"ion-justify-content-center ion-margin-vertical\">\n      <ion-col size=\"6\"  size-md=\"3\" (click)=\"editProfile()\">\n        <img class=\"profile\" src=\"{{settingForm.avatar}}\" alt=\"{{settingForm.name}}\"/>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <ion-grid>\n    <ion-row class=\"ion-justify-content-center\">\n      <ion-col size=\"12\">\n        <ion-item>\n          <ion-label>Online</ion-label>\n          <ion-toggle slot=\"end\" [(ngModel)]=\"status\" [checked]=\"status\" (ionChange)=\"statusChange($event)\"></ion-toggle>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <ion-grid>\n    <ion-row class=\"ion-justify-content-center\">\n      <ion-col size=\"12\">\n        <ion-item>\n          <ion-label position=\"floating\">Name</ion-label>\n          <ion-input [(ngModel)]=\"settingForm.name\" [ngModelOptions]=\"{standalone: true}\" (ionBlur)=\"saveName($event)\" type=\"text\" placeholder=\"Edit your name\"></ion-input>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <ion-grid>\n    <ion-row class=\"ion-justify-content-center\">\n      <ion-col size=\"12\">\n        <ion-item>\n          <ion-label position=\"floating\">Email</ion-label>\n          <ion-input [(ngModel)]=\"settingForm.email\" [ngModelOptions]=\"{standalone: true}\" (ionBlur)=\"saveEmail($event)\" type=\"email\" placeholder=\"Edit your email\"></ion-input>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <ion-grid>\n    <ion-row class=\"ion-justify-content-center ion-margin-vertical\">\n      <ion-col size=\"11\">\n        <ion-button expand=\"block\" fill=\"outline\" color=\"danger\" (click)=\"logout()\">Logout</ion-button>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher>\n</ion-content>\n";
 
 /***/ })
 

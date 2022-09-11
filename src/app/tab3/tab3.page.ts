@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ContentService } from '../shared/api/content.service';
+import { PusherService } from '../shared/provider/pusher.service';
 
 @Component({
   selector: 'app-tab3',
@@ -19,7 +20,8 @@ export class Tab3Page implements OnInit {
   status = false;
   constructor(
     private contentService: ContentService,
-    private router: Router
+    private router: Router,
+    private pusher: PusherService
   ) {
   }
 
@@ -27,6 +29,9 @@ export class Tab3Page implements OnInit {
     this.getProfile();
   }
 
+  ionViewWillEnter() {
+    this.getProfile();
+  }
 
   getProfile() {
     this.contentService.getToken().then((token) => {
@@ -98,10 +103,12 @@ export class Tab3Page implements OnInit {
     this.contentService.getToken().then((token) => {
       this.contentService.postLogout(token).subscribe(
         (response) => {
+          this.pusher.unbind();
           this.contentService.deleteToken();
           console.log('Success & delete token');
         },
         (error) => {
+          this.pusher.unbind();
           this.contentService.deleteToken();
           console.log('Unauthorization & delete token');
         }

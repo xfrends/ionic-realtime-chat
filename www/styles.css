@@ -1377,5 +1377,17 @@ sub {
 .ion-align-items-baseline {
   align-items: baseline !important;
 }
+.pointer {
+  cursor: pointer;
+}
+.grab {
+  cursor: grab;
+}
+.none {
+  cursor: none;
+}
+.default {
+  cursor: default;
+}
 
 /*# sourceMappingURL=styles.css.map*/

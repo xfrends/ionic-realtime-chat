@@ -32,6 +32,19 @@ export class ContentService {
   }
   // End Token
 
+  // Start Token
+  setEmail(data) {
+    return Storage.set({key: 'email', value: data });
+  }
+  deleteEmail() {
+    return Storage.remove({ key: 'email' });
+  }
+  async getEmail() {
+    const { value } = await Storage.get({ key: 'email' });
+    return value;
+  }
+  // End Token
+
   // Start Auth
   postRegister(data) {
     const url = environment.baseUrl+'/api/user';

@@ -14,30 +14,99 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 4929);
 /* harmony import */ var _add_group_modal_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./add-group-modal.component.html?ngResource */ 3492);
 /* harmony import */ var _add_group_modal_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./add-group-modal.component.scss?ngResource */ 5882);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ 3819);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ 2816);
+/* harmony import */ var src_app_shared_api_content_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/shared/api/content.service */ 3558);
+
+
+
 
 
 
 
 let AddGroupModalComponent = class AddGroupModalComponent {
-    constructor() { }
+    constructor(modalCtrl, router, alertController, contentService) {
+        this.modalCtrl = modalCtrl;
+        this.router = router;
+        this.alertController = alertController;
+        this.contentService = contentService;
+        this.handlerMessage = '';
+        this.roleMessage = '';
+    }
     ngOnInit() { }
     createGroup() {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__awaiter)(this, void 0, void 0, function* () {
+            const alert = yield this.alertController.create({
+                header: 'Group Information',
+                inputs: [
+                    {
+                        name: 'name',
+                        type: 'text',
+                        placeholder: 'masukan nama group disini'
+                    },
+                    {
+                        name: 'desc',
+                        type: 'textarea',
+                        placeholder: 'masukan deskripsi group disini'
+                    }
+                ],
+                buttons: [
+                    {
+                        text: 'Cancel',
+                        role: 'cancel',
+                        handler: () => {
+                            this.handlerMessage = 'Create Group Canceled';
+                        },
+                    },
+                    {
+                        text: 'OK',
+                        role: 'confirm',
+                        handler: data => {
+                            this.storeGroup(data);
+                            this.handlerMessage = 'Create Group Confirmed';
+                        },
+                    },
+                ],
+            });
+            yield alert.present();
+            const { role } = yield alert.onDidDismiss();
+            this.roleMessage = `Dismissed with role: ${role}`;
+        });
+    }
+    storeGroup(data) {
         const participant = [];
         this.contacts.forEach(element => {
             if (element.is_checked) {
                 participant.push(element.other_user_id);
             }
         });
-        console.log(participant);
+        this.contentService.getToken().then((token) => {
+            this.contentService.postGroup(token, data.name, data.desc, participant).subscribe((response) => {
+                console.log(response);
+                this.modalCtrl.dismiss();
+                this.router.navigate(['tabs/group']);
+            }, (error) => {
+                console.log('error: ', error);
+                if (error.status === 401) {
+                    this.contentService.deleteToken();
+                    this.router.navigate(['/login']);
+                }
+            });
+        });
     }
 };
-AddGroupModalComponent.ctorParameters = () => [];
+AddGroupModalComponent.ctorParameters = () => [
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__.ModalController },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__.Router },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__.AlertController },
+    { type: src_app_shared_api_content_service__WEBPACK_IMPORTED_MODULE_2__.ContentService }
+];
 AddGroupModalComponent.propDecorators = {
-    contacts: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input }]
+    contacts: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input }]
 };
 AddGroupModalComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.Component)({
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.Component)({
         selector: 'app-add-group-modal',
         template: _add_group_modal_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
         styles: [_add_group_modal_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
@@ -248,10 +317,12 @@ let Tab2Page = class Tab2Page {
         this.isOnline = false;
     }
     ngOnInit() {
-        this.getContact();
         if (!this.platform.is('ios')) {
             this.showButton = true;
         }
+    }
+    ionViewWillEnter() {
+        this.getContact();
     }
     onScroll(event) {
         if (event.detail.deltaY > 0) {
@@ -268,6 +339,7 @@ let Tab2Page = class Tab2Page {
                 if (this.contacts.length !== 0) {
                     this.empty = !true;
                     const today = new Date();
+                    console.log('contacts: ', this.contacts);
                     this.contacts.forEach(element => {
                         const last = new Date(element.other_user.updated_at);
                         if (today.toDateString() === last.toDateString()) {
@@ -347,7 +419,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
   \***********************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-modal #modal trigger=\"open-modal-add-group\" [initialBreakpoint]=\"0.25\" [breakpoints]=\"[0, 0.25, 0.5, 0.75]\">\n  <ng-template>\n    <ion-content>\n      <ion-searchbar placeholder=\"Search\" (click)=\"modal.setCurrentBreakpoint(0.75)\" class=\"ion-margin-top\"></ion-searchbar>\n      <ion-list>\n        <ion-item *ngFor=\"let item of contacts\">\n          <ion-avatar slot=\"start\">\n            <ion-img src=\"{{item.other_user.avatar}}\"></ion-img>\n          </ion-avatar>\n          <ion-label>\n            <h2>{{item.other_user.name}}</h2>\n            <p>{{item.other_user.role.name}}</p>\n          </ion-label>\n          <ion-checkbox slot=\"end\" [(ngModel)]=\"item.is_checked\"></ion-checkbox>\n        </ion-item>\n      </ion-list>\n      <ion-button (click)=\"createGroup()\" expand=\"block\" class=\"ion-margin-horizontal\">Create Group</ion-button>\n    </ion-content>\n  </ng-template>\n</ion-modal>\n";
+module.exports = "<ion-modal #modal trigger=\"open-modal-add-group\" [initialBreakpoint]=\"0.25\" [breakpoints]=\"[0, 0.25, 0.5, 0.75]\">\n  <ng-template>\n    <ion-content>\n      <ion-searchbar placeholder=\"Search\" (click)=\"modal.setCurrentBreakpoint(0.75)\" class=\"ion-margin-top\"></ion-searchbar>\n      <ion-list>\n        <div *ngFor=\"let item of contacts\">\n          <ion-item *ngIf=\"item.other_user_id !== item.user_id\">\n            <ion-avatar slot=\"start\">\n              <ion-img src=\"{{item.other_user.avatar}}\"></ion-img>\n            </ion-avatar>\n            <ion-label>\n              <h2>{{item.other_user.name}}</h2>\n              <p>{{item.other_user.role.name}}</p>\n            </ion-label>\n            <ion-checkbox slot=\"end\" [(ngModel)]=\"item.is_checked\"></ion-checkbox>\n          </ion-item>\n        </div>\n      </ion-list>\n      <ion-button (click)=\"createGroup()\" expand=\"block\" class=\"ion-margin-horizontal\">Create Group</ion-button>\n    </ion-content>\n  </ng-template>\n</ion-modal>\n";
 
 /***/ }),
 
@@ -357,7 +429,7 @@ module.exports = "<ion-modal #modal trigger=\"open-modal-add-group\" [initialBre
   \*************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-list>\n  <ion-item-sliding *ngFor=\"let item of contacts\">\n    <ion-item (click)=\"contactClick(item.other_user.email)\">\n      <ion-avatar class=\"ion-margin-vertical ion-margin-end\">\n        <img src=\"{{item.other_user.avatar}}\">\n      </ion-avatar>\n      <ion-label>{{item.other_user.name}}</ion-label>\n      <ion-note slot=\"end\">\n        <ion-text color=\"success\" *ngIf=\"isOnline; else lastOnline\">\n          <small>{{item.other_user.status}}</small>\n        </ion-text>\n        <ng-template #lastOnline>\n          <ion-text color=\"medium\" *ngIf=\"!item.today; else today\">\n            <small>{{item.other_user.updated_at | date:\"mediumDate\"}}</small>\n          </ion-text>\n          <ng-template #today>\n            <ion-text color=\"medium\">\n              <small>{{item.other_user.updated_at | date:\"shortTime\"}}</small>\n            </ion-text>\n          </ng-template>\n        </ng-template>\n      </ion-note>\n    </ion-item>\n    <ion-item-options side=\"end\">\n      <ion-item-option (click)=\"contactClick(item)\">Open</ion-item-option>\n      <ion-item-option (click)=\"contactArsip(item)\" color=\"danger\">Delete</ion-item-option>\n    </ion-item-options>\n  </ion-item-sliding>\n</ion-list>\n";
+module.exports = "<ion-list>\n  <ion-item-sliding *ngFor=\"let item of contacts\">\n    <ion-item (click)=\"contactClick(item.other_user.email)\" *ngIf=\"item.other_user_id !== item.user_id\">\n      <ion-avatar class=\"ion-margin-vertical ion-margin-end\">\n        <img src=\"{{item.other_user.avatar}}\">\n      </ion-avatar>\n      <ion-label>{{item.other_user.name}}</ion-label>\n      <ion-note slot=\"end\">\n        <ion-text color=\"success\" *ngIf=\"isOnline; else lastOnline\">\n          <small>{{item.other_user.status}}</small>\n        </ion-text>\n        <ng-template #lastOnline>\n          <ion-text color=\"medium\" *ngIf=\"!item.today; else today\">\n            <small>{{item.other_user.updated_at | date:\"mediumDate\"}}</small>\n          </ion-text>\n          <ng-template #today>\n            <ion-text color=\"medium\">\n              <small>{{item.other_user.updated_at | date:\"shortTime\"}}</small>\n            </ion-text>\n          </ng-template>\n        </ng-template>\n      </ion-note>\n    </ion-item>\n    <ion-item-options side=\"end\">\n      <ion-item-option (click)=\"contactClick(item)\">Open</ion-item-option>\n      <ion-item-option (click)=\"contactArsip(item)\" color=\"danger\">Delete</ion-item-option>\n    </ion-item-options>\n  </ion-item-sliding>\n</ion-list>\n";
 
 /***/ }),
 
@@ -367,7 +439,7 @@ module.exports = "<ion-list>\n  <ion-item-sliding *ngFor=\"let item of contacts\
   \************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title slot=\"start\">\n      Contacts\n    </ion-title>\n    <ion-button slot=\"end\" size=\"small\" fill=\"clear\" (click)=\"addContact()\" *ngIf=\"showButton\">\n        <ion-icon name=\"person-add-outline\"></ion-icon>\n    </ion-button>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content [fullscreen]=\"true\" [scrollEvents]=\"true\" (ionScroll)=\"onScroll($event)\">\n  <ion-header collapse=\"condense\">\n    <ion-toolbar>\n      <ion-title size=\"large\">Contacts</ion-title>\n      <ion-button slot=\"end\" fill=\"clear\" (click)=\"addContact()\">\n          <ion-icon name=\"person-add-outline\"></ion-icon>\n      </ion-button>\n    </ion-toolbar>\n  </ion-header>\n\n  <app-explore-container *ngIf=\"empty\" name=\"Contact Empty\" navigate=\"tabs/contact/add-contact\"></app-explore-container>\n\n  <ion-item id=\"open-modal-add-group\">\n    <ion-icon name=\"people-outline\" class=\"ion-margin-vertical ion-margin-horizontal\"></ion-icon>\n    <ion-label>Create Group</ion-label>\n  </ion-item>\n  <app-add-group-modal [contacts]=\"contacts\"></app-add-group-modal>\n\n  <app-all-contact-list [contacts]=\"contacts\" [isOnline]=\"isOnline\"></app-all-contact-list>\n\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher>\n</ion-content>\n";
+module.exports = "<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title class=\"default\" slot=\"start\">\n      Contacts\n    </ion-title>\n    <ion-button slot=\"end\" size=\"small\" fill=\"clear\" (click)=\"addContact()\" *ngIf=\"showButton\">\n        <ion-icon name=\"person-add-outline\"></ion-icon>\n    </ion-button>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content [fullscreen]=\"true\" [scrollEvents]=\"true\" (ionScroll)=\"onScroll($event)\">\n  <ion-header collapse=\"condense\">\n    <ion-toolbar>\n      <ion-title size=\"large\">Contacts</ion-title>\n      <ion-button slot=\"end\" fill=\"clear\" (click)=\"addContact()\">\n          <ion-icon name=\"person-add-outline\"></ion-icon>\n      </ion-button>\n    </ion-toolbar>\n  </ion-header>\n\n  <app-explore-container *ngIf=\"empty\" name=\"Contact Empty\" navigate=\"tabs/contact/add-contact\"></app-explore-container>\n\n  <ion-item id=\"open-modal-add-group\" class=\"pointer\">\n    <ion-icon name=\"people-outline\" class=\"ion-margin-vertical ion-margin-horizontal\"></ion-icon>\n    <ion-label>Create Group</ion-label>\n  </ion-item>\n  <app-add-group-modal [contacts]=\"contacts\"></app-add-group-modal>\n\n  <app-all-contact-list [contacts]=\"contacts\" [isOnline]=\"isOnline\"></app-all-contact-list>\n\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher>\n</ion-content>\n";
 
 /***/ })
 

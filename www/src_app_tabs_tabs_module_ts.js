@@ -34,7 +34,11 @@ const routes = [
             },
             {
                 path: 'setting',
-                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_tab3_tab3_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ../tab3/tab3.module */ 3746)).then(m => m.Tab3PageModule)
+                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_provider_pusher_service_ts"), __webpack_require__.e("common"), __webpack_require__.e("src_app_tab3_tab3_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ../tab3/tab3.module */ 3746)).then(m => m.Tab3PageModule)
+            },
+            {
+                path: 'group',
+                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_tab4_tab4_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ../tab4/tab4.module */ 2486)).then(m => m.Tab4PageModule)
             },
             {
                 path: '',
@@ -153,7 +157,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
   \************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-tabs>\n\n  <ion-tab-bar slot=\"bottom\">\n    <ion-tab-button tab=\"chat\">\n      <ion-icon name=\"chatbubbles-outline\"></ion-icon>\n      <ion-label>Chat</ion-label>\n    </ion-tab-button>\n\n    <ion-tab-button tab=\"contact\">\n      <ion-icon name=\"person-outline\"></ion-icon>\n      <ion-label>Contact</ion-label>\n    </ion-tab-button>\n\n    <ion-tab-button tab=\"setting\">\n      <ion-icon name=\"cog-outline\"></ion-icon>\n      <ion-label>Setting</ion-label>\n    </ion-tab-button>\n  </ion-tab-bar>\n\n</ion-tabs>\n";
+module.exports = "<ion-tabs>\n\n  <ion-tab-bar slot=\"bottom\">\n    <ion-tab-button tab=\"chat\">\n      <ion-icon name=\"chatbubbles-outline\"></ion-icon>\n      <ion-label>Chat</ion-label>\n    </ion-tab-button>\n\n    <ion-tab-button tab=\"group\">\n      <ion-icon name=\"people-outline\"></ion-icon>\n      <ion-label>Group</ion-label>\n    </ion-tab-button>\n\n    <ion-tab-button tab=\"contact\">\n      <ion-icon name=\"person-outline\"></ion-icon>\n      <ion-label>Contact</ion-label>\n    </ion-tab-button>\n\n    <ion-tab-button tab=\"setting\">\n      <ion-icon name=\"cog-outline\"></ion-icon>\n      <ion-label>Setting</ion-label>\n    </ion-tab-button>\n  </ion-tab-bar>\n\n</ion-tabs>\n";
 
 /***/ })
 

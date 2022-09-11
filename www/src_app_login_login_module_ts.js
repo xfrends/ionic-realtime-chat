@@ -104,6 +104,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+// import { FcmService } from '../shared/notification/fcm.service';
 let LoginPage = class LoginPage {
     constructor(contentService, router) {
         this.contentService = contentService;
@@ -121,7 +122,10 @@ let LoginPage = class LoginPage {
     onSubmit() {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(this, void 0, void 0, function* () {
             this.contentService.postLogin(this.loginForm).subscribe((response) => {
+                console.log(this.loginForm, response.content);
+                this.contentService.setEmail(response.content.email);
                 this.contentService.setToken(response.content.access_token);
+                // this.fcm.setToken();
                 this.router.navigate(['/']);
             });
         });
@@ -162,7 +166,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
   \**************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title>{{appName}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-header collapse=\"condense\">\n    <ion-toolbar>\n      <ion-title size=\"large\">{{appName}}</ion-title>\n    </ion-toolbar>\n  </ion-header>\n\n  <ion-grid>\n    <ion-row class=\"ion-align-items-center\">\n      <ion-col size=\"12\" size-md class=\"ion-align-self-center\">\n        <ion-card>\n          <ion-card-header>\n            <ion-card-title>Login</ion-card-title>\n          </ion-card-header>\n\n          <ion-card-content class=\"ion-padding-vertical ion-margin-bottom\">\n            <form (ngSubmit)=\"onSubmit()\" class=\"form-horizontal\">\n              <ion-item>\n                <ion-label position=\"floating\">Email</ion-label>\n                <ion-input inputmode=\"email\" [(ngModel)]=\"loginForm.email\" [ngModelOptions]=\"{standalone: true}\" type=\"email\"></ion-input>\n              </ion-item>\n              <ion-item class=\"ion-margin-bottom\">\n                <ion-label position=\"floating\">Password</ion-label>\n                <ion-input inputmode=\"text\" [(ngModel)]=\"loginForm.password\" [ngModelOptions]=\"{standalone: true}\" required=\"true\" type=\"password\"></ion-input>\n              </ion-item>\n              <ion-button type=\"submit\" expand=\"block\">Login</ion-button>\n            </form>\n            <br>\n            <ion-text> Belum memiliki akun? <a href=\"register\">Register</a></ion-text>\n          </ion-card-content>\n        </ion-card>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n</ion-content>\n";
+module.exports = "<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title>{{appName}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-header collapse=\"condense\">\n    <ion-toolbar>\n      <ion-title size=\"large\">{{appName}}</ion-title>\n    </ion-toolbar>\n  </ion-header>\n\n  <ion-grid>\n    <ion-row class=\"ion-align-items-center ion-justify-content-center\">\n      <ion-col size=\"12\" size-sm=\"6\" class=\"ion-align-self-center\">\n        <ion-card >\n          <ion-card-header>\n            <ion-card-title>Login</ion-card-title>\n          </ion-card-header>\n\n          <ion-card-content class=\"ion-padding-vertical ion-margin-bottom\">\n            <form (ngSubmit)=\"onSubmit()\" class=\"form-horizontal\">\n              <ion-item>\n                <ion-label position=\"floating\">Email</ion-label>\n                <ion-input inputmode=\"email\" [(ngModel)]=\"loginForm.email\" [ngModelOptions]=\"{standalone: true}\" type=\"email\"></ion-input>\n              </ion-item>\n              <ion-item class=\"ion-margin-bottom\">\n                <ion-label position=\"floating\">Password</ion-label>\n                <ion-input inputmode=\"text\" [(ngModel)]=\"loginForm.password\" [ngModelOptions]=\"{standalone: true}\" required=\"true\" type=\"password\"></ion-input>\n              </ion-item>\n              <ion-button type=\"submit\" expand=\"block\">Login</ion-button>\n            </form>\n            <br>\n            <ion-text> Belum memiliki akun? <a href=\"register\">Register</a></ion-text>\n          </ion-card-content>\n        </ion-card>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n</ion-content>\n";
 
 /***/ })
 

@@ -23,10 +23,13 @@ export class Tab1Page implements OnInit {
   }
 
   ngOnInit() {
-    this.getChats();
     if (!this.platform.is('ios')) {
       this.showButton = true;
     }
+  }
+
+  ionViewWillEnter() {
+    this.getChats();
   }
 
   getChats() {

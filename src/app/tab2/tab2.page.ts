@@ -23,10 +23,13 @@ export class Tab2Page implements OnInit {
   }
 
   ngOnInit() {
-    this.getContact();
     if (!this.platform.is('ios')) {
       this.showButton = true;
     }
+  }
+
+  ionViewWillEnter() {
+    this.getContact();
   }
 
   onScroll(event) {

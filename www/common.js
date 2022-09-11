@@ -1,220 +1,6 @@
 "use strict";
 (self["webpackChunkapp"] = self["webpackChunkapp"] || []).push([["common"],{
 
-/***/ 8520:
-/*!**********************************************************!*\
-  !*** ./src/app/chat/messages/messages-routing.module.ts ***!
-  \**********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "MessagesPageRoutingModule": () => (/* binding */ MessagesPageRoutingModule)
-/* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ 4929);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 3184);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ 2816);
-/* harmony import */ var _messages_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./messages.page */ 4093);
-
-
-
-
-const routes = [
-    {
-        path: '',
-        component: _messages_page__WEBPACK_IMPORTED_MODULE_0__.MessagesPage
-    }
-];
-let MessagesPageRoutingModule = class MessagesPageRoutingModule {
-};
-MessagesPageRoutingModule = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.NgModule)({
-        imports: [_angular_router__WEBPACK_IMPORTED_MODULE_3__.RouterModule.forChild(routes)],
-        exports: [_angular_router__WEBPACK_IMPORTED_MODULE_3__.RouterModule],
-    })
-], MessagesPageRoutingModule);
-
-
-
-/***/ }),
-
-/***/ 7763:
-/*!**************************************************!*\
-  !*** ./src/app/chat/messages/messages.module.ts ***!
-  \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "MessagesPageModule": () => (/* binding */ MessagesPageModule)
-/* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 4929);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 3184);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common */ 6362);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/forms */ 587);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ 3819);
-/* harmony import */ var _messages_routing_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./messages-routing.module */ 8520);
-/* harmony import */ var _messages_page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./messages.page */ 4093);
-/* harmony import */ var src_app_explore_container_explore_container_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/explore-container/explore-container.module */ 581);
-
-
-
-
-
-
-
-
-let MessagesPageModule = class MessagesPageModule {
-};
-MessagesPageModule = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.NgModule)({
-        imports: [
-            _angular_common__WEBPACK_IMPORTED_MODULE_5__.CommonModule,
-            _angular_forms__WEBPACK_IMPORTED_MODULE_6__.FormsModule,
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.IonicModule,
-            _messages_routing_module__WEBPACK_IMPORTED_MODULE_0__.MessagesPageRoutingModule,
-            src_app_explore_container_explore_container_module__WEBPACK_IMPORTED_MODULE_2__.ExploreContainerComponentModule
-        ],
-        declarations: [_messages_page__WEBPACK_IMPORTED_MODULE_1__.MessagesPage]
-    })
-], MessagesPageModule);
-
-
-
-/***/ }),
-
-/***/ 4093:
-/*!************************************************!*\
-  !*** ./src/app/chat/messages/messages.page.ts ***!
-  \************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "MessagesPage": () => (/* binding */ MessagesPage)
-/* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 4929);
-/* harmony import */ var _messages_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./messages.page.html?ngResource */ 9261);
-/* harmony import */ var _messages_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./messages.page.scss?ngResource */ 1296);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 3184);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ 2816);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/angular */ 3819);
-/* harmony import */ var src_app_shared_api_content_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/shared/api/content.service */ 3558);
-
-
-
-
-
-
-
-let MessagesPage = class MessagesPage {
-    constructor(platform, router, route, contentService) {
-        this.platform = platform;
-        this.router = router;
-        this.route = route;
-        this.contentService = contentService;
-        this.messages = null;
-        this.newMessage = '';
-        this.to = '';
-        this.chatId = null;
-        this.empty = true;
-        this.showButton = false;
-        this.replyMessage = null;
-    }
-    ngOnInit() {
-        this.route.queryParams.subscribe(params => {
-            this.chatId = params.id;
-            this.getMessages(this.chatId);
-        });
-    }
-    backButton() {
-        this.router.navigate(['tabs/chat']);
-    }
-    getMessages(chatId) {
-        this.contentService.getToken().then((token) => {
-            this.contentService.getMessages(token, chatId).subscribe((messages) => {
-                this.messages = messages.content.message;
-                this.to = messages.content.to.name;
-                if (this.messages.length !== 0) {
-                    this.empty = !true;
-                    const today = new Date();
-                    this.messages.forEach(element => {
-                        const last = new Date(element.updated_at);
-                        if (today.toDateString() === last.toDateString()) {
-                            element.today = true;
-                        }
-                    });
-                }
-            }, (error) => {
-                console.log('error: ', error);
-                if (error.status === 401) {
-                    this.contentService.deleteToken();
-                    this.router.navigate(['/login']);
-                }
-            });
-        });
-    }
-    send() {
-        this.contentService.getToken().then((token) => {
-            this.contentService.postMessage(token, this.chatId, this.replyMessage, this.newMessage, 'text', 'sending').subscribe(() => {
-                this.newMessage = '';
-                this.getMessages(this.chatId);
-            });
-        });
-    }
-    reply(reply) {
-        this.replyMessage = reply;
-        document.getElementById('message-input').focus();
-    }
-    writing() {
-        console.log('ngetik');
-    }
-    stopWriting() {
-        console.log('stop ngetik');
-    }
-    editText() {
-        console.log(this.newMessage);
-        // remove double enter
-        // while (this.newMessage.includes('\n\n')) {
-        //   this.newMessage = this.newMessage.replace('\n\n','\n');
-        // }
-    }
-    onScroll(event) {
-        if (event.detail.deltaY > 0) {
-            this.showButton = true;
-        }
-        else if (event.detail.deltaY < 0 && this.platform.is('ios')) {
-            this.showButton = false;
-        }
-    }
-    doRefresh(event) {
-        this.getMessages(this.chatId);
-        setTimeout(() => {
-            event.target.complete();
-        }, 2000);
-    }
-    greaterThan(subj, num) {
-        return subj < num;
-    }
-};
-MessagesPage.ctorParameters = () => [
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_3__.Platform },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__.Router },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__.ActivatedRoute },
-    { type: src_app_shared_api_content_service__WEBPACK_IMPORTED_MODULE_2__.ContentService }
-];
-MessagesPage = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.Component)({
-        selector: 'app-messages',
-        template: _messages_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
-        styles: [_messages_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
-    })
-], MessagesPage);
-
-
-
-/***/ }),
-
 /***/ 4762:
 /*!******************************************************************!*\
   !*** ./src/app/explore-container/explore-container.component.ts ***!
@@ -294,6 +80,260 @@ ExploreContainerComponentModule = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decora
         exports: [_explore_container_component__WEBPACK_IMPORTED_MODULE_0__.ExploreContainerComponent]
     })
 ], ExploreContainerComponentModule);
+
+
+
+/***/ }),
+
+/***/ 9967:
+/*!*****************************************************!*\
+  !*** ./src/app/messages/messages-routing.module.ts ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MessagesPageRoutingModule": () => (/* binding */ MessagesPageRoutingModule)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ 2816);
+/* harmony import */ var _messages_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./messages.page */ 3567);
+
+
+
+
+const routes = [
+    {
+        path: '',
+        component: _messages_page__WEBPACK_IMPORTED_MODULE_0__.MessagesPage
+    }
+];
+let MessagesPageRoutingModule = class MessagesPageRoutingModule {
+};
+MessagesPageRoutingModule = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.NgModule)({
+        imports: [_angular_router__WEBPACK_IMPORTED_MODULE_3__.RouterModule.forChild(routes)],
+        exports: [_angular_router__WEBPACK_IMPORTED_MODULE_3__.RouterModule],
+    })
+], MessagesPageRoutingModule);
+
+
+
+/***/ }),
+
+/***/ 4812:
+/*!*********************************************!*\
+  !*** ./src/app/messages/messages.module.ts ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MessagesPageModule": () => (/* binding */ MessagesPageModule)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common */ 6362);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/forms */ 587);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ 3819);
+/* harmony import */ var _messages_routing_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./messages-routing.module */ 9967);
+/* harmony import */ var _messages_page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./messages.page */ 3567);
+/* harmony import */ var src_app_explore_container_explore_container_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/explore-container/explore-container.module */ 581);
+
+
+
+
+
+
+
+
+let MessagesPageModule = class MessagesPageModule {
+};
+MessagesPageModule = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.NgModule)({
+        imports: [
+            _angular_common__WEBPACK_IMPORTED_MODULE_5__.CommonModule,
+            _angular_forms__WEBPACK_IMPORTED_MODULE_6__.FormsModule,
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.IonicModule,
+            _messages_routing_module__WEBPACK_IMPORTED_MODULE_0__.MessagesPageRoutingModule,
+            src_app_explore_container_explore_container_module__WEBPACK_IMPORTED_MODULE_2__.ExploreContainerComponentModule
+        ],
+        declarations: [_messages_page__WEBPACK_IMPORTED_MODULE_1__.MessagesPage]
+    })
+], MessagesPageModule);
+
+
+
+/***/ }),
+
+/***/ 3567:
+/*!*******************************************!*\
+  !*** ./src/app/messages/messages.page.ts ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MessagesPage": () => (/* binding */ MessagesPage)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var _messages_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./messages.page.html?ngResource */ 8693);
+/* harmony import */ var _messages_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./messages.page.scss?ngResource */ 9170);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ 2816);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ 3819);
+/* harmony import */ var src_app_shared_api_content_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/shared/api/content.service */ 3558);
+/* harmony import */ var _shared_provider_pusher_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../shared/provider/pusher.service */ 3163);
+
+
+
+
+
+
+
+
+// import { FcmService } from '../shared/notification/fcm.service';
+let MessagesPage = class MessagesPage {
+    constructor(platform, router, route, contentService, pusher) {
+        this.platform = platform;
+        this.router = router;
+        this.route = route;
+        this.contentService = contentService;
+        this.pusher = pusher;
+        this.email = null;
+        this.messages = null;
+        this.newMessage = '';
+        this.title = '';
+        this.chatId = null;
+        this.empty = true;
+        this.showButton = false;
+        this.replyMessage = null;
+        this.back = 'tabs/chat';
+        this.contentService.getEmail().then((email) => {
+            this.email = email;
+        });
+    }
+    ngOnInit() {
+        this.route.queryParams.subscribe(params => {
+            this.chatId = params.id;
+            this.getMessages(this.chatId);
+        });
+        const channel = this.pusher.init();
+        channel.bind('new_messages', (data) => {
+            if (data.id === this.chatId && data.from_email !== this.email) {
+                this.getMessages(this.chatId);
+            }
+        });
+    }
+    backButton() {
+        this.router.navigate([this.back]);
+    }
+    getChat(chatId) {
+        this.contentService.getToken().then((token) => {
+            this.contentService.getChat(token, chatId).subscribe((chat) => {
+                if (chat.length !== 0 && chat.content.type === 'group') {
+                    this.title = chat.content.name;
+                    this.back = 'tabs/group';
+                }
+            }, (error) => {
+                console.log('error: ', error);
+                if (error.status === 401) {
+                    this.contentService.deleteToken();
+                    this.router.navigate(['/login']);
+                }
+            });
+        });
+    }
+    getMessages(chatId) {
+        this.contentService.getToken().then((token) => {
+            this.contentService.getMessages(token, chatId).subscribe((messages) => {
+                this.messages = messages.content.message;
+                this.title = messages.content.to.name;
+                this.getChat(chatId);
+                if (this.messages.length !== 0) {
+                    this.empty = !true;
+                    const today = new Date();
+                    this.messages.forEach(element => {
+                        const last = new Date(element.updated_at);
+                        if (today.toDateString() === last.toDateString()) {
+                            element.today = true;
+                        }
+                    });
+                }
+            }, (error) => {
+                console.log('error: ', error);
+                if (error.status === 401) {
+                    this.contentService.deleteToken();
+                    this.router.navigate(['/login']);
+                }
+            });
+        });
+    }
+    send() {
+        this.contentService.getToken().then((token) => {
+            this.contentService.postMessage(token, this.chatId, this.replyMessage, this.newMessage, 'text', 'sending').subscribe(() => {
+                this.newMessage = '';
+                this.replyMessage = null;
+                this.getMessages(this.chatId);
+                // this.fcm.sendNotif(this.chatId, this.email, this.newMessage);
+            });
+        });
+    }
+    reply(reply, id) {
+        this.replyMessage = reply;
+        const slidingItem = document.getElementById('slidingItem' + id);
+        slidingItem.close();
+        document.getElementById('message-input').focus();
+    }
+    writing() {
+        console.log('mengetik');
+    }
+    stopWriting() {
+        console.log('stop mengetik');
+    }
+    editText() {
+        console.log(this.newMessage);
+        // remove double enter
+        // while (this.newMessage.includes('\n\n')) {
+        //   this.newMessage = this.newMessage.replace('\n\n','\n');
+        // }
+    }
+    onScroll(event) {
+        if (event.detail.deltaY > 0) {
+            this.showButton = true;
+        }
+        else if (event.detail.deltaY < 0 && this.platform.is('ios')) {
+            this.showButton = false;
+        }
+    }
+    detail(chatId) {
+        console.log(chatId);
+    }
+    doRefresh(event) {
+        this.getMessages(this.chatId);
+        setTimeout(() => {
+            event.target.complete();
+        }, 2000);
+    }
+    greaterThan(subj, num) {
+        return subj < num;
+    }
+};
+MessagesPage.ctorParameters = () => [
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__.Platform },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__.Router },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__.ActivatedRoute },
+    { type: src_app_shared_api_content_service__WEBPACK_IMPORTED_MODULE_2__.ContentService },
+    { type: _shared_provider_pusher_service__WEBPACK_IMPORTED_MODULE_3__.PusherService }
+];
+MessagesPage = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_7__.Component)({
+        selector: 'app-messages',
+        template: _messages_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
+        styles: [_messages_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
+    })
+], MessagesPage);
 
 
 
@@ -1562,16 +1602,6 @@ const openURL = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ 1296:
-/*!*************************************************************!*\
-  !*** ./src/app/chat/messages/messages.page.scss?ngResource ***!
-  \*************************************************************/
-/***/ ((module) => {
-
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJtZXNzYWdlcy5wYWdlLnNjc3MifQ== */";
-
-/***/ }),
-
 /***/ 1509:
 /*!*******************************************************************************!*\
   !*** ./src/app/explore-container/explore-container.component.scss?ngResource ***!
@@ -1582,13 +1612,13 @@ module.exports = "#container {\n  text-align: center;\n  position: absolute;\n  
 
 /***/ }),
 
-/***/ 9261:
-/*!*************************************************************!*\
-  !*** ./src/app/chat/messages/messages.page.html?ngResource ***!
-  \*************************************************************/
+/***/ 9170:
+/*!********************************************************!*\
+  !*** ./src/app/messages/messages.page.scss?ngResource ***!
+  \********************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title>{{to}}</ion-title>\n    <ion-button slot=\"start\" size=\"small\" fill=\"clear\" (click)=\"backButton()\">\n        <ion-icon name=\"chevron-back-outline\"></ion-icon>&nbsp;\n    </ion-button>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content [fullscreen]=\"true\" [scrollEvents]=\"true\" (ionScroll)=\"onScroll($event)\">\n\n  <app-explore-container *ngIf=\"empty\" name=\"Messages is empty\"></app-explore-container>\n\n  <ion-list>\n    <ion-item-sliding *ngFor=\"let item of messages\">\n      <ion-item>\n        <ion-avatar slot=\"start\">\n          <img src=\"{{item.user.avatar}}\">\n        </ion-avatar>\n        <span class=\"ion-margin-vertical\">\n          <ion-text color=\"medium\" *ngIf=\"item.reply\" id=\"{{item.id}}\" style=\"font-size: 10px;\"><ion-icon name=\"arrow-redo-outline\"></ion-icon> &nbsp; {{item.reply.substr(0, 30)}}<ion-text *ngIf=\"!greaterThan(item.reply.length, 30)\">...</ion-text></ion-text>\n          <ion-popover trigger=\"{{item.id}}\">\n            <ng-template>\n              <ion-content class=\"ion-padding\">{{item.reply}}</ion-content>\n            </ng-template>\n          </ion-popover>\n          <ion-label>{{item.user.name}}</ion-label>\n          <ion-text style=\"font-size: 14px; color: var(--ion-color-step-600, #666666);\">{{item.content}}</ion-text>\n        </span>\n        <ion-note slot=\"end\">\n            <ion-text color=\"medium\" *ngIf=\"!item.today; else today\">\n              <small>{{item.updated_at | date:\"mediumDate\"}}</small>\n            </ion-text>\n            <ng-template #today>\n              <ion-text color=\"medium\">\n                <small>{{item.updated_at | date:\"shortTime\"}}</small>\n              </ion-text>\n            </ng-template>\n        </ion-note>\n      </ion-item>\n      <ion-item-options side=\"end\">\n        <ion-item-option (click)=\"reply(item.content)\">Reply</ion-item-option>\n      </ion-item-options>\n    </ion-item-sliding>\n  </ion-list>\n  <br>\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher>\n</ion-content>\n\n<ion-footer collapse=\"fade\" style=\"box-shadow: rgb(0 0 0 / 10%) 0px 0px 25px 1px;\">\n  <ion-item>\n    <ion-textarea class=\"ion-align-self-center\" id=\"message-input\" style=\"max-height: 200px!important;\" auto-grow=\"true\" (ionFocus)=\"writing()\" (ionBlur)=\"stopWriting()\" (ionChange)=\"editText()\" [(ngModel)]=\"newMessage\" placeholder=\"Enter message here...\"></ion-textarea>\n    <ion-button slot=\"end\" fill=\"clear\" class=\"ion-align-self-center\" (click)=\"send()\">\n      <ion-icon name=\"send\"></ion-icon>\n    </ion-button>\n  </ion-item>\n</ion-footer>\n";
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJtZXNzYWdlcy5wYWdlLnNjc3MifQ== */";
 
 /***/ }),
 
@@ -1599,6 +1629,16 @@ module.exports = "<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion
 /***/ ((module) => {
 
 module.exports = "<div id=\"container\">\n  <strong>{{ name }}</strong>\n  <p><a rel=\"noopener noreferrer\" (click)=\"redirect(navigate)\" *ngIf=\"navigate\">Add New</a></p>\n</div>\n";
+
+/***/ }),
+
+/***/ 8693:
+/*!********************************************************!*\
+  !*** ./src/app/messages/messages.page.html?ngResource ***!
+  \********************************************************/
+/***/ ((module) => {
+
+module.exports = "<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title class=\"pointer\" id=\"message-detail\" (click)=\"detail(chatId)\">{{title}}</ion-title>\n    <ion-button slot=\"start\" size=\"small\" fill=\"clear\" (click)=\"backButton()\">\n        <ion-icon name=\"chevron-back-outline\"></ion-icon>&nbsp;\n    </ion-button>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content [fullscreen]=\"true\" [scrollEvents]=\"true\" (ionScroll)=\"onScroll($event)\">\n\n  <app-explore-container *ngIf=\"empty\" name=\"Messages is empty\"></app-explore-container>\n\n  <ion-list>\n    <ion-item-sliding class=\"grab\" *ngFor=\"let item of messages\" [id]=\"'slidingItem' + item.id\">\n      <ion-item>\n        <ion-avatar slot=\"start\">\n          <img src=\"{{item.user.avatar}}\">\n        </ion-avatar>\n        <span class=\"ion-margin-vertical\">\n          <ion-text color=\"medium\" *ngIf=\"item.reply\" id=\"{{item.id}}\" style=\"font-size: 10px;\"><ion-icon name=\"arrow-redo-outline\"></ion-icon> &nbsp; {{item.reply.substr(0, 30)}}<ion-text *ngIf=\"!greaterThan(item.reply.length, 30)\">...</ion-text></ion-text>\n          <ion-popover trigger=\"{{item.id}}\">\n            <ng-template>\n              <ion-content class=\"ion-padding\">{{item.reply}}</ion-content>\n            </ng-template>\n          </ion-popover>\n          <ion-label>{{item.user.name}}</ion-label>\n          <ion-text style=\"font-size: 14px; color: var(--ion-color-step-600, #666666);\">{{item.content}}</ion-text>\n        </span>\n        <ion-note slot=\"end\">\n            <ion-text color=\"medium\" *ngIf=\"!item.today; else today\">\n              <small>{{item.updated_at | date:\"mediumDate\"}}</small>\n            </ion-text>\n            <ng-template #today>\n              <ion-text color=\"medium\">\n                <small>{{item.updated_at | date:\"shortTime\"}}</small>\n              </ion-text>\n            </ng-template>\n        </ion-note>\n      </ion-item>\n      <ion-item-options side=\"end\">\n        <ion-item-option (click)=\"reply(item.content, item.id)\">Reply</ion-item-option>\n      </ion-item-options>\n    </ion-item-sliding>\n  </ion-list>\n  <br>\n  <ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher>\n</ion-content>\n\n<ion-footer collapse=\"fade\" style=\"box-shadow: rgb(0 0 0 / 10%) 0px 0px 25px 1px;\">\n  <ion-item>\n    <ion-textarea class=\"ion-align-self-center\" id=\"message-input\" style=\"max-height: 200px!important;\" auto-grow=\"true\" (ionFocus)=\"writing()\" (ionBlur)=\"stopWriting()\" (ionChange)=\"editText()\" [(ngModel)]=\"newMessage\" placeholder=\"Enter message here...\"></ion-textarea>\n    <ion-button slot=\"end\" fill=\"clear\" class=\"ion-align-self-center\" (click)=\"send()\">\n      <ion-icon name=\"send\"></ion-icon>\n    </ion-button>\n  </ion-item>\n</ion-footer>\n";
 
 /***/ })
 

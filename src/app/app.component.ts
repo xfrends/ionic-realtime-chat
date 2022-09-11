@@ -12,8 +12,7 @@ export class AppComponent {
   constructor(
     private router: Router,
     private contentService: ContentService,
-    ) {
-
+  ){
     this.router.events.subscribe((e) => {
       if (e instanceof NavigationEnd) {
         if (e.url !== '/register') {

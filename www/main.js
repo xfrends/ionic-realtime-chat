@@ -32,7 +32,7 @@ const routes = [
     },
     {
         path: 'messages',
-        loadChildren: () => __webpack_require__.e(/*! import() */ "common").then(__webpack_require__.bind(__webpack_require__, /*! ./chat/messages/messages.module */ 7763)).then(m => m.MessagesPageModule)
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-src_app_shared_provider_pusher_service_ts"), __webpack_require__.e("common")]).then(__webpack_require__.bind(__webpack_require__, /*! ./messages/messages.module */ 4812)).then(m => m.MessagesPageModule)
     },
     {
         path: 'user',
@@ -153,7 +153,10 @@ AppModule = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
         declarations: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent],
         entryComponents: [],
         imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__.BrowserModule, _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.IonicModule.forRoot(), _app_routing_module__WEBPACK_IMPORTED_MODULE_0__.AppRoutingModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_6__.HttpClientModule],
-        providers: [{ provide: _angular_router__WEBPACK_IMPORTED_MODULE_7__.RouteReuseStrategy, useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.IonicRouteStrategy }],
+        providers: [{
+                provide: _angular_router__WEBPACK_IMPORTED_MODULE_7__.RouteReuseStrategy,
+                useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.IonicRouteStrategy
+            }],
         bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent],
     })
 ], AppModule);
@@ -209,9 +212,33 @@ let ContentService = class ContentService {
         });
     }
     // End Token
+    // Start Token
+    setEmail(data) {
+        return _capacitor_storage__WEBPACK_IMPORTED_MODULE_0__.Storage.set({ key: 'email', value: data });
+    }
+    deleteEmail() {
+        return _capacitor_storage__WEBPACK_IMPORTED_MODULE_0__.Storage.remove({ key: 'email' });
+    }
+    getEmail() {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__awaiter)(this, void 0, void 0, function* () {
+            const { value } = yield _capacitor_storage__WEBPACK_IMPORTED_MODULE_0__.Storage.get({ key: 'email' });
+            return value;
+        });
+    }
+    // End Token
     // Start Auth
     postRegister(data) {
         const url = _environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.baseUrl + '/api/user';
+        this.httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpHeaders({
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            })
+        };
+        return this.http.post(url, data, this.httpOptions);
+    }
+    postLogin(data) {
+        const url = _environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.baseUrl + '/api/login';
         this.httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpHeaders({
                 'Content-Type': 'application/json',
@@ -230,10 +257,6 @@ let ContentService = class ContentService {
             })
         };
         return this.http.get(url, this.httpOptions);
-    }
-    postLogin(data) {
-        const url = _environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.baseUrl + '/api/login';
-        return this.http.post(url, data, this.httpOptions);
     }
     postLogout(token) {
         const url = _environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.baseUrl + '/api/auth/logout';
@@ -373,7 +396,7 @@ let ContentService = class ContentService {
     }
     // End Chat
     // Start Group
-    postGroup(token, participant) {
+    postGroup(token, name, desc, participant) {
         const url = _environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.baseUrl + '/api/group';
         this.httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpHeaders({
@@ -382,7 +405,7 @@ let ContentService = class ContentService {
                 'Authorization': 'Bearer ' + token
             })
         };
-        return this.http.post(url, { participant }, this.httpOptions);
+        return this.http.post(url, { name, desc, participant }, this.httpOptions);
     }
     getGroups(token) {
         const url = _environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.baseUrl + '/api/group';
@@ -512,7 +535,7 @@ var map = {
 		"node_modules_ionic_core_dist_esm_ion-alert_entry_js"
 	],
 	"./ion-app_8.entry.js": [
-		4812,
+		2893,
 		"common",
 		"node_modules_ionic_core_dist_esm_ion-app_8_entry_js"
 	],
