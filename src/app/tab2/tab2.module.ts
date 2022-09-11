@@ -8,6 +8,7 @@ import { ExploreContainerComponentModule } from '../explore-container/explore-co
 
 import { Tab2PageRoutingModule } from './tab2-routing.module';
 import { AllContactListComponent } from '../contact/all-contact-list/all-contact-list.component';
+import { AddGroupModalComponent } from '../contact/add-group-modal/add-group-modal.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,6 @@ import { AllContactListComponent } from '../contact/all-contact-list/all-contact
     ExploreContainerComponentModule,
     Tab2PageRoutingModule
   ],
-  declarations: [Tab2Page, AllContactListComponent]
+  declarations: [Tab2Page, AllContactListComponent, AddGroupModalComponent]
 })
 export class Tab2PageModule {}

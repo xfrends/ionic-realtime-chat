@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title slot="start">
+    <ion-title class="default" slot="start">
       Contacts
     </ion-title>
     <ion-button slot="end" size="small" fill="clear" (click)="addContact()" *ngIf="showButton">
@@ -21,9 +21,13 @@
 
   <app-explore-container *ngIf="empty" name="Contact Empty" navigate="tabs/contact/add-contact"></app-explore-container>
 
-  <app-all-contact-list [contacts]="contacts" [isOnline]="isOnline"></app-all-contact-list>
+  <ion-item id="open-modal-add-group" class="pointer">
+    <ion-icon name="people-outline" class="ion-margin-vertical ion-margin-horizontal"></ion-icon>
+    <ion-label>Create Group</ion-label>
+  </ion-item>
+  <app-add-group-modal [contacts]="contacts"></app-add-group-modal>
 
-  <br>
+  <app-all-contact-list [contacts]="contacts" [isOnline]="isOnline"></app-all-contact-list>
 
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>

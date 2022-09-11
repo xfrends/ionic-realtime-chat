@@ -43,6 +43,16 @@ export class ContentService {
     };
     return this.http.post(url, data, this.httpOptions);
   }
+  postLogin(data) {
+    const url = environment.baseUrl+'/api/login';
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      })
+    };
+    return this.http.post(url, data, this.httpOptions);
+  }
   getProfile(token) {
     const url = environment.baseUrl+'/api/auth/profile';
     this.httpOptions = {
@@ -53,10 +63,6 @@ export class ContentService {
       })
     };
     return this.http.get<any>(url, this.httpOptions);
-  }
-  postLogin(data) {
-    const url = environment.baseUrl+'/api/login';
-    return this.http.post(url, data, this.httpOptions);
   }
   postLogout(token) {
     const url = environment.baseUrl+'/api/auth/logout';
@@ -198,6 +204,31 @@ export class ContentService {
 
   }
   // End Chat
+
+  // Start Group
+  postGroup(token, name, desc, participant) {
+    const url = environment.baseUrl+'/api/group';
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer '+token
+      })
+    };
+    return this.http.post<any>(url, {name, desc, participant}, this.httpOptions);
+  }
+  getGroups(token) {
+    const url = environment.baseUrl+'/api/group';
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer '+token
+      })
+    };
+    return this.http.get<any>(url, this.httpOptions);
+  }
+  // End Group
 
   // Start Messages
   getMessages(token, chatId) {

@@ -29,7 +29,7 @@ export class AllUserListComponent implements OnInit {
             this.router.navigate(['/login']);
           }
         }
-        );
+      );
     });
   }
 }

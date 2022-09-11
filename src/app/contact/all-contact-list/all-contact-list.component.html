@@ -1,6 +1,6 @@
 <ion-list>
   <ion-item-sliding *ngFor="let item of contacts">
-    <ion-item (click)="contactClick(item.other_user.email)">
+    <ion-item (click)="contactClick(item.other_user.email)" *ngIf="item.other_user_id !== item.user_id">
       <ion-avatar class="ion-margin-vertical ion-margin-end">
         <img src="{{item.other_user.avatar}}">
       </ion-avatar>

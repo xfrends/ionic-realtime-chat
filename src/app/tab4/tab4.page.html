@@ -1,0 +1,73 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="default">
+      Groups
+    </ion-title>
+    <ion-button slot="end" size="small" fill="clear" (click)="createChat()" *ngIf="showButton">
+      <ion-icon name="create-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" [scrollEvents]="true" (ionScroll)="onScroll($event)">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title class="default" size="large">Chats</ion-title>
+      <ion-button slot="end" fill="clear" (click)="createChat()">
+        <ion-icon name="create-outline"></ion-icon>
+      </ion-button>
+    </ion-toolbar>
+  </ion-header>
+
+  <app-explore-container *ngIf="empty" name="Chat Empty" navigate="tabs/contact"></app-explore-container>
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let item of chats">
+      <ion-item (click)="openChat(item.id)">
+        <ion-avatar class="ion-margin-vertical ion-margin-end">
+          <img src="https://gravatar.com/avatar/{{item.gravatar}}">
+        </ion-avatar>
+        <ion-label>
+          <h3>{{item.name}}</h3>
+          <p *ngIf="!item.lastMessages;else message">...</p>
+          <ng-template #message>
+            <p>{{item.lastMessages}}</p>
+          </ng-template>
+        </ion-label>
+        <ion-note slot="end" class="ion-text-end">
+          <ion-text color="success" *ngIf="newMessage; else read">
+            <small>{{item.updated_at | date:"shortTime"}}</small>
+          </ion-text>
+          <ng-template #read>
+            <ion-text color="medium" *ngIf="!item.today; else today">
+              <small>{{item.updated_at | date:"mediumDate"}}</small>
+            </ion-text>
+            <ng-template #today>
+              <ion-text color="medium">
+                <small>{{item.updated_at | date:"shortTime"}}</small>
+              </ion-text>
+            </ng-template>
+          </ng-template>
+          <br>
+          <small *ngIf="item.pin" >
+            <ion-icon name="pin-outline"></ion-icon>
+          </small>
+        </ion-note>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option *ngIf="!item.pin; else unpin" (click)="pinChat(item.id)" color="tertiary">Pin</ion-item-option>
+        <ng-template #unpin>
+        <ion-item-option (click)="unPinChat(item.id)" color="tertiary">Unpin</ion-item-option>
+        </ng-template>
+        <ion-item-option (click)="openChat(item.id)">Open</ion-item-option>
+        <ion-item-option (click)="deleteChat(item.id)" color="danger">Delete</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <br>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+</ion-content>

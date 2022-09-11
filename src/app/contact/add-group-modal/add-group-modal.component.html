@@ -1,0 +1,22 @@
+<ion-modal #modal trigger="open-modal-add-group" [initialBreakpoint]="0.25" [breakpoints]="[0, 0.25, 0.5, 0.75]">
+  <ng-template>
+    <ion-content>
+      <ion-searchbar placeholder="Search" (click)="modal.setCurrentBreakpoint(0.75)" class="ion-margin-top"></ion-searchbar>
+      <ion-list>
+        <div *ngFor="let item of contacts">
+          <ion-item *ngIf="item.other_user_id !== item.user_id">
+            <ion-avatar slot="start">
+              <ion-img src="{{item.other_user.avatar}}"></ion-img>
+            </ion-avatar>
+            <ion-label>
+              <h2>{{item.other_user.name}}</h2>
+              <p>{{item.other_user.role.name}}</p>
+            </ion-label>
+            <ion-checkbox slot="end" [(ngModel)]="item.is_checked"></ion-checkbox>
+          </ion-item>
+        </div>
+      </ion-list>
+      <ion-button (click)="createGroup()" expand="block" class="ion-margin-horizontal">Create Group</ion-button>
+    </ion-content>
+  </ng-template>
+</ion-modal>

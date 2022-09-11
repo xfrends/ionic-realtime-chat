@@ -45,6 +45,7 @@ export class Tab2Page implements OnInit {
           if (this.contacts.length !== 0) {
             this.empty = !true;
             const today = new Date();
+            console.log('contacts: ', this.contacts);
             this.contacts.forEach(element => {
               const last = new Date( element.other_user.updated_at);
               if (today.toDateString() === last.toDateString()) {
